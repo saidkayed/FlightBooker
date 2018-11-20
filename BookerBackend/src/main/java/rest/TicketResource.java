@@ -30,9 +30,9 @@ public class TicketResource {
 
     @Context
     private UriInfo context;
-    
+
     Gson gson;
-    
+
     TicketFacade tf = new TicketFacade(Persistence.createEntityManagerFactory("pu"));
 
     /**
@@ -43,32 +43,37 @@ public class TicketResource {
 
     /**
      * Retrieves representation of an instance of rest.GenericResource
+     *
      * @return an instance of java.lang.String
      */
+    @Path("alltickets")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getJson() {
-        
+    public Response getJson() {
+        String json = gson.toJson(tf.getAllTickets().toString());
+
+        //return Response.ok("{\"petCount\":\""+json+"\"}").build();
+        return Response.ok(json).build();
     }
 
     /**
      * PUT method for updating or creating an instance of GenericResource
+     *
      * @param content representation for the resource
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void putJson(String content) {
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postJson(String json)
-    {
+    public Response postJson(String json) {
         FlightTicket t = gson.fromJson(json, FlightTicket.class);
-        
+
         tf.CreateTicket(t);
-        
+
         return Response.ok(json).build();
     }
 }

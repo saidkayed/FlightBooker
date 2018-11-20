@@ -6,9 +6,11 @@
 package facade;
 
 import entity.FlightTicket;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 /**
  *
@@ -40,8 +42,17 @@ public class TicketFacade {
         return ft;
 
     }
-    
-    
+
+    public List<FlightTicket> getAllTickets() {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            Query q = em.createQuery("SELECT e FROM flightticket e");
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -50,12 +61,13 @@ public class TicketFacade {
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         String currentTime = sdf.format(dt);
-        
+
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
 
         TicketFacade tf = new TicketFacade(emf);
-        FlightTicket t1 = new FlightTicket("THR", "CPH", "IST", currentTime, currentTime, 0, 0, 0, "JumboJet", "ABC123", 0);
-        tf.CreateTicket(t1);
+        //FlightTicket t1 = new FlightTicket("THR", "CPH", "IST", currentTime, currentTime, 0, 0, 0, "JumboJet", "ABC123", 0);
+        //tf.CreateTicket(t1);
+        System.out.println(tf.getAllTickets());
     }
 
 }

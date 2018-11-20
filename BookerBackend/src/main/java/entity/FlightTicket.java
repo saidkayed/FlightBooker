@@ -147,6 +147,11 @@ public class FlightTicket implements Serializable {
         this.model = model;
     }
 
+    @Override
+    public String toString() {
+        return "FlightTicket{" + "id=" + id + ", airline=" + airline + ", departure=" + departure + ", desination=" + desination + ", depTime=" + depTime + ", arrTime=" + arrTime + ", duration=" + duration + ", price=" + price + ", cancelInsurance=" + cancelInsurance + ", airplane=" + airplane + ", model=" + model + ", capacity=" + capacity + '}';
+    }
+
    
 
     
