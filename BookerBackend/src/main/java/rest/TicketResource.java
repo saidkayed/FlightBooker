@@ -6,6 +6,7 @@
 package rest;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import entity.FlightTicket;
 import facade.TicketFacade;
 import javax.persistence.Persistence;
@@ -39,6 +40,7 @@ public class TicketResource {
      * Creates a new instance of GenericResource
      */
     public TicketResource() {
+        gson = new GsonBuilder().setPrettyPrinting().create();
     }
 
     /**
@@ -50,7 +52,7 @@ public class TicketResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJson() {
-        String json = gson.toJson(tf.getAllTickets().toString());
+        String json = gson.toJson(tf.getAllTickets());
 
         //return Response.ok("{\"petCount\":\""+json+"\"}").build();
         return Response.ok(json).build();

@@ -18,6 +18,7 @@ import javax.persistence.Id;
  * @author sidad
  */
 @Entity
+
 public class FlightTicket implements Serializable {
 
     private static final long serialVersionUID = 1L;

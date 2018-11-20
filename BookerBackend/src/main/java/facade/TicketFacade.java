@@ -47,7 +47,7 @@ public class TicketFacade {
         EntityManager em = emf.createEntityManager();
 
         try {
-            Query q = em.createQuery("SELECT e FROM flightticket e");
+            Query q = em.createQuery("SELECT e FROM FlightTicket e");
             return q.getResultList();
         } finally {
             em.close();
@@ -65,9 +65,9 @@ public class TicketFacade {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
 
         TicketFacade tf = new TicketFacade(emf);
-        //FlightTicket t1 = new FlightTicket("THR", "CPH", "IST", currentTime, currentTime, 0, 0, 0, "JumboJet", "ABC123", 0);
-        //tf.CreateTicket(t1);
-        System.out.println(tf.getAllTickets());
+        FlightTicket t1 = new FlightTicket("THR", "CPH", "IST", currentTime, currentTime, 0, 0, 0, "JumboJet", "ABC123", 0);
+        tf.CreateTicket(t1);
+       //System.out.println(tf.getAllTickets());
     }
 
 }
