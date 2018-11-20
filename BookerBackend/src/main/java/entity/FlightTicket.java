@@ -22,13 +22,13 @@ public class FlightTicket implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String airline;
     private String departure;
     private String desination;
-    private Date  depTime;
-    private Date  arrTime;
+    private String  depTime;
+    private String  arrTime;
     private int duration;
     private int price;
     private int cancelInsurance;
@@ -40,7 +40,7 @@ public class FlightTicket implements Serializable {
         
     }
 
-    public FlightTicket(String airline, String departure, String desination, Date depTime, Date arrTime, int duration, int price, int cancelInsurance, String airplane, String model, int capacity) {
+    public FlightTicket(String airline, String departure, String desination, String depTime, String arrTime, int duration, int price, int cancelInsurance, String airplane, String model, int capacity) {
         this.airline = airline;
         this.departure = departure;
         this.desination = desination;
@@ -99,19 +99,19 @@ public class FlightTicket implements Serializable {
         this.desination = desination;
     }
 
-    public Date getDepTime() {
+    public String getDepTime() {
         return depTime;
     }
 
-    public void setDepTime(Date depTime) {
+    public void setDepTime(String depTime) {
         this.depTime = depTime;
     }
 
-    public Date getArrTime() {
+    public String getArrTime() {
         return arrTime;
     }
 
-    public void setArrTime(Date arrTime) {
+    public void setArrTime(String arrTime) {
         this.arrTime = arrTime;
     }
 

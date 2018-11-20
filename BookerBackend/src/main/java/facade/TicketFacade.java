@@ -8,13 +8,15 @@ package facade;
 import entity.FlightTicket;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
  * @author sidad
  */
 public class TicketFacade {
-     EntityManagerFactory emf;
+
+    EntityManagerFactory emf;
 
     public TicketFacade(EntityManagerFactory emf) {
         this.emf = emf;
@@ -23,20 +25,37 @@ public class TicketFacade {
     EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
+
+    public FlightTicket CreateTicket(FlightTicket ft) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            em.persist(ft);
+            em.getTransaction().commit();
+
+        } finally {
+            em.close();
+        }
+        return ft;
+
+    }
     
-   public FlightTicket CreateTicket(FlightTicket ft){
-       EntityManager em = emf.createEntityManager();
-       
-       try {
-           em.getTransaction().begin();
-           em.persist(ft);
-           em.getTransaction().commit();
-           
-       } finally {
-           em.close();
-       }
-       return ft;
- 
-   }
     
+
+    public static void main(String[] args) {
+
+        java.util.Date dt = new java.util.Date();
+
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String currentTime = sdf.format(dt);
+        
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
+
+        TicketFacade tf = new TicketFacade(emf);
+        FlightTicket t1 = new FlightTicket("THR", "CPH", "IST", currentTime, currentTime, 0, 0, 0, "JumboJet", "ABC123", 0);
+        tf.CreateTicket(t1);
+    }
+
 }
