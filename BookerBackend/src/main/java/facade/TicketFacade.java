@@ -6,7 +6,6 @@
 package facade;
 
 import entity.FlightTicket;
-import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 

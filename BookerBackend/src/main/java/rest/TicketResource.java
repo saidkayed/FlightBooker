@@ -20,7 +20,7 @@ import javax.ws.rs.core.MediaType;
  * @author sidad
  */
 @Path("generic")
-public class GenericResource {
+public class TicketResource {
 
     @Context
     private UriInfo context;
@@ -28,7 +28,7 @@ public class GenericResource {
     /**
      * Creates a new instance of GenericResource
      */
-    public GenericResource() {
+    public TicketResource() {
     }
 
     /**
