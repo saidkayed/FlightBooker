@@ -41,16 +41,17 @@ const columns = [{
         sort: true
     }]
 export default class Ticket extends Component {
-    state = { names: [], sizePerPage: 10, page: 1, totalSize: 0 }
+    state = { names: [], sizePerPage: 5, page:1, totalSize: 0 }
     handleTableChange = async (type, props) => {
         const { page, sizePerPage, sortField, sortOrder } = props;
         console.log(props)  //Monitor this output, when you test this step
-        const sortStr = (sortField && sortOrder) ? `&_sort=${sortField}&_order=${sortOrder}` : "";
+        
         const currentIndex = (page - 1) * sizePerPage;
         const end = currentIndex + sizePerPage;
-        const URI = `${URL}?start=${currentIndex}&end=${end}${sortStr}`;
+        const URI = `${URL}start=${currentIndex}&end=${end}`;
         let p = await fetch(URI).then(res => {
-            const totalSize = Number(res.headers.get("x-total-count"));
+            const totalSize = Number(res.headers.get("X-Total-Count"));
+            console.log(totalSize);
             if (totalSize) { this.setState({ totalSize }) }
             return res.json()
         });

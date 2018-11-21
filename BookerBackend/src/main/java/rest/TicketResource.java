@@ -63,6 +63,17 @@ public class TicketResource {
         
         return Response.ok(gson.toJson(tf.Ticket_Pagination(id,id2))).build();
     }
+    
+    @Path("alltickets")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getJson(String json) {
+       
+//String json = gson.toJson(tf.getAllTickets());
+        //return Response.ok("{\"petCount\":\""+json+"\"}").build();
+        
+        return Response.ok(gson.toJson(tf.getAllTickets())).build();
+    }
 
     
      
