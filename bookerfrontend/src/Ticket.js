@@ -42,6 +42,9 @@ const columns = [{
     }]
 export default class Ticket extends Component {
     state = { names: [], sizePerPage: 10, page:1, totalSize: 0 }
+    
+    
+    
     handleTableChange = async (type, props) => {
         const { page, sizePerPage, sortField, sortOrder } = props;
         console.log(props)  //Monitor this output, when you test this step
@@ -49,27 +52,54 @@ export default class Ticket extends Component {
         const currentIndex = (page - 1) * sizePerPage;
         const end = currentIndex + sizePerPage;
         const URI = `${URL}start=${currentIndex}&end=${end}`;
+        
         let p = await fetch(URI).then(res => {
-            const totalSize = Number(res.headers.get("X-Total-Count"));
-            console.log(totalSize);
-            if (totalSize) { this.setState({ totalSize }) }
-            return res.json()
+        const totalSize = Number(res.headers.get("X-Total-Count"));
+       
+
+         if (totalSize) { this.setState({ totalSize }) }
+         return res.json()
         });
+        
+        
         const names = await p;
         this.setState({ page, sizePerPage, names })
+    
+
     }
 
     async componentDidMount() {
         const {page,sizePerPage} = this.state
     this.handleTableChange("didMount",{page,sizePerPage});
+   
       }
+
+
       componentDidUpdate() {
         console.timeEnd("rendering");
       }
+
+      onSubmit = (ev) => {
+          ev.preventDefault();
+          const sort = this.state.names.sort(function(a, b) {
+            return parseFloat(a.price) - parseFloat(b.price);
+        });
+             console.log(sort);
+             this.setState({names: sort});
+      }
+
+
+
     render() {
         const { page, sizePerPage, totalSize } = this.state;
+        
         return (
             <div>
+                <form onSubmit={this.onSubmit}>
+                    <button>Price</button>
+                </form>
+
+                
                 <h2>Tickets</h2>
                 <BootstrapTable
                     striped
