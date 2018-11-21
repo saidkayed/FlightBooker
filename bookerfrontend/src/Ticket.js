@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import facade from './TicketFacade';
-import facade from "./apiFacade";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-const columns = [
-    {
+const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets/"
+const columns = [{
         dataField: 'airline',
         text: 'Airline',
         sort: false
@@ -17,7 +16,7 @@ const columns = [
         sort: true
     },
     {
-        dataField: 'destination',
+        dataField: 'desination',
         text: 'Destination',
         sort: true
     },
@@ -41,7 +40,7 @@ const columns = [
         text: 'Price',
         sort: true
     }]
-export default class pagination extends Component {
+export default class Ticket extends Component {
     state = { names: [], sizePerPage: 10, page: 1, totalSize: 0 }
     handleTableChange = async (type, props) => {
         const { page, sizePerPage, sortField, sortOrder } = props;
@@ -49,7 +48,7 @@ export default class pagination extends Component {
         const sortStr = (sortField && sortOrder) ? `&_sort=${sortField}&_order=${sortOrder}` : "";
         const currentIndex = (page - 1) * sizePerPage;
         const end = currentIndex + sizePerPage;
-        const URI = `${URL}?_start=${currentIndex}&_end=${end}${sortStr}`;
+        const URI = `${URL}?start=${currentIndex}&end=${end}${sortStr}`;
         let p = await fetch(URI).then(res => {
             const totalSize = Number(res.headers.get("x-total-count"));
             if (totalSize) { this.setState({ totalSize }) }
@@ -60,14 +59,17 @@ export default class pagination extends Component {
     }
 
     async componentDidMount() {
-        const tickets = await facade.fetchTicket();
-        console.log(tickets.price);
-    }
+        const {page,sizePerPage} = this.state
+    this.handleTableChange("didMount",{page,sizePerPage});
+      }
+      componentDidUpdate() {
+        console.timeEnd("rendering");
+      }
     render() {
         const { page, sizePerPage, totalSize } = this.state;
         return (
             <div>
-                <h2>AppRemote</h2>
+                <h2>Tickets</h2>
                 <BootstrapTable
                     striped
                     remote

@@ -6,6 +6,7 @@
 package facade;
 
 import entity.FlightTicket;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -54,20 +55,37 @@ public class TicketFacade {
         }
     }
 
+    public List<FlightTicket> Ticket_Pagination(int id, int id2) {
+        List<FlightTicket> ticks = new ArrayList<>();
+        
+            for (int i = id; i < id2; i++) {
+                FlightTicket ticket = getAllTickets().get(i);
+                ticks.add(ticket);
+
+          
+                
+            }
+        return ticks;
+        }
+    
+
     public static void main(String[] args) {
-
-        java.util.Date dt = new java.util.Date();
-
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-        String currentTime = sdf.format(dt);
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
 
         TicketFacade tf = new TicketFacade(emf);
-        FlightTicket t1 = new FlightTicket("THR", "CPH", "IST", currentTime, currentTime, 0, 0, 0, "JumboJet", "ABC123", 0);
-        tf.CreateTicket(t1);
-       //System.out.println(tf.getAllTickets());
+
+        System.out.println(tf.Ticket_Pagination(1, 5));
+//        java.util.Date dt = new java.util.Date();
+//
+//        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
+//
+//        String currentTime = sdf.format(dt);
+//
+
+//        FlightTicket t1 = new FlightTicket("THR", "CPH", "IST", currentTime, currentTime, 0, 200, 0, "JumboJet", "ABC123", 0);
+//        tf.CreateTicket(t1);
+        //System.out.println(tf.getAllTickets());
     }
 
 }

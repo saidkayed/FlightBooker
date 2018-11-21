@@ -9,6 +9,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entity.FlightTicket;
 import facade.TicketFacade;
+import java.util.ArrayList;
+import static java.util.Collections.list;
+import java.util.List;
 import javax.persistence.Persistence;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -18,6 +21,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -48,16 +52,20 @@ public class TicketResource {
      *
      * @return an instance of java.lang.String
      */
-    @Path("alltickets")
+    @Path("alltickets/start={id}&end={id2}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJson() {
-        String json = gson.toJson(tf.getAllTickets());
-
+    public Response getJson(String json,@PathParam("id") int id,@PathParam("id2")int id2) {
+        System.out.println(tf.Ticket_Pagination(id, id2));
+       
+//String json = gson.toJson(tf.getAllTickets());
         //return Response.ok("{\"petCount\":\""+json+"\"}").build();
-        return Response.ok(json).build();
+        
+        return Response.ok(gson.toJson(tf.Ticket_Pagination(id,id2))).build();
     }
 
+    
+     
     /**
      * PUT method for updating or creating an instance of GenericResource
      *
