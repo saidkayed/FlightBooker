@@ -57,13 +57,12 @@ public class TicketFacade {
 
     public List<FlightTicket> Ticket_Pagination(int id, int id2) {
         List<FlightTicket> ticks = new ArrayList<>();
-        
+        if(id2 > getAllTickets().size()){
+            id2 = getAllTickets().size();
+        }
             for (int i = id; i < id2; i++) {
                 FlightTicket ticket = getAllTickets().get(i);
                 ticks.add(ticket);
-
-          
-                
             }
         return ticks;
         }
