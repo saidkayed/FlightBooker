@@ -13,12 +13,12 @@ const columns = [{
     {
         dataField: 'departure',
         text: 'From',
-        sort: true
+        sort: false
     },
     {
         dataField: 'desination',
         text: 'Destination',
-        sort: true
+        sort: false
     },
     {
         dataField: 'depTime',
@@ -38,11 +38,15 @@ const columns = [{
     {
         dataField: 'price',
         text: 'Price',
-        sort: true
+        sort: false
     }]
 export default class Ticket extends Component {
-    state = { names: [], sizePerPage: 10, page:1, totalSize: 0 }
+constructor(props){
+    super(props);
+    this.state = { names: [], sizePerPage: 10, page:1, totalSize: 0,PSort:"",Price_Sort:false}
+}
     
+   
     
     
     handleTableChange = async (type, props) => {
@@ -51,15 +55,14 @@ export default class Ticket extends Component {
         
         const currentIndex = (page - 1) * sizePerPage;
         const end = currentIndex + sizePerPage;
-        const URI = `${URL}start=${currentIndex}&end=${end}?Sort`;
+   
         
-        let p = await fetch(URI).then(res => {
-        const totalSize = Number(res.headers.get("X-Total-Count"));
-       
-
+       const URI = `${URL}start=${currentIndex}&end=${end}` + this.state.PSort;
+        let p = await fetch(URI).then(res => {const totalSize = Number(res.headers.get("X-Total-Count"));
          if (totalSize) { this.setState({ totalSize }) }
          return res.json()
         });
+        
         
         
         const names = await p;
@@ -71,7 +74,7 @@ export default class Ticket extends Component {
     async componentDidMount() {
         const {page,sizePerPage} = this.state
     this.handleTableChange("didMount",{page,sizePerPage});
-   
+
       }
 
 
@@ -80,14 +83,12 @@ export default class Ticket extends Component {
       }
 
       onSubmit = (ev) => {
-          ev.preventDefault();
-          const sort = this.state.names.sort(function(a, b) {
-            return parseFloat(a.price) - parseFloat(b.price);
-        });
-             console.log(sort);
-             this.setState({names: sort});
-      }
-
+        ev.preventDefault();
+        if(this.state.Price_Sort == false ){
+            this.setState({PSort:"?Sort"})   
+        this.forceUpdate(this.componentDidMount);
+        }
+       }
 
 
     render() {
