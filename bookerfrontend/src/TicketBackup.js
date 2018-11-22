@@ -5,15 +5,11 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets/"
-function hej(){
-    console.log("fuck")
-
-}
 const columns = [{
         dataField: 'airline',
         text: 'Airline',
-        sort: false,
-        },
+        sort: false
+    },
     {
         dataField: 'departure',
         text: 'From',
@@ -43,21 +39,16 @@ const columns = [{
         dataField: 'price',
         text: 'Price',
         sort: false
-    },{
-        events: {
-            onClick: (e, column, columnIndex, row, rowIndex) => {
-              console.log(row);
-            },
-          },
+    },
+    {
+    text: "Book",
     formatter: () => {
-        return (
-          
-            <button>Book</button>
-          
-        );
-        
-  }}]
-    
+      return (
+        <h5>
+          <button>Book</button>
+        </h5>
+      );
+    }}]
 export default class Ticket extends Component {
 constructor(props){
     super(props);
@@ -130,7 +121,6 @@ constructor(props){
                     onTableChange={this.handleTableChange}
                     pagination={paginationFactory({ page, sizePerPage, totalSize })}
                 />
-
 
 
 
