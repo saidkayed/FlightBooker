@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import entity.FlightTicket;
 import facade.TicketFacade;
 import java.util.ArrayList;
+import java.util.Collections;
 import static java.util.Collections.list;
 import java.util.List;
 import javax.persistence.Persistence;
@@ -22,6 +23,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -55,14 +57,17 @@ public class TicketResource {
     @Path("alltickets/start={id}&end={id2}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJson(String json,@PathParam("id") int id,@PathParam("id2")int id2) {
-        System.out.println(tf.Ticket_Pagination(id, id2));
-       
-//String json = gson.toJson(tf.getAllTickets());
-        //return Response.ok("{\"petCount\":\""+json+"\"}").build();
+    public Response getJson(String json,@PathParam("id") int id,@PathParam("id2")int id2,@QueryParam("Sort") String sort) {
+       List<FlightTicket> pricesort = tf.Ticket_Pagination(id, id2);
+        if(sort != null){
+            Collections.sort(pricesort);
+        }
         
-        return Response.ok(gson.toJson(tf.Ticket_Pagination(id,id2))).build();
+        return Response.ok(gson.toJson(pricesort)).build();
     }
+    
+    
+    
     
     @Path("alltickets")
     @GET

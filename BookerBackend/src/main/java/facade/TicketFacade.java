@@ -7,6 +7,8 @@ package facade;
 
 import entity.FlightTicket;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -67,14 +69,23 @@ public class TicketFacade {
         return ticks;
         }
     
+    
+    
+    
+    
 
     public static void main(String[] args) {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
 
         TicketFacade tf = new TicketFacade(emf);
+    List<FlightTicket> hej = tf.getAllTickets();
+        Collections.sort(hej);
+        System.out.println(hej);
+        
+      
 
-        System.out.println(tf.Ticket_Pagination(1, 5));
+       // System.out.println(tf.Ticket_Pagination(1, 5));
 //        java.util.Date dt = new java.util.Date();
 //
 //        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");

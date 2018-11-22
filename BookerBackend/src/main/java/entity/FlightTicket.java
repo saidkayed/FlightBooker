@@ -19,7 +19,7 @@ import javax.persistence.Id;
  */
 @Entity
 
-public class FlightTicket implements Serializable {
+public class FlightTicket implements Serializable,Comparable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -149,9 +149,18 @@ public class FlightTicket implements Serializable {
     }
 
     @Override
+    public int compareTo(Object t) {
+       int price= ((FlightTicket)t).getPrice();
+        /* For Ascending order*/
+        return this.price-price;
+    }
+    
+    @Override
     public String toString() {
         return "FlightTicket{" + "id=" + id + ", airline=" + airline + ", departure=" + departure + ", desination=" + desination + ", depTime=" + depTime + ", arrTime=" + arrTime + ", duration=" + duration + ", price=" + price + ", cancelInsurance=" + cancelInsurance + ", airplane=" + airplane + ", model=" + model + ", capacity=" + capacity + '}';
     }
+
+    
 
    
 
