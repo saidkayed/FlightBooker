@@ -39,7 +39,16 @@ const columns = [{
         dataField: 'price',
         text: 'Price',
         sort: false
-    }]
+    },
+    {
+    text: "Book",
+    formatter: () => {
+      return (
+        <h5>
+          <button>Book</button>
+        </h5>
+      );
+    }}]
 export default class Ticket extends Component {
 constructor(props){
     super(props);
