@@ -57,31 +57,38 @@ public class TicketResource {
     @Path("alltickets/start={id}&end={id2}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJson(String json,@PathParam("id") int id,@PathParam("id2")int id2,@QueryParam("Sort") String sort) {
-       List<FlightTicket> pricesort = tf.Ticket_Pagination(id, id2);
-        if(sort != null){
+    public Response getJson(String json, @PathParam("id") int id, @PathParam("id2") int id2, @QueryParam("Sort") String sort) {
+        List<FlightTicket> pricesort = tf.getAllTickets();
+        List<FlightTicket> ticks = new ArrayList<>();
+       if (sort != null) {
             Collections.sort(pricesort);
         }
+       
+        if (id != 0 || id2 != 0) {
+            if (id2 > pricesort.size()) {
+                id2 = pricesort.size();
+            }
+            for (int i = id; i < id2; i++) {
+               FlightTicket ticket = pricesort.get(i);
+              ticks.add(ticket);
+            }
+            pricesort = ticks;
+        }
         
+
         return Response.ok(gson.toJson(pricesort)).build();
     }
-    
-    
-    
-    
+
     @Path("alltickets")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJson(String json) {
-       
+
 //String json = gson.toJson(tf.getAllTickets());
         //return Response.ok("{\"petCount\":\""+json+"\"}").build();
-        
         return Response.ok(gson.toJson(tf.getAllTickets())).build();
     }
 
-    
-     
     /**
      * PUT method for updating or creating an instance of GenericResource
      *

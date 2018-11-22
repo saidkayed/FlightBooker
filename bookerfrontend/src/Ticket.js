@@ -51,7 +51,7 @@ export default class Ticket extends Component {
         
         const currentIndex = (page - 1) * sizePerPage;
         const end = currentIndex + sizePerPage;
-        const URI = `${URL}start=${currentIndex}&end=${end}`;
+        const URI = `${URL}start=${currentIndex}&end=${end}?Sort`;
         
         let p = await fetch(URI).then(res => {
         const totalSize = Number(res.headers.get("X-Total-Count"));
@@ -99,7 +99,7 @@ export default class Ticket extends Component {
                     <button>Price</button>
                 </form>
 
-                
+
                 <h2>Tickets</h2>
                 <BootstrapTable
                     striped
