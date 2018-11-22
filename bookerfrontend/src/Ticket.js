@@ -5,66 +5,16 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets/"
+function hej() {
+    console.log("fuck")
 
+}
 
-
-
-
-const columns = [{
-    dataField: 'airline',
-    text: 'Airline',
-    sort: false,
-},
-{
-    dataField: 'departure',
-    text: 'From',
-    sort: false
-},
-{
-    dataField: 'desination',
-    text: 'Destination',
-    sort: false
-},
-{
-    dataField: 'depTime',
-    text: 'Departure',
-    sort: false
-},
-{
-    dataField: 'arrTime',
-    text: 'Arrival',
-    sort: false
-},
-{
-    dataField: 'duration',
-    text: 'Duration',
-    sort: false
-},
-{
-    dataField: 'price',
-    text: 'Price',
-    sort: false
-}, {
-    events: {
-        onClick: (row) => {
-            console.log(row);
-            this.setState({ booked: row })
-        },
-    },
-    formatter: () => {
-        return (
-
-            <button>Book</button>
-
-        );
-
-    }
-}]
 
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
-        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", Price_Sort: false, booked: [] }
+        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", Price_Sort: false, booked:[] }
     }
 
     handleTableChange = async (type, props) => {
@@ -107,6 +57,57 @@ export default class Ticket extends Component {
 
     render() {
         const { page, sizePerPage, totalSize } = this.state;
+        const columns = [{
+            dataField: 'airline',
+            text: 'Airline',
+            sort: false,
+        },
+        {
+            dataField: 'departure',
+            text: 'From',
+            sort: false
+        },
+        {
+            dataField: 'desination',
+            text: 'Destination',
+            sort: false
+        },
+        {
+            dataField: 'depTime',
+            text: 'Departure',
+            sort: false
+        },
+        {
+            dataField: 'arrTime',
+            text: 'Arrival',
+            sort: false
+        },
+        {
+            dataField: 'duration',
+            text: 'Duration',
+            sort: false
+        },
+        {
+            dataField: 'price',
+            text: 'Price',
+            sort: false
+        }, {
+            events: {
+                onClick: (e, column, columnIndex, row, rowIndex) => {
+                    console.log(row);
+                    this.setState({ booked: row })
+                    console.log(this.state.booked)
+                },
+            },
+            formatter: () => {
+                return (
+        
+                    <button>Book</button>
+        
+                );
+        
+            }
+        }]
 
         return (
             <div>
