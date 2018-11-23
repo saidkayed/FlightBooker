@@ -4,6 +4,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import ShopingCart from './ShoppingCart';
 const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets/"
 function hej() {
     console.log("fuck")
@@ -14,7 +15,7 @@ function hej() {
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
-        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", Price_Sort: false, booked:[] }
+        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", Price_Sort: false, booked: [], Test: "hejsa" }
     }
 
     handleTableChange = async (type, props) => {
@@ -25,7 +26,7 @@ export default class Ticket extends Component {
         const end = currentIndex + sizePerPage;
 
 
-        const URI = `${URL}start=${currentIndex}&end=${end}` + this.state.PSort;
+        const URI = `${URL}?from=${currentIndex}&to=${end}` + this.state.PSort;
         let p = await fetch(URI).then(res => {
             const totalSize = Number(res.headers.get("X-Total-Count"));
             if (totalSize) { this.setState({ totalSize }) }
@@ -42,17 +43,18 @@ export default class Ticket extends Component {
     async componentDidMount() {
         const { page, sizePerPage } = this.state
         this.handleTableChange("didMount", { page, sizePerPage });
-
     }
 
 
     onSubmit = (ev) => {
         ev.preventDefault();
         if (this.state.Price_Sort == false) {
-            this.setState({ PSort: "?Sort" })
+            this.setState({ PSort: "&Sort" })
             this.forceUpdate(this.componentDidMount);
         }
     }
+
+
 
 
     render() {
@@ -90,27 +92,29 @@ export default class Ticket extends Component {
         {
             dataField: 'price',
             text: 'Price',
-            sort: false
+            sort: true
         }, {
             events: {
                 onClick: (e, column, columnIndex, row, rowIndex) => {
-                    console.log(row);
+
                     this.setState({ booked: row })
-                    console.log(this.state.booked)
+
                 },
             },
             formatter: () => {
                 return (
-        
+
                     <button>Book</button>
-        
+
                 );
-        
+
             }
         }]
 
         return (
+
             <div>
+                <ShopingCart Book={this.state.booked} />
                 <form onSubmit={this.onSubmit}>
                     <button>Price</button>
                 </form>
@@ -126,9 +130,10 @@ export default class Ticket extends Component {
                     pagination={paginationFactory({ page, sizePerPage, totalSize })}
                 />
 
+            </div>
 
 
 
-            </div>)
+        )
     }
 }

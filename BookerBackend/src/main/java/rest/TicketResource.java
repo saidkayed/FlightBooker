@@ -8,7 +8,10 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entity.FlightTicket;
+import facade.DatboisTicket;
 import facade.TicketFacade;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import static java.util.Collections.list;
@@ -54,13 +57,14 @@ public class TicketResource {
      *
      * @return an instance of java.lang.String
      */
-    @Path("alltickets/start={id}&end={id2}")
+    @Path("alltickets")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJson(String json, @PathParam("id") int id, @PathParam("id2") int id2, @QueryParam("Sort") String sort) {
+    public Response getJson(String json, @QueryParam("from") int id, @QueryParam("to") int id2, @QueryParam("Sort") String sort) {
         List<FlightTicket> pricesort = tf.getAllTickets();
         List<FlightTicket> ticks = new ArrayList<>();
-       if (sort != null) {
+       
+        if (sort != null) {
             Collections.sort(pricesort);
         }
        
@@ -78,16 +82,42 @@ public class TicketResource {
 
         return Response.ok(gson.toJson(pricesort)).build();
     }
-
-    @Path("alltickets")
-    @GET
+   DatboisTicket sf = new DatboisTicket();
+      
+   
+   @GET    
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJson(String json) {
-
-//String json = gson.toJson(tf.getAllTickets());
-        //return Response.ok("{\"petCount\":\""+json+"\"}").build();
-        return Response.ok(gson.toJson(tf.getAllTickets())).build();
+    @Path("datbois")
+    public Response getdatbois(String json, @QueryParam("from") int id, @QueryParam("to") int id2, @QueryParam("Sort") String sort) throws MalformedURLException, IOException {
+        List<FlightTicket> pricesort = sf.getDatbois();
+        List<FlightTicket> ticks = new ArrayList<>();
+       
+        if (sort != null) {
+            Collections.sort(pricesort);
+        }
+       
+        if (id != 0 || id2 != 0) {
+            if (id2 > pricesort.size()) {
+                id2 = pricesort.size();
+            }
+            for (int i = id; i < id2; i++) {
+               FlightTicket ticket = pricesort.get(i);
+              ticks.add(ticket);
+            }
+            pricesort = ticks;
+        }
+          return Response.ok(gson.toJson(pricesort)).build();
     }
+
+//    @Path("alltickets")
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response getJson(String json) {
+//
+////String json = gson.toJson(tf.getAllTickets());
+//        //return Response.ok("{\"petCount\":\""+json+"\"}").build();
+//        return Response.ok(gson.toJson(tf.getAllTickets())).build();
+//    }
 
     /**
      * PUT method for updating or creating an instance of GenericResource

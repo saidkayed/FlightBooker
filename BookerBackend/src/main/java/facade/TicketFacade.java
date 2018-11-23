@@ -50,13 +50,15 @@ public class TicketFacade {
         EntityManager em = emf.createEntityManager();
 
         try {
-            Query q = em.createQuery("SELECT e FROM FlightTicket e");
+            Query q = em.createQuery    ("SELECT e FROM FlightTicket e");
             return q.getResultList();
         } finally {
             em.close();
         }
     }
 
+    
+    
     public List<FlightTicket> Ticket_Pagination(int id, int id2) {
         List<FlightTicket> ticks = new ArrayList<>();
         if(id2 > getAllTickets().size()){
@@ -79,23 +81,31 @@ public class TicketFacade {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
 
         TicketFacade tf = new TicketFacade(emf);
-    List<FlightTicket> hej = tf.getAllTickets();
-        Collections.sort(hej);
-        System.out.println(hej);
+//    List<FlightTicket> hej = tf.getAllTickets();
+//        Collections.sort(hej);
+//        System.out.println(hej);
         
       
 
        // System.out.println(tf.Ticket_Pagination(1, 5));
-//        java.util.Date dt = new java.util.Date();
-//
-//        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
-//
-//        String currentTime = sdf.format(dt);
-//
+        java.util.Date dt = new java.util.Date();
 
-//        FlightTicket t1 = new FlightTicket("THR", "CPH", "IST", currentTime, currentTime, 0, 200, 0, "JumboJet", "ABC123", 0);
-//        tf.CreateTicket(t1);
-        //System.out.println(tf.getAllTickets());
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        String currentTime = sdf.format(dt);
+
+        for (int i = 0; i < 3; i++) {
+        FlightTicket t1 = new FlightTicket("THR", "CPH", "IST", currentTime, currentTime, 0, 300, 0, "JumboJet", "ABC123", 0);    
+        FlightTicket t2 = new FlightTicket("HEJ", "CPH", "IST", currentTime, currentTime, 0, 500, 0, "JumboJet", "ABC123", 0);
+        FlightTicket t3 = new FlightTicket("TEST", "CPH", "IST", currentTime, currentTime, 0, 200, 0, "JumboJet", "ABC123", 0);
+        FlightTicket t4 = new FlightTicket("hvad", "CPH", "IST", currentTime, currentTime, 0, 400, 0, "JumboJet", "ABC123", 0);
+        tf.CreateTicket(t1);
+        tf.CreateTicket(t2);
+        tf.CreateTicket(t3);
+        tf.CreateTicket(t4);
+        
+        }
+        System.out.println(tf.getAllTickets());
     }
 
 }

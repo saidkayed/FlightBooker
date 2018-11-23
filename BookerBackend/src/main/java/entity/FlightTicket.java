@@ -27,7 +27,7 @@ public class FlightTicket implements Serializable,Comparable {
     private Integer id;
     private String airline;
     private String departure;
-    private String desination;
+    private String destination;
     private String  depTime;
     private String  arrTime;
     private int duration;
@@ -41,10 +41,10 @@ public class FlightTicket implements Serializable,Comparable {
         
     }
 
-    public FlightTicket(String airline, String departure, String desination, String depTime, String arrTime, int duration, int price, int cancelInsurance, String airplane, String model, int capacity) {
+    public FlightTicket(String airline, String departure, String destination, String depTime, String arrTime, int duration, int price, int cancelInsurance, String airplane, String model, int capacity) {
         this.airline = airline;
         this.departure = departure;
-        this.desination = desination;
+        this.destination = destination;
         this.depTime = depTime;
         this.arrTime = arrTime;
         this.duration = duration;
@@ -92,12 +92,12 @@ public class FlightTicket implements Serializable,Comparable {
         this.airline = airline;
     }
 
-    public String getDesination() {
-        return desination;
+    public String getDestination() {
+        return destination;
     }
 
-    public void setDesination(String desination) {
-        this.desination = desination;
+    public void setDestination(String desination) {
+        this.destination = desination;
     }
 
     public String getDepTime() {
@@ -157,7 +157,7 @@ public class FlightTicket implements Serializable,Comparable {
     
     @Override
     public String toString() {
-        return "FlightTicket{" + "id=" + id + ", airline=" + airline + ", departure=" + departure + ", desination=" + desination + ", depTime=" + depTime + ", arrTime=" + arrTime + ", duration=" + duration + ", price=" + price + ", cancelInsurance=" + cancelInsurance + ", airplane=" + airplane + ", model=" + model + ", capacity=" + capacity + '}';
+        return "FlightTicket{" + "id=" + id + ", airline=" + airline + ", departure=" + departure + ", destination=" + destination + ", depTime=" + depTime + ", arrTime=" + arrTime + ", duration=" + duration + ", price=" + price + ", cancelInsurance=" + cancelInsurance + ", airplane=" + airplane + ", model=" + model + ", capacity=" + capacity + '}';
     }
 
     

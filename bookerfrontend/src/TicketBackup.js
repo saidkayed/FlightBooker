@@ -121,6 +121,7 @@ constructor(props){
                     onTableChange={this.handleTableChange}
                     pagination={paginationFactory({ page, sizePerPage, totalSize })}
                 />
+                <Apps/>
 
 
 
