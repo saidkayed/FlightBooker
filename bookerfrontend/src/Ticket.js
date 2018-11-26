@@ -3,7 +3,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import ShopingCart from './ShoppingCart';
+import ShoppingCart from './ShoppingCart';
 
 const URL = "http://localhost:8084/BookerBackend/api/ticket/alltickets/"
 
@@ -12,11 +12,11 @@ const URL = "http://localhost:8084/BookerBackend/api/ticket/alltickets/"
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
-        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", Price_Sort: false, booked: [], Test: "hejsa" }
+        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", booked: []}
     }
 
     handleTableChange = async (type, props) => {
-        const { page, sizePerPage, sortField, sortOrder } = props;
+        const { page, sizePerPage} = props;
 
         const currentIndex = (page - 1) * sizePerPage;
         const end = currentIndex + sizePerPage;
@@ -44,10 +44,8 @@ export default class Ticket extends Component {
 
     onSubmit = (ev) => {
         ev.preventDefault();
-        if (this.state.Price_Sort == false) {
-            this.setState({ PSort: "&sort" })
+            this.setState({ PSort: "&Sort" })
             this.forceUpdate(this.componentDidMount);
-        }
     }
 
 
@@ -108,7 +106,7 @@ export default class Ticket extends Component {
         return (
 
             <div>
-                <ShopingCart Book={this.state.booked} />
+                <ShoppingCart Book={this.state.booked} />
                 <form onSubmit={this.onSubmit}>
                     <button>Price</button>
                 </form>
