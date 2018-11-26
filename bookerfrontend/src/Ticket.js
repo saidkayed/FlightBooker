@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
-import facade from './TicketFacade';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ShopingCart from './ShoppingCart';
 
-const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets/"
+const URL = "http://localhost:8084/BookerBackend/api/ticket/alltickets/"
 
-function hej() {
-    console.log("fuck")
-
-}
 
 
 export default class Ticket extends Component {
@@ -22,7 +17,6 @@ export default class Ticket extends Component {
 
     handleTableChange = async (type, props) => {
         const { page, sizePerPage, sortField, sortOrder } = props;
-        console.log(props)  //Monitor this output, when you test this step
 
         const currentIndex = (page - 1) * sizePerPage;
         const end = currentIndex + sizePerPage;
@@ -55,8 +49,6 @@ export default class Ticket extends Component {
             this.forceUpdate(this.componentDidMount);
         }
     }
-
-
 
 
     render() {
@@ -133,9 +125,6 @@ export default class Ticket extends Component {
                 />
 
             </div>
-
-
-
         )
     }
 }
