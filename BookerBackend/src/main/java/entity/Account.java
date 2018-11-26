@@ -27,7 +27,8 @@ public class Account implements Serializable {
     private String username;
     private String password;
     
-    @OneToMany(mappedBy = "user")
+   
+    @OneToMany(mappedBy = "account")
     private List<FlightTicket> ft;
     
     public Account(){
@@ -36,6 +37,11 @@ public class Account implements Serializable {
     
     public Account(int id, String username, String password){
         this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+    
+    public Account(String username, String password){
         this.username = username;
         this.password = password;
     }
