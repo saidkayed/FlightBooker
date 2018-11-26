@@ -51,7 +51,7 @@ export default class Ticket extends Component {
     onSubmit = (ev) => {
         ev.preventDefault();
         if (this.state.Price_Sort == false) {
-            this.setState({ PSort: "&sort" })
+            this.setState({ PSort: "&Sort" })
             this.forceUpdate(this.componentDidMount);
         }
     }
