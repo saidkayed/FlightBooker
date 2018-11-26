@@ -91,7 +91,13 @@ public class TicketResource {
     public Response getdatbois(String json, @QueryParam("from") int id, @QueryParam("to") int id2, @QueryParam("Sort") String sort) throws MalformedURLException, IOException {
         List<FlightTicket> pricesort = sf.getDatbois();
         List<FlightTicket> ticks = new ArrayList<>();
-       
+        List<FlightTicket> mixTicket = tf.getAllTickets();
+        
+        System.out.println(tf.getAllTickets());
+        for (int i = 0; i < tf.getAllTickets().size(); i++) {
+           pricesort.add(mixTicket.get(i));
+       }
+      
         if (sort != null) {
             Collections.sort(pricesort);
         }
