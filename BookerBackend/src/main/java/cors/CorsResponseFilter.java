@@ -25,7 +25,7 @@ public class CorsResponseFilter implements ContainerResponseFilter {
     res.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT" );
     res.getHeaders().add("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, Authorization,x-access-token,x-total-count");
     res.getHeaders().add("Access-Control-Expose-Headers","x-total-count" );  
-    res.getHeaders().add("X-Total-Count", String.valueOf(tf.getAllTickets().size()));
+    res.getHeaders().add("X-Total-Count", tf.X_total_count_header());
   
   }
 }

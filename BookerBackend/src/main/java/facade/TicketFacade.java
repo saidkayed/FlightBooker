@@ -6,6 +6,8 @@
 package facade;
 
 import entity.FlightTicket;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -50,33 +52,31 @@ public class TicketFacade {
         EntityManager em = emf.createEntityManager();
 
         try {
-            Query q = em.createQuery    ("SELECT e FROM FlightTicket e");
+            Query q = em.createQuery("SELECT e FROM FlightTicket e");
             return q.getResultList();
         } finally {
             em.close();
         }
+        
+        
+       
+
+   
     }
-
     
-    
-    public List<FlightTicket> Ticket_Pagination(int id, int id2) {
-        List<FlightTicket> ticks = new ArrayList<>();
-        if(id2 > getAllTickets().size()){
-            id2 = getAllTickets().size();
+    public int X_total_count_header() throws MalformedURLException, IOException {
+        DatboisTicket sf = new DatboisTicket();
+        List<FlightTicket> pricesort = sf.getDatbois();
+        List<FlightTicket> mixTicket = getAllTickets();
+        
+        for (int i = 0; i < getAllTickets().size() ; i++) {
+            pricesort.add(mixTicket.get(i));
         }
-            for (int i = id; i < id2; i++) {
-                FlightTicket ticket = getAllTickets().get(i);
-                ticks.add(ticket);
-            }
-        return ticks;
-        }
-    
-    
-    
-    
-    
+        
+        return pricesort.size();
+}
 
-    public static void main(String[] args) {
+public static void main(String[] args) {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
 
