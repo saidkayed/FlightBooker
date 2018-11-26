@@ -45,7 +45,16 @@ public class AccountFacade {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
         AccountFacade af = new AccountFacade(emf);
+        
         Account acc = new Account("Said", "Kayed");
         af.createAccount(acc);
+        
+        
+        System.out.println("true password");
+        System.out.println(acc.verifyPassword("Kayed"));
+        
+        
+        System.out.println("false password");
+        System.out.println(acc.verifyPassword("kayeddddd"));
     }
 }

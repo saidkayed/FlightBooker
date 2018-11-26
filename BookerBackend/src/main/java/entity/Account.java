@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -43,7 +44,7 @@ public class Account implements Serializable {
     
     public Account(String username, String password){
         this.username = username;
-        this.password = password;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
     public Integer getId() {
@@ -77,6 +78,11 @@ public class Account implements Serializable {
     public void setFt(List<FlightTicket> ft) {
         this.ft = ft;
     }
+    
+        public boolean verifyPassword(String pw){
+            return BCrypt.checkpw(pw, password);
+        }
+    
 
     @Override
     public String toString() {
