@@ -48,7 +48,7 @@ public class TicketFacade {
 
     }
 
-    public List<FlightTicket> getAllTickets() {
+    public List<FlightTicket> getMixTickets() {
         EntityManager em = emf.createEntityManager();
 
         try {
@@ -57,37 +57,27 @@ public class TicketFacade {
         } finally {
             em.close();
         }
-        
-        
-       
 
-   
     }
-    
+
     public int X_total_count_header() throws MalformedURLException, IOException {
         DatboisTicket sf = new DatboisTicket();
         List<FlightTicket> pricesort = sf.getDatbois();
-        List<FlightTicket> mixTicket = getAllTickets();
-        
-        for (int i = 0; i < getAllTickets().size() ; i++) {
+        List<FlightTicket> mixTicket = getMixTickets();
+
+        for (int i = 0; i < getMixTickets().size(); i++) {
             pricesort.add(mixTicket.get(i));
         }
-        
-        return pricesort.size();
-}
 
-public static void main(String[] args) {
+        return pricesort.size();
+    }
+
+    public static void main(String[] args) {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
 
         TicketFacade tf = new TicketFacade(emf);
-//    List<FlightTicket> hej = tf.getAllTickets();
-//        Collections.sort(hej);
-//        System.out.println(hej);
-        
-      
 
-       // System.out.println(tf.Ticket_Pagination(1, 5));
         java.util.Date dt = new java.util.Date();
 
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -95,17 +85,17 @@ public static void main(String[] args) {
         String currentTime = sdf.format(dt);
 
         for (int i = 0; i < 3; i++) {
-        FlightTicket t1 = new FlightTicket("THR", "CPH", "IST", currentTime, currentTime, 0, 300, 0, "JumboJet", "ABC123", 0);    
-        FlightTicket t2 = new FlightTicket("HEJ", "CPH", "IST", currentTime, currentTime, 0, 500, 0, "JumboJet", "ABC123", 0);
-        FlightTicket t3 = new FlightTicket("TEST", "CPH", "IST", currentTime, currentTime, 0, 200, 0, "JumboJet", "ABC123", 0);
-        FlightTicket t4 = new FlightTicket("hvad", "CPH", "IST", currentTime, currentTime, 0, 400, 0, "JumboJet", "ABC123", 0);
-        tf.CreateTicket(t1);
-        tf.CreateTicket(t2);
-        tf.CreateTicket(t3);
-        tf.CreateTicket(t4);
-        
+            FlightTicket t1 = new FlightTicket("THR", "CPH", "IST", currentTime, currentTime, 0, 300, 0, "JumboJet", "ABC123", 0);
+            FlightTicket t2 = new FlightTicket("HEJ", "CPH", "IST", currentTime, currentTime, 0, 500, 0, "JumboJet", "ABC123", 0);
+            FlightTicket t3 = new FlightTicket("TEST", "CPH", "IST", currentTime, currentTime, 0, 200, 0, "JumboJet", "ABC123", 0);
+            FlightTicket t4 = new FlightTicket("hvad", "CPH", "IST", currentTime, currentTime, 0, 400, 0, "JumboJet", "ABC123", 0);
+            tf.CreateTicket(t1);
+            tf.CreateTicket(t2);
+            tf.CreateTicket(t3);
+            tf.CreateTicket(t4);
+
         }
-        System.out.println(tf.getAllTickets());
+        System.out.println(tf.getMixTickets());
     }
 
 }
