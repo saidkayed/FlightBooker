@@ -5,7 +5,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ShopingCart from './ShoppingCart';
-const URL = "http://localhost:8080/BookerBackend/api/ticket/datbois/"
+const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets/"
 function hej() {
     console.log("fuck")
 
@@ -49,7 +49,7 @@ export default class Ticket extends Component {
     onSubmit = (ev) => {
         ev.preventDefault();
         if (this.state.Price_Sort == false) {
-            this.setState({ PSort: "&Sort" })
+            this.setState({ PSort: "&sort" })
             this.forceUpdate(this.componentDidMount);
         }
     }
