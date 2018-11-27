@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom';
 import ReactModal from 'react-modal';
+import App from './App';
 
 export default class login extends Component{
 constructor(){
@@ -14,6 +15,9 @@ showModal: false
 handleOpenModal () {
     this.setState({ showModal: true });
   }
+  componentDidMount(){
+    this.setState({ showModal: true });
+  }
   
   handleCloseModal () {
     this.setState({ showModal: false });
@@ -22,13 +26,14 @@ handleOpenModal () {
   render () {
     return (
       <div>
-        <button onClick={this.handleOpenModal}>Trigger Modal</button>
         <ReactModal 
            isOpen={this.state.showModal}
            contentLabel="Minimal Modal Example"
-        >
+          >
+        Email: <input type="email" name="email" />
           <button onClick={this.handleCloseModal}>Close Modal</button>
         </ReactModal>
+        
       </div>
     );
   }
