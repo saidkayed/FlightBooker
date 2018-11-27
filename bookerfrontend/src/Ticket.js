@@ -55,38 +55,30 @@ export default class Ticket extends Component {
         const columns = [{
             dataField: 'airline',
             text: 'Airline',
-            sort: false,
-            filter: textFilter()
         },
         {
             dataField: 'departure',
             text: 'From',
-            sort: false
         },
         {
             dataField: 'desination',
             text: 'Destination',
-            sort: false
         },
         {
             dataField: 'depTime',
             text: 'Departure',
-            sort: false
         },
         {
             dataField: 'arrTime',
             text: 'Arrival',
-            sort: false
         },
         {
             dataField: 'duration',
             text: 'Duration',
-            sort: false
         },
         {
             dataField: 'price',
             text: 'Price',
-            sort: true
         }, {
             events: {
                 onClick: (e, column, columnIndex, row, rowIndex) => {
