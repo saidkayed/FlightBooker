@@ -1,4 +1,4 @@
-const URL = "http://localhost:8084/BookerBackend/api/ticket/alltickets"
+const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets"
 
 function handleHttpErrors(res) {
     if (!res.ok) {

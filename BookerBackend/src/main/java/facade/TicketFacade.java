@@ -74,10 +74,12 @@ public class TicketFacade {
         return pricesort.size();
     }
     
-    public List<FlightDTO> getPetsWithOwner() {
+    public List<FlightDTO> getFlightDTO() {
         EntityManager em = emf.createEntityManager();
 
-        TypedQuery<FlightDTO> query = em.createQuery("SELECT NEW DTO.FlightDTO(c1.airline,c1.airplane,c1.arrTime,c1.depTime,c1.departure,c1.destination,c1.duration,c1.model,c2.username) FROM FlightTicket AS c1 INNER JOIN c1.id AS c2", FlightDTO.class);
+        TypedQuery<FlightDTO> query = em.createQuery("SELECT NEW DTO.FlightDTO"
+                + "(c1.id ,c1.airplane,c1.arrTime,c1.depTime,c1.departure,c1.destination,c1.duration,c1.model,c2.username)"
+                + "FROM FlightTicket AS c1 INNER JOIN c1.id AS c2", FlightDTO.class);
         
         try {
             
