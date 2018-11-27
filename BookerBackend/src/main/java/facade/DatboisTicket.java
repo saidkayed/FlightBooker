@@ -16,7 +16,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import static javax.ws.rs.client.Entity.json;
 
 /**
  *
