@@ -4,6 +4,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ShoppingCart from './ShoppingCart';
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 const URL = "http://localhost:8084/BookerBackend/api/ticket/alltickets/"
 
@@ -55,6 +56,7 @@ export default class Ticket extends Component {
             dataField: 'airline',
             text: 'Airline',
             sort: false,
+            filter: textFilter()
         },
         {
             dataField: 'departure',
@@ -120,6 +122,7 @@ export default class Ticket extends Component {
                     columns={columns}
                     onTableChange={this.handleTableChange}
                     pagination={paginationFactory({ page, sizePerPage, totalSize })}
+                    filter={filterFactory()}
                 />
 
             </div>
