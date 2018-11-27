@@ -8,7 +8,12 @@ class App extends Component {
     return (
       <Router>
       <div> 
-       <Ticket  />
+       <ul>
+         <li>
+           <NavLink exact to="/">Tickets</NavLink>
+         </li>
+       </ul>
+       <Route path="/" component={Ticket}/>
       </div>
       </Router>
     );
