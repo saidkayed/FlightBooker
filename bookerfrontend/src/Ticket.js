@@ -6,6 +6,8 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import ShoppingCart from './ShoppingCart';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import Dropdown from 'react-dropdown'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import 'react-dropdown/style.css'
 
 
@@ -14,14 +16,22 @@ import 'react-dropdown/style.css'
 const airline = ['THR', 'SAS', 'SaidAirlines']
 const from = ['Istanbul', 'Copenhagen', 'SaidLand']
 const dest = ['Istanbul', 'Copenhagen', 'SaidLand']
-//const defaultOption = options[0]
 
 const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets/"
 
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
-        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", booked: [] }
+        startDate: new Date()
+        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", booked: [], startDate: new Date(), endDate: new Date() }
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(date) {
+        this.setState({
+            startDate: date,
+            endDate: date
+        });
     }
 
     handleTableChange = async (type, props) => {
@@ -119,9 +129,9 @@ export default class Ticket extends Component {
                     placeholder="Select Airline"
                 />
                 <Dropdown
-                        options={from}
-                        onChange={this._onSelect}
-                        placeholder="Select From"
+                    options={from}
+                    onChange={this._onSelect}
+                    placeholder="Select From"
                 />
                 <Dropdown
                     options={dest}
@@ -129,6 +139,16 @@ export default class Ticket extends Component {
                     placeholder="Select Destination"
                 />
 
+                <DatePicker
+                    selected={this.state.startDate}
+                    onChange={this.handleChange}
+                    placeholder="deptTime"
+                />
+                <DatePicker
+                    selected={this.state.endDate}
+                    onChange={this.handleChange}
+                    placeholder="Arrival time"
+                />                
                 <h2>Tickets</h2>
                 <BootstrapTable
                     striped
