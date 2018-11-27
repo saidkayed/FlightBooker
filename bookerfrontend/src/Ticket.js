@@ -11,6 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import 'react-dropdown/style.css'
 
 
+
 //HUSK at skrive "npm install react-dropdown" for dependency
 
 const airline = ['THR', 'SAS', 'SaidAirlines']

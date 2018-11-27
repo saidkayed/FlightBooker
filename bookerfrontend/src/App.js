@@ -3,7 +3,7 @@ import Ticket from './Ticket';
 import { HashRouter as Router, Route, NavLink } from "react-router-dom";
 import ReactModal from 'react-modal';
 import "./loginmodal.css";
-
+import "./Route.css"
 class App extends Component {
 
   constructor(){
@@ -24,7 +24,7 @@ showModal: false
     return (
       <Router>
       <div> 
-       <ul>
+       <ul className="header">
          <li>
            <NavLink exact to="/">Tickets</NavLink>
          </li>
