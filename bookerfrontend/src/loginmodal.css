@@ -1,5 +1,5 @@
 .ReactModal {
-  position: absolute;
+  position: fixed;
     top: 60px; 
     left: 760px; 
     right: 760px; 
@@ -9,6 +9,7 @@
 }
 
 .ModalContent {
+    position: fixed;
     padding: 10%;
     text-align: center;
 }
