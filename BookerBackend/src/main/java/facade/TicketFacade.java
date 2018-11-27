@@ -5,17 +5,16 @@
  */
 package facade;
 
+import DTO.FlightDTO;
 import entity.FlightTicket;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -70,6 +69,22 @@ public class TicketFacade {
         }
 
         return pricesort.size();
+    }
+    
+    public List<FlightDTO> getFlightDTO() {
+        EntityManager em = emf.createEntityManager();
+
+        TypedQuery<FlightDTO> query = em.createQuery("SELECT NEW DTO.FlightDTO"
+                + "(c1.id ,c1.airplane,c1.arrTime,c1.depTime,c1.departure,c1.destination,c1.duration,c1.model,c2.username)"
+                + "FROM FlightTicket AS c1 INNER JOIN c1.id AS c2", FlightDTO.class);
+        
+        try {
+            
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+
     }
 
     public static void main(String[] args) {
