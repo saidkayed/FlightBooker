@@ -12,6 +12,7 @@ import 'react-dropdown/style.css'
 //HUSK at skrive "npm install react-dropdown" for dependency
 
 const airline = ['THR', 'SAS', 'SaidAirlines']
+const from = ['Istanbul', 'Copenhagen', 'SaidLand']
 const dest = ['Istanbul', 'Copenhagen', 'SaidLand']
 //const defaultOption = options[0]
 
@@ -111,17 +112,22 @@ export default class Ticket extends Component {
                 <form onSubmit={this.onSubmit}>
                     <button>Price</button>
                 </form>
-            
+
                 <Dropdown
                     options={airline}
                     onChange={this._onSelect}
-                    placeholder="Select Airline" 
-                    />
-                    <Dropdown
+                    placeholder="Select Airline"
+                />
+                <Dropdown
+                        options={from}
+                        onChange={this._onSelect}
+                        placeholder="Select From"
+                />
+                <Dropdown
                     options={dest}
                     onChange={this._onSelect}
                     placeholder="Select Destination"
-                    />
+                />
 
                 <h2>Tickets</h2>
                 <BootstrapTable
