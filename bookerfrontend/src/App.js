@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Ticket from './Ticket';
-import login from './login';
 import { HashRouter as Router, Route, NavLink } from "react-router-dom";
+import login from './login';
 
 class App extends Component {
 
@@ -12,11 +12,12 @@ class App extends Component {
        <ul>
          <li>
            <NavLink exact to="/">Tickets</NavLink>
-           <NavLink to="/login">log in</NavLink>
+         </li>
+         <li>
+        
          </li>
        </ul>
        <Route exact path="/" component={Ticket}/>
-       <Route path="/login" component={login}/>
       </div>
       </Router>
     );
