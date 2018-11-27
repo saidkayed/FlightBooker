@@ -6,24 +6,41 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import ShoppingCart from './ShoppingCart';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import Dropdown from 'react-dropdown'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import 'react-dropdown/style.css'
 
 
 //HUSK at skrive "npm install react-dropdown" for dependency
 
-const options = ['Select Airline','THR','HEJ','TEST']
-const defaultOption = options[0]
+const airline = ['THR', 'SAS', 'SaidAirlines']
+const from = ['Istanbul', 'Copenhagen', 'SaidLand']
+const dest = ['Istanbul', 'Copenhagen', 'SaidLand']
 
 const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets/"
 
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
-        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", booked: []}
+        startDate: new Date()
+        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", booked: [], startDate: new Date(), endDate: new Date() }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleChange1 = this.handleChange1.bind(this);
+    }
+
+    handleChange(date) {
+        this.setState({
+            startDate: date
+        });
+    }
+    handleChange1(date) {
+        this.setState({
+            endDate: date
+        });
     }
 
     handleTableChange = async (type, props) => {
-        const { page, sizePerPage} = props;
+        const { page, sizePerPage } = props;
 
         const currentIndex = (page - 1) * sizePerPage;
         const end = currentIndex + sizePerPage;
@@ -51,8 +68,8 @@ export default class Ticket extends Component {
 
     onSubmit = (ev) => {
         ev.preventDefault();
-            this.setState({ PSort: "&Sort" })
-            this.forceUpdate(this.componentDidMount);
+        this.setState({ PSort: "&Sort" })
+        this.forceUpdate(this.componentDidMount);
     }
 
 
@@ -111,12 +128,32 @@ export default class Ticket extends Component {
                     <button>Price</button>
                 </form>
 
-                <Dropdown 
-                options={options} 
-                onChange={this._onSelect} 
-                value={defaultOption} 
-                placeholder="Select an option" />
-
+                <Dropdown
+                    options={airline}
+                    onChange={this._onSelect}
+                    placeholder="Select Airline"
+                />
+                <Dropdown
+                    options={from}
+                    onChange={this._onSelect}
+                    placeholder="Select From"
+                />
+                <Dropdown
+                    options={dest}
+                    onChange={this._onSelect}
+                    placeholder="Select Destination"
+                />
+                departure date
+                <DatePicker 
+                    selected={this.state.startDate}
+                    onChange={this.handleChange}
+                    placeholder="deptTime"
+                />Arrival date
+                <DatePicker
+                    selected={this.state.endDate}
+                    onChange={this.handleChange1}
+                    placeholder="Arrival time"
+                />                
                 <h2>Tickets</h2>
                 <BootstrapTable
                     striped
