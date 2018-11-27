@@ -11,19 +11,19 @@ import 'react-dropdown/style.css'
 
 //HUSK at skrive "npm install react-dropdown" for dependency
 
-const options = ['Select Airline','THR','HEJ','TEST']
-const defaultOption = options[0]
+const options = ['Select Airline', 'THR', 'HEJ', 'TEST']
+//const defaultOption = options[0]
 
 const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets/"
 
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
-        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", booked: []}
+        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", booked: [] }
     }
 
     handleTableChange = async (type, props) => {
-        const { page, sizePerPage} = props;
+        const { page, sizePerPage } = props;
 
         const currentIndex = (page - 1) * sizePerPage;
         const end = currentIndex + sizePerPage;
@@ -51,8 +51,8 @@ export default class Ticket extends Component {
 
     onSubmit = (ev) => {
         ev.preventDefault();
-            this.setState({ PSort: "&Sort" })
-            this.forceUpdate(this.componentDidMount);
+        this.setState({ PSort: "&Sort" })
+        this.forceUpdate(this.componentDidMount);
     }
 
 
@@ -110,12 +110,12 @@ export default class Ticket extends Component {
                 <form onSubmit={this.onSubmit}>
                     <button>Price</button>
                 </form>
-
-                <Dropdown 
-                options={options} 
-                onChange={this._onSelect} 
-                value={defaultOption} 
-                placeholder="Select an option" />
+            
+                <Dropdown
+                    options={options}
+                    onChange={this._onSelect}
+                    placeholder="Select Airline" 
+                    />
 
                 <h2>Tickets</h2>
                 <BootstrapTable
