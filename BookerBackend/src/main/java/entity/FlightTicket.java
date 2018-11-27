@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -35,8 +36,8 @@ public class FlightTicket implements Serializable,Comparable {
     private String airplane;
     private String model;
     private int capacity;
-    //@ManyToOne
-    //private Account account;
+    @ManyToOne
+    private Account account;
     
     public FlightTicket(){
         
