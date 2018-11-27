@@ -57,67 +57,64 @@ public class TicketResource {
      *
      * @return an instance of java.lang.String
      */
-    @Path("alltickets")
+    @Path("mixtickets")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJson(String json, @QueryParam("from") int id, @QueryParam("to") int id2, @QueryParam("Sort") String sort) {
-        List<FlightTicket> pricesort = tf.getAllTickets();
+    public Response getMix(String json, @QueryParam("from") int id, @QueryParam("to") int id2, @QueryParam("sort") String sort) {
+        List<FlightTicket> pricesort = tf.getMixTickets();
         List<FlightTicket> ticks = new ArrayList<>();
-       
+
         if (sort != null) {
             Collections.sort(pricesort);
         }
-       
+
         if (id != 0 || id2 != 0) {
             if (id2 > pricesort.size()) {
                 id2 = pricesort.size();
             }
             for (int i = id; i < id2; i++) {
-               FlightTicket ticket = pricesort.get(i);
-              ticks.add(ticket);
+                FlightTicket ticket = pricesort.get(i);
+                ticks.add(ticket);
             }
             pricesort = ticks;
         }
-        
 
         return Response.ok(gson.toJson(pricesort)).build();
     }
-   DatboisTicket sf = new DatboisTicket();
-      
-   
-   @GET    
+
+    
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("datbois")
-    public Response getdatbois(String json, @QueryParam("from") int id, @QueryParam("to") int id2, @QueryParam("Sort") String sort) throws MalformedURLException, IOException {
+    @Path("alltickets")
+    public Response getDatbois(String json, @QueryParam("from") int id, @QueryParam("to") int id2, @QueryParam("Sort") String sort) throws MalformedURLException, IOException {
+        DatboisTicket sf = new DatboisTicket();
+        
         List<FlightTicket> pricesort = sf.getDatbois();
         List<FlightTicket> ticks = new ArrayList<>();
-       
+        List<FlightTicket> mixTicket = tf.getMixTickets();
+
+        System.out.println(tf.getMixTickets());
+        for (int i = 0; i < tf.getMixTickets().size(); i++) {
+            pricesort.add(mixTicket.get(i));
+        }
+
         if (sort != null) {
             Collections.sort(pricesort);
         }
-       
+
         if (id != 0 || id2 != 0) {
             if (id2 > pricesort.size()) {
                 id2 = pricesort.size();
             }
             for (int i = id; i < id2; i++) {
-               FlightTicket ticket = pricesort.get(i);
-              ticks.add(ticket);
+                FlightTicket ticket = pricesort.get(i);
+                ticks.add(ticket);
             }
             pricesort = ticks;
         }
-          return Response.ok(gson.toJson(pricesort)).build();
+        return Response.ok(gson.toJson(pricesort)).build();
     }
 
-//    @Path("alltickets")
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response getJson(String json) {
-//
-////String json = gson.toJson(tf.getAllTickets());
-//        //return Response.ok("{\"petCount\":\""+json+"\"}").build();
-//        return Response.ok(gson.toJson(tf.getAllTickets())).build();
-//    }
 
     /**
      * PUT method for updating or creating an instance of GenericResource
