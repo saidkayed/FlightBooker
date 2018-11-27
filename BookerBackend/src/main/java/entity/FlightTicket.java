@@ -7,7 +7,6 @@ package entity;
 
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,8 +36,8 @@ public class FlightTicket implements Serializable,Comparable {
     private String airplane;
     private String model;
     private int capacity;
-    //@ManyToOne
-    //private Account account;
+    @ManyToOne
+    private Account account;
     
     public FlightTicket(){
         

@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
@@ -29,8 +28,8 @@ public class Account implements Serializable {
     private String password;
     
    
-    //@OneToMany(mappedBy = "account")
-    //private List<FlightTicket> ft;
+    @OneToMany(mappedBy = "account")
+    private List<FlightTicket> ft;
     
     public Account(){
         
