@@ -5,6 +5,7 @@
  */
 package facade;
 
+import DTO.FlightDTO;
 import entity.FlightTicket;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -16,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -70,6 +72,21 @@ public class TicketFacade {
         }
 
         return pricesort.size();
+    }
+    
+    public List<FlightDTO> getPetsWithOwner() {
+        EntityManager em = emf.createEntityManager();
+
+        TypedQuery<FlightDTO> query = em.createQuery("SELECT NEW Entity.PetDTO(c1.name,c1.birth,c1.species,c2.firstName,c2.lastName) FROM Pet AS c1 INNER JOIN c1.ownerId as c2", PetDTO.class);
+                        
+
+        try {
+            
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+
     }
 
     public static void main(String[] args) {
