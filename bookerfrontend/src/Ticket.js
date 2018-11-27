@@ -25,11 +25,16 @@ export default class Ticket extends Component {
         startDate: new Date()
         this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", booked: [], startDate: new Date(), endDate: new Date() }
         this.handleChange = this.handleChange.bind(this);
+        this.handleChange1 = this.handleChange1.bind(this);
     }
 
     handleChange(date) {
         this.setState({
-            startDate: date,
+            startDate: date
+        });
+    }
+    handleChange1(date) {
+        this.setState({
             endDate: date
         });
     }
@@ -138,15 +143,15 @@ export default class Ticket extends Component {
                     onChange={this._onSelect}
                     placeholder="Select Destination"
                 />
-
-                <DatePicker
+                departure date
+                <DatePicker 
                     selected={this.state.startDate}
                     onChange={this.handleChange}
                     placeholder="deptTime"
-                />
+                />Arrival date
                 <DatePicker
                     selected={this.state.endDate}
-                    onChange={this.handleChange}
+                    onChange={this.handleChange1}
                     placeholder="Arrival time"
                 />                
                 <h2>Tickets</h2>
