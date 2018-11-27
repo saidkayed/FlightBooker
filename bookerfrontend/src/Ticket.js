@@ -5,7 +5,7 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ShoppingCart from './ShoppingCart';
 
-const URL = "http://localhost:8084/BookerBackend/api/ticket/alltickets/"
+const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets/"
 
 
 
