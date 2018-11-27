@@ -5,8 +5,14 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ShoppingCart from './ShoppingCart';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-
+import Dropdown from 'react-dropdown'
+import 'react-dropdown/style.css'
 const URL = "http://localhost:8084/BookerBackend/api/ticket/alltickets/"
+
+//HUSK at skrive "npm install react-dropdown" for dependency
+
+const options = ['Select Airline','THR','HEJ','TEST']
+const defaultOption = options[0]
 
 
 
@@ -55,8 +61,7 @@ export default class Ticket extends Component {
         const columns = [{
             dataField: 'airline',
             text: 'Airline',
-            sort: false,
-            filter: textFilter()
+            sort: false
         },
         {
             dataField: 'departure',
@@ -112,6 +117,13 @@ export default class Ticket extends Component {
                 <form onSubmit={this.onSubmit}>
                     <button>Price</button>
                 </form>
+
+                <Dropdown 
+                options={options} 
+                onChange={this._onSelect} 
+                value={defaultOption} 
+                placeholder="Select an option" />
+
                 <h2>Tickets</h2>
                 <BootstrapTable
                     striped
@@ -122,7 +134,6 @@ export default class Ticket extends Component {
                     columns={columns}
                     onTableChange={this.handleTableChange}
                     pagination={paginationFactory({ page, sizePerPage, totalSize })}
-                    filter={filterFactory()}
                 />
 
             </div>
