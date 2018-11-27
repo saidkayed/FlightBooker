@@ -11,7 +11,8 @@ import 'react-dropdown/style.css'
 
 //HUSK at skrive "npm install react-dropdown" for dependency
 
-const options = ['Select Airline', 'THR', 'HEJ', 'TEST']
+const airline = ['THR', 'SAS', 'SaidAirlines']
+const dest = ['Istanbul', 'Copenhagen', 'SaidLand']
 //const defaultOption = options[0]
 
 const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets/"
@@ -112,9 +113,14 @@ export default class Ticket extends Component {
                 </form>
             
                 <Dropdown
-                    options={options}
+                    options={airline}
                     onChange={this._onSelect}
                     placeholder="Select Airline" 
+                    />
+                    <Dropdown
+                    options={dest}
+                    onChange={this._onSelect}
+                    placeholder="Select Destination"
                     />
 
                 <h2>Tickets</h2>
