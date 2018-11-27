@@ -77,9 +77,8 @@ public class TicketFacade {
     public List<FlightDTO> getPetsWithOwner() {
         EntityManager em = emf.createEntityManager();
 
-        TypedQuery<FlightDTO> query = em.createQuery("SELECT NEW Entity.PetDTO(c1.name,c1.birth,c1.species,c2.firstName,c2.lastName) FROM Pet AS c1 INNER JOIN c1.ownerId as c2", PetDTO.class);
-                        
-
+        TypedQuery<FlightDTO> query = em.createQuery("SELECT NEW DTO.FlightDTO(c1.airline,c1.airplane,c1.arrTime,c1.depTime,c1.departure,c1.destination,c1.duration,c1.model,c2.username) FROM FlightTicket AS c1 INNER JOIN c1.id AS c2", FlightDTO.class);
+        
         try {
             
             return query.getResultList();
