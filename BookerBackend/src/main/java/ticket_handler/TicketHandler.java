@@ -18,7 +18,7 @@ import javax.persistence.Persistence;
  */
 public class TicketHandler {
 
-    public List<FlightTicket> ticketHandler(String airline, String dept, String dest, String deptDate, String arrDate) throws IOException {
+    public static List<FlightTicket> ticketHandler(String airline, String dept, String dest, String deptDate, String arrDate) throws IOException {
         TicketFacade tf = new TicketFacade(Persistence.createEntityManagerFactory("pu"));
 
 
@@ -40,7 +40,11 @@ public class TicketHandler {
     }
 
     public static void main(String[] args) throws IOException {
-
+            
+        List<FlightTicket> list = ticketHandler("DATFlights", "CPH", "TUN", "2019-10-10T15-00", "2019-10-08T18-00");
+        
+        System.out.println(list.size());
+        
         
     }
 
