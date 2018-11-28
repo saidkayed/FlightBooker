@@ -11,8 +11,7 @@ export default class FrontPage extends Component {
         super(props);
         this.state = {
             data: [], airline: [], departure: [], destination: [], startDate: [], endDate: [], search: [],
-            names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: ""
-        };
+            names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "",URL:""};
     }
 
 
@@ -50,10 +49,12 @@ export default class FrontPage extends Component {
     onSubmit = async (evt) => {
         evt.preventDefault();
 
-
-        const URI = `${URL}?from=${0}&to=${10}` + "&airline=" + evt.target.airline.value + "&dept=" + evt.target.departure.value + "&dest=" + evt.target.destination.value + "&deptdate=" + evt.target.departureDate.value + "&arrdate=" + evt.target.arrivalDate.value + this.state.PSort;
-
-
+        this.forceUpdate(this.onChange);
+        const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${0}&to=${10}` + "&airline=" + evt.target.airline.value + "&dept=" + evt.target.departure.value + "&dest=" + evt.target.destination.value + "&deptdate=" + evt.target.departureDate.value + "&arrdate=" + evt.target.arrivalDate.value + this.state.PSort;
+        console.log(URI);
+      
+    //this.setState({ airline: evt.target.airline.value, departure: evt.target.departure.value, destination: evt.target.destination.value, startDate:  evt.target.departureDate.value, endDate:evt.target.arrivalDate.value})
+    this.setState({URL:URI.toString()})
 
     }
 
@@ -66,14 +67,16 @@ export default class FrontPage extends Component {
         this.setState({ endDate: date });
     }
     onChange = async (ev) => {
-        ev.preventDefault();
+        
 
-        const URI = `${URL}?from=${0}&to=${10}` + "&airline=" + this.state.airline + "&dept=" + this.state.depature + "&dest=" + this.state.destination + "&depdate=" + this.state.deptdate + "&arrdate=" + this.state.arrdate + this.state.PSort;
+        const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${0}&to=${10}` + "&airline=" + this.state.airline + "&dept=" + this.state.depature + "&dest=" + this.state.destination + "&depdate=" + this.state.deptdate + "&arrdate=" + this.state.arrdate + this.state.PSort;
 
         let p = await fetch(URI).then(res => {
             return res.json()
         });
-        this.setState({ search: p })
+        
+
+        this.setState({search: p })
     }
 
     render() {
@@ -116,14 +119,9 @@ export default class FrontPage extends Component {
 
 
                 </div>
+                <Ticket search={this.state.search} URL={this.state.URL} />
                 <button>Submit</button>
-                <Ticket search={this.state.search} />
-
-
-
-
-
-
+              
             </form>
         );
     }

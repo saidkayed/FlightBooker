@@ -45,13 +45,16 @@ export default class Ticket extends Component {
         const currentIndex = (page - 1) * sizePerPage;
         const end = currentIndex + sizePerPage;
 
-
-        const URI = `${URL}?from=${currentIndex}&to=${end}` + "&airline="+this.props.airline +"&dept="+this.props.depature + "&dest="+this.props.destination + "&depdate=" + this.props.deptdate  +"&arrdate=" + this.props.arrdate +  this.state.PSort;
+        console.log(this.props.URL)
+        console.log(this.props.search);
+        const URI = this.props.URL;
         let p = await fetch(URI).then(res => {
             const totalSize = Number(res.headers.get("X-Total-Count"));
             if (totalSize) { this.setState({ totalSize }) }
             return res.json()
         });
+
+      
 
 
         const names = await p;
@@ -122,6 +125,8 @@ export default class Ticket extends Component {
 
         return (
 
+            <form onSubmit={this.onSubmit}>
+
             <div>
                             
                 
@@ -138,6 +143,8 @@ export default class Ticket extends Component {
             
 
             </div>
+            <button>TEST</button>
+            </form>
         )
     }
 }
