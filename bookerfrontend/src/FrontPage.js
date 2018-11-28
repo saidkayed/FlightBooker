@@ -45,6 +45,7 @@ export default class FrontPage extends Component{
     render(){
         
         return(
+            <form onSubmit="">
             <div>
                 <Dropdown
                     options={this.state.airline}
@@ -76,6 +77,7 @@ export default class FrontPage extends Component{
                 />             
                 <button>Submit</button>
             </div>
+            </form>
         );
     }
 }

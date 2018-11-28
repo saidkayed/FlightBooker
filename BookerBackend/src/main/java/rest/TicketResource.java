@@ -84,7 +84,7 @@ public class TicketResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("alltickets")
-    public Response getDatbois(String json, @QueryParam("from") int id, @QueryParam("to") int id2, @QueryParam("Sort") String sort) throws MalformedURLException, IOException {
+    public Response getDatbois(String json, @QueryParam("from") int id, @QueryParam("to") int id2, @QueryParam("Sort") String sort,@QueryParam("dept") String dept,@QueryParam("dest")String dest,@QueryParam("airline") String airline) throws MalformedURLException, IOException {
         
         
         
