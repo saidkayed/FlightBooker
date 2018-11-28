@@ -4,13 +4,9 @@ import { HashRouter as Router, Route, NavLink } from "react-router-dom";
 import ReactModal from 'react-modal';
 import "./loginmodal.css";
 import "./Route.css"
-<<<<<<< HEAD
-import fontpage from './fontpage'
-class App extends Component {
-=======
+import FrontPage from './FrontPage'
 
 export default class App extends Component {
->>>>>>> 7976f2ec1c84f5114fa51a7de44ab24bd682da87
 
   constructor(){
     super();
