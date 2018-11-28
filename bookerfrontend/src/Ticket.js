@@ -14,6 +14,9 @@ import FrontPage from './FrontPage';
 
 //HUSK at skrive "npm install react-dropdown" for dependency
 
+const airline = ['THR', 'SAS', 'SaidAirlines']
+const from = ['Istanbul', 'Copenhagen', 'SaidLand']
+const dest = ['Istanbul', 'Copenhagen', 'SaidLand']
 
 const URL = "http://localhost:8080/BookerBackend/api/ticket/foundtickets/"
 
@@ -22,9 +25,20 @@ export default class Ticket extends Component {
         super(props);
         startDate: new Date()
         this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "" }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleChange1 = this.handleChange1.bind(this);
     }
 
-    
+    handleChange(date) {
+        this.setState({
+            startDate: date
+        });
+    }
+    handleChange1(date) {
+        this.setState({
+            endDate: date
+        });
+    }
 
     handleTableChange = async (type, props) => {
         const { page, sizePerPage } = props;
@@ -122,7 +136,8 @@ export default class Ticket extends Component {
                     onTableChange={this.handleTableChange}
                     pagination={paginationFactory({ page, sizePerPage, totalSize })}
                 />
-               
+            
+
             </div>
         )
     }
