@@ -46,7 +46,7 @@ export default class Ticket extends Component {
         const end = currentIndex + sizePerPage;
 
         console.log(this.props.URL)
-        
+
         const URI = this.props.URL;
         let p = await fetch(URI).then(res => {
             const totalSize = Number(res.headers.get("X-Total-Count"));
@@ -110,6 +110,7 @@ export default class Ticket extends Component {
                 onClick: (e, column, columnIndex, row, rowIndex) => {
 
                     this.setState({ booked: row })
+                    console.log(this.state.booked)
 
                 },
             },

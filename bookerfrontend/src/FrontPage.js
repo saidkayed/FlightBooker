@@ -50,7 +50,7 @@ export default class FrontPage extends Component {
         evt.preventDefault();
 
         
-        const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${0}&to=${10}` + "&airline=" + evt.target.airline.value + "&dept=" + evt.target.departure.value + "&dest=" + evt.target.destination.value + "&deptdate=" + evt.target.departureDate.value + "&arrdate=" + evt.target.arrivalDate.value + this.state.PSort;
+        const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${0}&to=${10}` + "&airline=" + evt.currentTarget.airline.value + "&dept=" + evt.currentTarget.departure.value + "&dest=" + evt.currentTarget.destination.value + "&deptdate=" + evt.currentTarget.departureDate.value + "&arrdate=" + evt.currentTarget.arrivalDate.value + this.state.PSort;
         console.log(URI);
       
     //this.setState({ airline: evt.target.airline.value, departure: evt.target.departure.value, destination: evt.target.destination.value, startDate:  evt.target.departureDate.value, endDate:evt.target.arrivalDate.value})
