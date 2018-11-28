@@ -24,8 +24,11 @@ public class Ticket_Handler {
         
         
        List<FlightTicket> active_ticket = tf.getAllTickets();
+       Lis
        
-       active_ticket.
+       if(active_ticket.contains(dept) && active_ticket.contains(dest) && active_ticket.contains(airline)){
+           
+       }
        
         
         
