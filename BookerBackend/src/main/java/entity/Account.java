@@ -29,8 +29,7 @@ public class Account implements Serializable {
     private String password;
     
    
-    @OneToMany(mappedBy = "account")
-    private List<FlightTicket> ft;
+    
     
     public Account(){
         
@@ -71,13 +70,6 @@ public class Account implements Serializable {
         this.password = password;
     }
 
-    public List<FlightTicket> getFt() {
-        return ft;
-    }
-
-    public void setFt(List<FlightTicket> ft) {
-        this.ft = ft;
-    }
     
         public boolean verifyPassword(String pw){
             return BCrypt.checkpw(pw, password);

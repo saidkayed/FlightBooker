@@ -9,12 +9,15 @@ import DTO.FlightDTO;
 import entity.FlightTicket;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -85,6 +88,19 @@ public class TicketFacade {
             em.close();
         }
 
+    }
+    
+    public List<FlightTicket> getAllTickets() throws MalformedURLException, IOException{
+        DatboisTicket dt = new DatboisTicket();
+        EntityManager em = emf.createEntityManager();
+        List<FlightTicket> listMix = getMixTickets();
+        List<FlightTicket> listDatbois = dt.getDatbois();
+        
+        for (int i = 0; i < listMix.size(); i++) {
+            listDatbois.add(listMix.get(i));
+        }
+
+        return listDatbois;
     }
 
     public static void main(String[] args) {

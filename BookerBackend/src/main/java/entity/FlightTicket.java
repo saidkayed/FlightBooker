@@ -36,8 +36,6 @@ public class FlightTicket implements Serializable,Comparable {
     private String airplane;
     private String model;
     private int capacity;
-    //@ManyToOne
-    //private Account account;
     
     public FlightTicket(){
         
