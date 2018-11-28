@@ -16,19 +16,11 @@ import javax.persistence.Persistence;
  *
  * @author sidad
  */
-public class Ticket_Handler {
+public class TicketHandler {
 
-    public static List<FlightTicket> ticketHandler(String airline, String dept, String dest, String deptDate, String arrDate) throws IOException {
+    public List<FlightTicket> ticketHandler(String airline, String dept, String dest, String deptDate, String arrDate) throws IOException {
         TicketFacade tf = new TicketFacade(Persistence.createEntityManagerFactory("pu"));
 
-        
-        //Hvad vi skal have CPHFlights, CPH, TUN, 2019-10-10T15-00, 2019-10-08T18-00
-        
-        
-        //Hvad vi har CPHFlights, CPH, TUN, 2019-10-10, 2019-10-08
-        
-        
-        
         List<FlightTicket> allTickets = tf.getAllTickets();
         List<FlightTicket> myTicks = new ArrayList();
 
@@ -38,15 +30,7 @@ public class Ticket_Handler {
                     && allTickets.get(i).getDestination().equalsIgnoreCase(dest)
                     && allTickets.get(i).getDepTime().equalsIgnoreCase(deptDate)
                     && allTickets.get(i).getArrTime().equalsIgnoreCase(arrDate)) {
-             
-                String newDeptDate = deptDate.substring(0, 10);
-                String newArrDate = arrDate.substring(0, 10);
-                
-                
-                
-                allTickets.get(i).setDepTime(newDeptDate);
-                allTickets.get(i).setArrTime(newArrDate);
-                
+
                 myTicks.add(allTickets.get(i));
             }
         }
@@ -55,19 +39,8 @@ public class Ticket_Handler {
     }
 
     public static void main(String[] args) throws IOException {
-        
-        TicketFacade tf = new TicketFacade(Persistence.createEntityManagerFactory("pu"));
-
-        List<FlightTicket> tickets = ticketHandler("DATFlights", "CPH", "TUN", "2019-10-10T15-00", "2019-10-08T18-00");
-
-        for (int i = 0; i < tickets.size(); i++) {
-            System.out.println(tickets.get(i).toString());
-
-        }
 
         
-        
-                
     }
 
 }

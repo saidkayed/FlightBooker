@@ -27,6 +27,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import ticket_handler.TicketHandler;
 
 /**
  * REST Web Service
@@ -84,13 +85,43 @@ public class TicketResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("alltickets")
-    public Response getDatbois(String json, @QueryParam("from") int id, @QueryParam("to") int id2, @QueryParam("Sort") String sort,@QueryParam("dept") String dept,@QueryParam("dest")String dest,@QueryParam("airline") String airline) throws MalformedURLException, IOException {
+    public Response getAllTickets(String json, @QueryParam("from") int id, @QueryParam("to") int id2, @QueryParam("Sort") String sort) throws MalformedURLException, IOException {
         
-        
+       
         
         List<FlightTicket> pricesort = tf.getAllTickets();
         List<FlightTicket> ticks = new ArrayList();
         
+ 
+        if (sort != null) {
+            Collections.sort(pricesort);
+        }
+
+        if (id != 0 || id2 != 0) {
+            if (id2 > pricesort.size()) {
+                id2 = pricesort.size();
+            }
+            for (int i = id; i < id2; i++) {
+                FlightTicket ticket = pricesort.get(i);
+                ticks.add(ticket);
+            }
+            pricesort = ticks;
+        }
+        return Response.ok(gson.toJson(pricesort)).build();
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("foundtickets")
+    public Response getFoundTickets(String json, @QueryParam("from") int id, @QueryParam("to") int id2, 
+            @QueryParam("Sort") String sort,@QueryParam("dept") String dept,@QueryParam("dest")String dest,
+            @QueryParam("airline") String airline, @QueryParam("deptDate") String deptDate, @QueryParam("arrDate") String arrDate) throws MalformedURLException, IOException {
+        
+        TicketHandler th = new TicketHandler();
+        
+        List<FlightTicket> pricesort = th.ticketHandler(airline, dept, dest, deptDate, arrDate);
+        List<FlightTicket> ticks = new ArrayList();
+   
         if (sort != null) {
             Collections.sort(pricesort);
         }
