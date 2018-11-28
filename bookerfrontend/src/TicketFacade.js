@@ -7,7 +7,7 @@ function handleHttpErrors(res) {
     return res.json();
    }
    
-  class TicketFacade {
+  export default class TicketFacade {
     makeOptions(method,addToken,body) {
         var opts = {
           method: method,
@@ -25,6 +25,6 @@ function handleHttpErrors(res) {
       
    }
    const facade = new TicketFacade();
-   export default facade;
+  
 
    

@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import Ticket from './Ticket';
+import FrontPage from './FrontPage';
 import { HashRouter as Router, Route, NavLink } from "react-router-dom";
 import ReactModal from 'react-modal';
 import "./loginmodal.css";
 import "./Route.css"
+<<<<<<< HEAD
 import fontpage from './fontpage'
 class App extends Component {
+=======
+
+export default class App extends Component {
+>>>>>>> 7976f2ec1c84f5114fa51a7de44ab24bd682da87
 
   constructor(){
     super();
@@ -27,13 +32,13 @@ showModal: false
       <div> 
        <ul className="header">
          <li>
-           <NavLink exact to="/">Tickets</NavLink>
+           <NavLink exact to="/">Front Page</NavLink>
          </li>
          <li>
             <a onClick={this.handleOpenModal}>Log In</a>        
          </li>
        </ul>
-       <Route exact path="/" component={fontpage}/>
+       <Route exact path="/" component={FrontPage}/>
        <ReactModal className="ReactModal"
            isOpen={this.state.showModal}
            contentLabel="Minimal Modal Example">
@@ -51,5 +56,3 @@ showModal: false
     );
   }
 }
-
-export default App;

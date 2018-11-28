@@ -4,7 +4,6 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ShoppingCart from './ShoppingCart';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import Dropdown from 'react-dropdown'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -128,7 +127,7 @@ export default class Ticket extends Component {
                 <form onSubmit={this.onSubmit}>
                     <button>Price</button>
                 </form>
-
+                
                 <Dropdown
                     options={airline}
                     onChange={this._onSelect}
