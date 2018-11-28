@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import 'react-dropdown/style.css';
+import DatePicker, { calenderType } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Ticket from "./Ticket"
 
@@ -13,6 +14,8 @@ export default class FrontPage extends Component {
             names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: ""
         };
     }
+
+
 
     async componentDidMount() {
         const data = await fetch(URL).then(res => res.json());
@@ -30,15 +33,16 @@ export default class FrontPage extends Component {
         var destinationFilter = mappedDestination.filter((elem, pos, arr) => arr.indexOf(elem) == pos)
         this.setState({ destination: destinationFilter })
 
-        var mappedStartDate = this.state.data.map((data) => data.depTime )
+
+        var mappedStartDate = this.state.data.map((data) => data.depTime)
         var startDateFilter = mappedStartDate.filter((elem, pos, arr) => arr.indexOf(elem) == pos)
         var sortedStartDate = startDateFilter.sort()
-        this.setState({startDate: sortedStartDate})
-        
-        var mappedArrDate = this.state.data.map((data) => data.arrTime )
+        this.setState({ startDate: sortedStartDate })
+
+        var mappedArrDate = this.state.data.map((data) => data.arrTime)
         var arrDateFilter = mappedArrDate.filter((elem, pos, arr) => arr.indexOf(elem) == pos)
         var sortedArrDate = arrDateFilter.sort()
-        this.setState({endDate: sortedArrDate})
+        this.setState({ endDate: sortedArrDate })
     }
 
 
@@ -48,13 +52,28 @@ export default class FrontPage extends Component {
 
 
         const URI = `${URL}?from=${0}&to=${10}` + "&airline=" + evt.target.airline.value + "&dept=" + evt.target.departure.value + "&dest=" + evt.target.destination.value + "&deptdate=" + evt.target.departureDate.value + "&arrdate=" + evt.target.arrivalDate.value + this.state.PSort;
-        console.log(URI)
+
+
+
+    }
+
+    handleChangeDepartureDate = (date) => {
+
+        this.setState({ startDate: date });
+    }
+    handleChangeArrivalDate = (date) => {
+
+        this.setState({ endDate: date });
+    }
+    onChange = async (ev) => {
+        ev.preventDefault();
+
+        const URI = `${URL}?from=${0}&to=${10}` + "&airline=" + this.state.airline + "&dept=" + this.state.depature + "&dest=" + this.state.destination + "&depdate=" + this.state.deptdate + "&arrdate=" + this.state.arrdate + this.state.PSort;
+
         let p = await fetch(URI).then(res => {
             return res.json()
         });
         this.setState({ search: p })
-
-
     }
 
     render() {
@@ -84,22 +103,28 @@ export default class FrontPage extends Component {
                     Departure Date
                     <select name="departureDate">
                         {this.state.startDate.map(function mapper(data) {
-                            return <option value={data}>{data.substring(0,10)}</option>
+                            return <option value={data}>{data.substring(0, 10)}</option>
                         })}
                     </select>
                     Arrival Date
                         <select name="arrivalDate">
-                            {this.state.endDate.map(function mapper(data) {
-                                return <option value={data}>{data.substring(0,10)}
-                                </option>
-                            })}
+                        {this.state.endDate.map(function mapper(data) {
+                            return <option value={data}>{data.substring(0, 10)}
+                            </option>
+                        })}
                     </select>
-            
-            
+
+
                 </div>
-                        <button>Submit</button>
-                        <Ticket search={this.state.search} />
+                <button>Submit</button>
+                <Ticket search={this.state.search} />
+
+
+
+
+
+
             </form>
-                    );
-                }
+        );
+    }
 }
