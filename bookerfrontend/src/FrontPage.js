@@ -46,6 +46,7 @@ export default class FrontPage extends Component{
     }
     onChange = (ev) =>{
         ev.preventDefault();
+      Ticket.componentDidMount()
     
     }
 
@@ -53,7 +54,7 @@ export default class FrontPage extends Component{
     render(){
         
         return(
-            <form onSubmit="">
+            <form onSubmit={this.onChange}>
             <div>
                 <Dropdown
                     options={this.state.airline}
