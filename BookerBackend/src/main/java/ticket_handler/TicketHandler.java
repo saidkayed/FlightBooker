@@ -21,6 +21,7 @@ public class TicketHandler {
     public List<FlightTicket> ticketHandler(String airline, String dept, String dest, String deptDate, String arrDate) throws IOException {
         TicketFacade tf = new TicketFacade(Persistence.createEntityManagerFactory("pu"));
 
+
         List<FlightTicket> allTickets = tf.getAllTickets();
         List<FlightTicket> myTicks = new ArrayList();
 
