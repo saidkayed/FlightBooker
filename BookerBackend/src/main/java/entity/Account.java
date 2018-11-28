@@ -29,8 +29,8 @@ public class Account implements Serializable {
     private String password;
     
    
-    @OneToMany(mappedBy = "account")
-    private List<FlightTicket> ft;
+    //@OneToMany(mappedBy = "account")
+    //private List<FlightTicket> ft;
     
     public Account(){
         

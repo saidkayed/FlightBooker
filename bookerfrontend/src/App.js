@@ -4,6 +4,7 @@ import { HashRouter as Router, Route, NavLink } from "react-router-dom";
 import ReactModal from 'react-modal';
 import "./loginmodal.css";
 import "./Route.css"
+import fontpage from './fontpage'
 class App extends Component {
 
   constructor(){
@@ -32,7 +33,7 @@ showModal: false
             <a onClick={this.handleOpenModal}>Log In</a>        
          </li>
        </ul>
-       <Route exact path="/" component={Ticket}/>
+       <Route exact path="/" component={fontpage}/>
        <ReactModal className="ReactModal"
            isOpen={this.state.showModal}
            contentLabel="Minimal Modal Example">
