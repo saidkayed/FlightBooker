@@ -8,36 +8,23 @@ import Dropdown from 'react-dropdown'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-dropdown/style.css'
+import FrontPage from './FrontPage';
 
 
 
 //HUSK at skrive "npm install react-dropdown" for dependency
 
-const airline = ['THR', 'SAS', 'SaidAirlines']
-const from = ['Istanbul', 'Copenhagen', 'SaidLand']
-const dest = ['Istanbul', 'Copenhagen', 'SaidLand']
 
-const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets/"
+const URL = "http://localhost:8080/BookerBackend/api/ticket/foundtickets/"
 
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
         startDate: new Date()
-        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", booked: [], startDate: new Date(), endDate: new Date() }
-        this.handleChange = this.handleChange.bind(this);
-        this.handleChange1 = this.handleChange1.bind(this);
+        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "" }
     }
 
-    handleChange(date) {
-        this.setState({
-            startDate: date
-        });
-    }
-    handleChange1(date) {
-        this.setState({
-            endDate: date
-        });
-    }
+    
 
     handleTableChange = async (type, props) => {
         const { page, sizePerPage } = props;
@@ -46,7 +33,7 @@ export default class Ticket extends Component {
         const end = currentIndex + sizePerPage;
 
 
-        const URI = `${URL}?from=${currentIndex}&to=${end}` + this.state.PSort;
+        const URI = `${URL}?from=${currentIndex}&to=${end}` + "&airline="+this.props.airline +"&dept="+this.props.depature + "&dest="+this.props.destination + "&depdate=" + this.props.deptdate  +"&arrdate=" + this.props.arrdate +  this.state.PSort;
         let p = await fetch(URI).then(res => {
             const totalSize = Number(res.headers.get("X-Total-Count"));
             if (totalSize) { this.setState({ totalSize }) }
@@ -68,7 +55,7 @@ export default class Ticket extends Component {
 
     onSubmit = (ev) => {
         ev.preventDefault();
-        this.setState({ PSort: "&Sort" })
+        this.setState({ PSort: "&sort" })
         this.forceUpdate(this.componentDidMount);
     }
 
@@ -123,38 +110,8 @@ export default class Ticket extends Component {
         return (
 
             <div>
-                <ShoppingCart Book={this.state.booked} />
-                <form onSubmit={this.onSubmit}>
-                    <button>Price</button>
-                </form>
+                            
                 
-                <Dropdown
-                    options={airline}
-                    onChange={this._onSelect}
-                    placeholder="Select Airline"
-                />
-                <Dropdown
-                    options={from}
-                    onChange={this._onSelect}
-                    placeholder="Select From"
-                />
-                <Dropdown
-                    options={dest}
-                    onChange={this._onSelect}
-                    placeholder="Select Destination"
-                />
-                departure date
-                <DatePicker 
-                    selected={this.state.startDate}
-                    onChange={this.handleChange}
-                    placeholder="deptTime"
-                />Arrival date
-                <DatePicker
-                    selected={this.state.endDate}
-                    onChange={this.handleChange1}
-                    placeholder="Arrival time"
-                />                
-                <h2>Tickets</h2>
                 <BootstrapTable
                     striped
                     remote
@@ -165,7 +122,7 @@ export default class Ticket extends Component {
                     onTableChange={this.handleTableChange}
                     pagination={paginationFactory({ page, sizePerPage, totalSize })}
                 />
-
+               
             </div>
         )
     }

@@ -3,6 +3,7 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import DatePicker, {calenderType} from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Ticket from "./Ticket"
 
 const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets"
 
@@ -36,11 +37,18 @@ export default class FrontPage extends Component{
     }
 
     handleChangeDepartureDate = (date) => {
+        
         this.setState({startDate: date});
     }
     handleChangeArrivalDate = (date) => {
+        
         this.setState({endDate: date});
     }
+    onChange = (ev) =>{
+        ev.preventDefault();
+    
+    }
+
 
     render(){
         
@@ -74,9 +82,13 @@ export default class FrontPage extends Component{
                     selected={this.state.endDate}
                     onChange={this.handleChangeArrivalDate}
                     placeholder="Arrival Time"
-                />             
-                <button>Submit</button>
+                />      
+                
+                
+            
             </div>
+            <button>Submit</button>
+            <Ticket airline={this.state.airline} depature={this.state.dept} destination={this.state.dest} deptdate={this.state.startDate} arrdate={this.state.endDate}/>    
             </form>
         );
     }
