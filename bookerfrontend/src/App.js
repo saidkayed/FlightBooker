@@ -4,7 +4,6 @@ import { HashRouter as Router, Route, NavLink } from "react-router-dom";
 import ReactModal from 'react-modal';
 import "./loginmodal.css";
 import "./Route.css"
-import FrontPage from './FrontPage'
 
 export default class App extends Component {
 
