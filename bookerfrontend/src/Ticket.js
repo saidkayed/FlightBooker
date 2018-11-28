@@ -23,7 +23,7 @@ const URL = "http://localhost:8080/BookerBackend/api/ticket/foundtickets/"
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
-        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "" }
+        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "",booked: [] }
         this.handleChange = this.handleChange.bind(this);
         this.handleChange1 = this.handleChange1.bind(this);
     }
@@ -110,7 +110,7 @@ export default class Ticket extends Component {
                 onClick: (e, column, columnIndex, row, rowIndex) => {
 
                     this.setState({ booked: row })
-                    console.log(this.state.booked)
+                    console.log(row)
 
                 },
             },
