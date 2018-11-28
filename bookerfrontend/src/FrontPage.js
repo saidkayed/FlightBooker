@@ -10,7 +10,8 @@ const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets"
 export default class FrontPage extends Component{
     constructor(props){
         super(props);
-        this.state={data: [], airline: [], dept: [], dest: [], startDate: new Date(), endDate: new Date()};
+        this.state={data: [], airline: [], dept: [], dest: [], startDate: new Date(), endDate: new Date(), search: [],
+            names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: ""};
     }
 
     
@@ -44,9 +45,20 @@ export default class FrontPage extends Component{
         
         this.setState({endDate: date});
     }
-    onChange = (ev) =>{
+    onChange = async (ev) =>{
         ev.preventDefault();
-      Ticket.componentDidMount()
+
+        const URI = `${URL}?from=${0}&to=${10}` + "&airline="+this.state.airline +"&dept="+this.state.depature + "&dest="+this.state.destination + "&depdate=" + this.state.deptdate  +"&arrdate=" + this.state.arrdate +  this.state.PSort;
+        console.log(URI)
+        let p = await fetch(URI).then(res => {
+            console.log(res.json())
+            return res.json()
+            
+
+        });
+        console.log(p)
+        this.setState({search: p})
+        console.log(this.state.p)
     
     }
 
@@ -89,7 +101,7 @@ export default class FrontPage extends Component{
             
             </div>
             <button>Submit</button>
-            <Ticket airline={this.state.airline} depature={this.state.dept} destination={this.state.dest} deptdate={this.state.startDate} arrdate={this.state.endDate}/>    
+            <Ticket search={this.state.p}/>    
             </form>
         );
     }

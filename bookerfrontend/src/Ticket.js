@@ -23,7 +23,6 @@ const URL = "http://localhost:8080/BookerBackend/api/ticket/foundtickets/"
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
-        startDate: new Date()
         this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "" }
         this.handleChange = this.handleChange.bind(this);
         this.handleChange1 = this.handleChange1.bind(this);

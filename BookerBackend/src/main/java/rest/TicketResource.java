@@ -114,8 +114,8 @@ public class TicketResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("foundtickets")
     public Response getFoundTickets(String json, @QueryParam("from") int id, @QueryParam("to") int id2, 
-            @QueryParam("Sort") String sort,@QueryParam("dept") String dept,@QueryParam("dest")String dest,
-            @QueryParam("airline") String airline, @QueryParam("deptDate") String deptDate, @QueryParam("arrDate") String arrDate) throws MalformedURLException, IOException {
+            @QueryParam("sort") String sort, @QueryParam("airline") String airline, @QueryParam("dept") String dept, @QueryParam("dest")String dest,
+            @QueryParam("deptdate") String deptDate, @QueryParam("arrdate") String arrDate) throws MalformedURLException, IOException {
         
         TicketHandler th = new TicketHandler();
         
