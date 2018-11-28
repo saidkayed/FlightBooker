@@ -49,7 +49,7 @@ export default class FrontPage extends Component {
     onSubmit = async (evt) => {
         evt.preventDefault();
 
-        this.forceUpdate(this.onChange);
+        
         const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${0}&to=${10}` + "&airline=" + evt.target.airline.value + "&dept=" + evt.target.departure.value + "&dest=" + evt.target.destination.value + "&deptdate=" + evt.target.departureDate.value + "&arrdate=" + evt.target.arrivalDate.value + this.state.PSort;
         console.log(URI);
       

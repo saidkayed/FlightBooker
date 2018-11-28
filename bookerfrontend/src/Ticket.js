@@ -46,7 +46,7 @@ export default class Ticket extends Component {
         const end = currentIndex + sizePerPage;
 
         console.log(this.props.URL)
-        console.log(this.props.search);
+        
         const URI = this.props.URL;
         let p = await fetch(URI).then(res => {
             const totalSize = Number(res.headers.get("X-Total-Count"));
