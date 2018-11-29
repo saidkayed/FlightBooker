@@ -16,8 +16,8 @@ export default class App extends Component {
   handleOpenModal = () => {
     this.setState({ showModal: true });
   }
-  handleCloseModal = () =>{
-  this.setState({showModal: false})
+  handleCloseModal = () => {
+    this.setState({ showModal: false })
   }
 
   userRole = (user) => {
@@ -36,14 +36,18 @@ export default class App extends Component {
 
   }
 
+  }
   onChange = (evt) => {
     this.setState({ [evt.target.id]: evt.target.value })
     console.log(evt.target.value);
   }
+  componentDidMount() {
+    if (this.state.username === "admin" || this.state.username === "Admin") {
+      userFacade.fetchAdminData().then(res => this.setState({ dataFromServer: res }))
+    } else {
+      userFacade.fetchData().then(res => this.setState({ dataFromServer: res }));
 
-  logout = () => {
-    userFacade.logout();
-    this.setState({ loggedIn: false });
+    }
   }
   componentDidMount() {
     if (this.state.username === "admin" || this.state.username === "Admin") {
@@ -66,8 +70,8 @@ export default class App extends Component {
               {!this.state.loggedIn ?
                 (<a onClick={this.handleOpenModal}>Log In</a>) :
                 (<a>Logged In As {this.state.username}</a>)
-                (<a onClick={this.logout}>Log out</a>)}
-                
+                  (<a onClick={this.logout}>Log out</a>)}
+
 
             </li>
           </ul>
@@ -77,7 +81,7 @@ export default class App extends Component {
             isOpen={this.state.showModal}
             contentLabel="Minimal Modal Example">
 
-            <form onSubmit={this.login} onChange={this.onChange}>
+            <form onSubmit={this.login} onChange={this.onChange} >
               <div className="ModalContent">
                 <h2 id="logintext">Log In</h2>
                 <input id="username" placeholder="username" type="username" name="username" required />
@@ -89,7 +93,10 @@ export default class App extends Component {
             </form>
 
           </ReactModal>
+
+          <h3>Welcome {this.state.username}</h3>
         </div>
+
       </Router>
     );
   }
