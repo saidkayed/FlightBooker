@@ -10,11 +10,9 @@ export default class App extends Component {
 
   constructor() {
     super();
-    this.state = {
-      showModal: false, username: "", password: "", loggedIn: false
-    };
+    this.state = { showModal: false }
   }
-  
+
   handleOpenModal = () => {
     this.setState({ showModal: true });
   }
