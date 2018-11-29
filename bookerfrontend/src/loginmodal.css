@@ -55,3 +55,13 @@
     font-weight: 700;
     
 }
+
+#loginbtn {
+    position: absolute;
+    bottom: 50%;
+    right: 40%;
+    font-size: 18px;
+    font-family: "cerapro-regular",sans-serif;
+    color: grey;
+    font-weight: 700;
+}
