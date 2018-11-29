@@ -1,6 +1,7 @@
 package ddg;
 
 import com.google.gson.Gson;
+import entity.FlightTicket;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -78,7 +79,7 @@ public class Generator
             int capacity = rnd.nextInt(capMax - capMin + 1) + capMin;
             
 
-            Ticket ticket = new Ticket(airline, departure, destination, depString, arrString,
+            FlightTicket ticket = new FlightTicket(airline, departure, destination, depString, arrString,
                     duration, price, cancel, airplane, model, capacity);
             System.out.println(gson.toJson(ticket));
         }
