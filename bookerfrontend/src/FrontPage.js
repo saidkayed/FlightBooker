@@ -4,7 +4,7 @@ import DatePicker, { calenderType } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Ticket from "./Ticket"
 
-const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets"
+const URL = "http://localhost:8084/BookerBackend/api/ticket/alltickets"
 
 export default class FrontPage extends Component {
     constructor(props) {
@@ -50,7 +50,7 @@ export default class FrontPage extends Component {
         evt.preventDefault();
 
         
-        const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${0}&to=${10}` + "&airline=" + evt.currentTarget.airline.value + "&dept=" + evt.currentTarget.departure.value + "&dest=" + evt.currentTarget.destination.value + "&deptdate=" + evt.currentTarget.departureDate.value + "&arrdate=" + evt.currentTarget.arrivalDate.value + this.state.PSort;
+        const URI = `http://localhost:8084/BookerBackend/api/ticket/foundtickets?from=${0}&to=${10}` + "&airline=" + evt.currentTarget.airline.value + "&dept=" + evt.currentTarget.departure.value + "&dest=" + evt.currentTarget.destination.value + "&deptdate=" + evt.currentTarget.departureDate.value + "&arrdate=" + evt.currentTarget.arrivalDate.value + this.state.PSort;
         console.log(URI);
       
     //this.setState({ airline: evt.target.airline.value, departure: evt.target.departure.value, destination: evt.target.destination.value, startDate:  evt.target.departureDate.value, endDate:evt.target.arrivalDate.value})
@@ -69,7 +69,7 @@ export default class FrontPage extends Component {
     onChange = async (ev) => {
         
 
-        const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${0}&to=${10}` + "&airline=" + this.state.airline + "&dept=" + this.state.depature + "&dest=" + this.state.destination + "&depdate=" + this.state.deptdate + "&arrdate=" + this.state.arrdate + this.state.PSort;
+        const URI = `http://localhost:8084/BookerBackend/api/ticket/foundtickets?from=${0}&to=${10}` + "&airline=" + this.state.airline + "&dept=" + this.state.depature + "&dest=" + this.state.destination + "&depdate=" + this.state.deptdate + "&arrdate=" + this.state.arrdate + this.state.PSort;
 
         let p = await fetch(URI).then(res => {
             return res.json()

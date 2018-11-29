@@ -18,7 +18,7 @@ const airline = ['THR', 'SAS', 'SaidAirlines']
 const from = ['Istanbul', 'Copenhagen', 'SaidLand']
 const dest = ['Istanbul', 'Copenhagen', 'SaidLand']
 
-const URL = "http://localhost:8080/BookerBackend/api/ticket/foundtickets/"
+const URL = "http://localhost:8084/BookerBackend/api/ticket/foundtickets/"
 
 export default class Ticket extends Component {
     constructor(props) {
