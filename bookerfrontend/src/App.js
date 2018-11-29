@@ -10,45 +10,17 @@ export default class App extends Component {
 
   constructor(){
     super();
-    this.state = { loggedIn: false }
-    this.state = { username: "", password: "" }
     this.state = { showModal: false }
   }
-  
+
   handleOpenModal = () => {
     this.setState({ showModal: true });
-    
-    userRole = (user) => {
-      this.setState({ username: user })
-    }
-  
-    logout = () => {
-      apiFacade.logout();
-      this.setState({ loggedIn: false });
-    }
-  
-    login = (user, pass) => {
-      apiFacade.login(user, pass)
-        .then(res => this.setState({ loggedIn: true }));
-    }
   }
 
   handleCloseModal = () => {
-    
-    login = (evt) => {
-      
-      evt.preventDefault();
-      this.props.userRole(this.state.username);
-      this.props.login(this.state.username, this.state.password);
-      console.log(username)
-      if(this.state.loggedIn=== true){
         this.setState({ showModal: false });
-      }else{
-        console.log(username)
-      }
     }
     
-  }
 
   render() {
     return (
