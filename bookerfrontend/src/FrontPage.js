@@ -4,6 +4,16 @@ import DatePicker, { calenderType } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Ticket from "./Ticket"
 
+
+
+function  handleHttpErrors(res) {
+    if (!res.ok) {
+        return Promise.reject({ status: res.status, fullError: res.json() })
+    }
+    console.log("http error")
+    return res.json();
+}
+
 const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets"
 
 export default class FrontPage extends Component {
@@ -11,7 +21,7 @@ export default class FrontPage extends Component {
         super(props);
         this.state = {
             data: [], airline: [], departure: [], destination: [], startDate: [], endDate: [], search: [],
-            names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "",URL:""};
+            names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "",p:["hej"]};
     }
 
 
@@ -44,19 +54,32 @@ export default class FrontPage extends Component {
         this.setState({ endDate: sortedArrDate })
     }
 
-
+    
 
     onSubmit = async (evt) => {
         evt.preventDefault();
 
         
-        const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${0}&to=${10}` + "&airline=" + evt.currentTarget.airline.value + "&dept=" + evt.currentTarget.departure.value + "&dest=" + evt.currentTarget.destination.value + "&deptdate=" + evt.currentTarget.departureDate.value + "&arrdate=" + evt.currentTarget.arrivalDate.value + this.state.PSort;
+        const URI = 'http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${0}&to=${10}' + "&airline=" + evt.currentTarget.airline.value + "&dept=" + evt.currentTarget.departure.value + "&dest=" + evt.currentTarget.destination.value + "&deptdate=" + evt.currentTarget.departureDate.value + "&arrdate=" + evt.currentTarget.arrivalDate.value + this.state.PSort;
+       
+        console.log(URI)
+        
+        
+        const p = await fetch(URI).then(res => res.json());
+        this.setState({ p: p });
+        console.log("This.state.p " + this.state.p)
+      }
+           
+          
+     
+       
+       /*
         console.log(URI);
-      
-    //this.setState({ airline: evt.target.airline.value, departure: evt.target.departure.value, destination: evt.target.destination.value, startDate:  evt.target.departureDate.value, endDate:evt.target.arrivalDate.value})
-    this.setState({URL:URI})
 
-    }
+      
+    this.setState({URL:URI})
+*/
+    
 
     handleChangeDepartureDate = (date) => {
 
@@ -69,7 +92,7 @@ export default class FrontPage extends Component {
     onChange = async (ev) => {
         
 
-        const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${0}&to=${10}` + "&airline=" + this.state.airline + "&dept=" + this.state.depature + "&dest=" + this.state.destination + "&depdate=" + this.state.deptdate + "&arrdate=" + this.state.arrdate + this.state.PSort;
+        const URI = 'http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${0}&to=${10}' + "&airline=" + this.state.airline + "&dept=" + this.state.depature + "&dest=" + this.state.destination + "&depdate=" + this.state.deptdate + "&arrdate=" + this.state.arrdate + this.state.PSort;
 
         let p = await fetch(URI).then(res => {
             return res.json()
@@ -119,8 +142,8 @@ export default class FrontPage extends Component {
 
 
                 </div>
-                <Ticket search={this.state.search} URL={this.state.URL} />
-                <button>Submit</button>
+                <Ticket search={this.state.search} p={this.state.p} />
+                
               
             </form>
         );
