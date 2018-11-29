@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import 'react-dropdown/style.css';
-import DatePicker, { calenderType } from "react-datepicker";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Ticket from "./Ticket"
 
-const URL = "http://localhost:8084/BookerBackend/api/ticket/alltickets"
+const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets"
 
 export default class FrontPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [], airline: [], departure: [], destination: [], startDate: [], endDate: [], search: [],
-            names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "",URL:""};
+            names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "",p:["hej"]};
     }
 
 
@@ -21,30 +21,30 @@ export default class FrontPage extends Component {
         this.setState({ data: data });
 
         var mappedAirline = this.state.data.map((data) => data.airline)
-        var airlineFilter = mappedAirline.filter((elem, pos, arr) => arr.indexOf(elem) == pos)
+        var airlineFilter = mappedAirline.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
         this.setState({ airline: airlineFilter })
 
         var mappedDepature = this.state.data.map((data) => data.departure)
-        var departureFilter = mappedDepature.filter((elem, pos, arr) => arr.indexOf(elem) == pos)
+        var departureFilter = mappedDepature.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
         this.setState({ departure: departureFilter })
 
         var mappedDestination = this.state.data.map((data) => data.destination)
-        var destinationFilter = mappedDestination.filter((elem, pos, arr) => arr.indexOf(elem) == pos)
+        var destinationFilter = mappedDestination.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
         this.setState({ destination: destinationFilter })
 
 
         var mappedStartDate = this.state.data.map((data) => data.depTime)
-        var startDateFilter = mappedStartDate.filter((elem, pos, arr) => arr.indexOf(elem) == pos)
+        var startDateFilter = mappedStartDate.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
         var sortedStartDate = startDateFilter.sort()
         this.setState({ startDate: sortedStartDate })
 
         var mappedArrDate = this.state.data.map((data) => data.arrTime)
-        var arrDateFilter = mappedArrDate.filter((elem, pos, arr) => arr.indexOf(elem) == pos)
+        var arrDateFilter = mappedArrDate.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
         var sortedArrDate = arrDateFilter.sort()
         this.setState({ endDate: sortedArrDate })
     }
 
-
+    
 
     onSubmit = async (evt) => {
         evt.preventDefault();
@@ -57,6 +57,7 @@ export default class FrontPage extends Component {
     this.setState({URL:URI.toString()})
 
     }
+
 
     handleChangeDepartureDate = (date) => {
 
@@ -119,8 +120,8 @@ export default class FrontPage extends Component {
 
 
                 </div>
-                <Ticket search={this.state.search} URL={this.state.URL} />
-                <button>Submit</button>
+                <Ticket search={this.state.search} p={this.state.p} />
+                
               
             </form>
         );
