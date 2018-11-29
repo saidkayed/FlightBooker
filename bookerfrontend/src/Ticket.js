@@ -14,19 +14,22 @@ import FrontPage from './FrontPage';
 
 //HUSK at skrive "npm install react-dropdown" for dependency
 
-const airline = ['THR', 'SAS', 'SaidAirlines']
-const from = ['Istanbul', 'Copenhagen', 'SaidLand']
-const dest = ['Istanbul', 'Copenhagen', 'SaidLand']
+
 
 const URL = "http://localhost:8080/BookerBackend/api/ticket/foundtickets/"
 
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
-        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "",booked: [] }
+        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", booked: [] }
         this.handleChange = this.handleChange.bind(this);
         this.handleChange1 = this.handleChange1.bind(this);
     }
+   
+
+
+
+      
 
     handleChange(date) {
         this.setState({
@@ -39,27 +42,26 @@ export default class Ticket extends Component {
         });
     }
 
+
     handleTableChange = async (type, props) => {
         const { page, sizePerPage } = props;
 
         const currentIndex = (page - 1) * sizePerPage;
         const end = currentIndex + sizePerPage;
 
-        console.log(this.props.URL)
-
-        const URI = this.props.URL;
-        let p = await fetch(URI).then(res => {
-            const totalSize = Number(res.headers.get("X-Total-Count"));
-            if (totalSize) { this.setState({ totalSize }) }
-            return res.json()
-        });
-
       
 
-
-        const names = await p;
+        /*
+                
+                let p = await fetch(URI).then(res => {
+                    const totalSize = Number(res.headers.get("X-Total-Count"));
+                    if (totalSize) { this.setState({ totalSize }) }
+                    return res.json()
+                        
+                });
+        */ 
+         const names = this.props.p
         this.setState({ page, sizePerPage, names })
-
 
     }
 
@@ -73,6 +75,7 @@ export default class Ticket extends Component {
         ev.preventDefault();
         this.setState({ PSort: "&sort" })
         this.forceUpdate(this.componentDidMount);
+        
     }
 
 
@@ -87,7 +90,7 @@ export default class Ticket extends Component {
             text: 'From',
         },
         {
-            dataField: 'desination',
+            dataField: 'destination',
             text: 'Destination',
         },
         {
@@ -128,23 +131,23 @@ export default class Ticket extends Component {
 
             <form onSubmit={this.onSubmit}>
 
-            <div>
-                            
-                
-                <BootstrapTable
-                    striped
-                    remote
-                    bootstrap4
-                    keyField='id'
-                    data={this.state.names}
-                    columns={columns}
-                    onTableChange={this.handleTableChange}
-                    pagination={paginationFactory({ page, sizePerPage, totalSize })}
-                />
-            
+                <div>
 
-            </div>
-            <button>TEST</button>
+
+                    <BootstrapTable
+                        striped
+                        remote
+                        bootstrap4
+                        keyField='id'
+                        data={this.state.names}
+                        columns={columns}
+                        onTableChange={this.handleTableChange}
+                        pagination={paginationFactory({ page, sizePerPage, totalSize })}
+                    />
+
+
+                </div>
+                <button>TEST</button>
             </form>
         )
     }
