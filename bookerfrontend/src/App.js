@@ -10,7 +10,7 @@ export default class App extends Component {
 
   constructor() {
     super();
-    this.state = { showModal: false }
+    this.state = { showModal: false,loggedIn: false,username: "",password:"" ,dataFromServer:"Fethcing!"}
   }
 
   handleOpenModal = () => {
@@ -19,20 +19,40 @@ export default class App extends Component {
   handleCloseModal = () =>{
   this.setState({showModal: false})
   }
+
+  userRole = (user) => {
+    this.setState({ username: user })
+  }
     
-  login = (evt) => {
+  login = (user, pass) => {
+    userFacade.login(user, pass)
+      .then(res => this.setState({ loggedIn: true }));
+  }
+
+  login2 = (evt) => {
     evt.preventDefault();
-    userFacade.login(this.state.username, this.state.password)
+    this.props.userRole(this.state.username2);
+    this.props.login(this.state.username2, this.state.password2);
+
   }
 
   onChange = (evt) => {
     this.setState({ [evt.target.id]: evt.target.value })
+    console.log(evt.target.value);
   }
 
   logout = () => {
     userFacade.logout();
     this.setState({ loggedIn: false });
   }
+  componentDidMount() {
+    if (this.state.username === "admin" || this.state.username === "Admin") {
+        userFacade.fetchAdminData().then(res => this.setState({ dataFromServer: res }))
+    } else {
+        userFacade.fetchData().then(res => this.setState({ dataFromServer: res }));
+
+    }
+}
 
   render() {
     return (
@@ -52,6 +72,7 @@ export default class App extends Component {
             </li>
           </ul>
           <Route exact path="/" component={FrontPage} />
+         
           <ReactModal className="ReactModal"
             isOpen={this.state.showModal}
             contentLabel="Minimal Modal Example">
