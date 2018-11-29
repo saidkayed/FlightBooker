@@ -8,25 +8,13 @@ import userFacade from './userFacade';
 
 export default class App extends Component {
 
-  constructor() {
-    super();
-    this.state = { showModal: false }
-  }
+  constructor(props) {
+    super(props);
+    this.state = { showModal: false, loggedIn: false, username: "", password: "" }
 
-  handleOpenModal = () => {
-    this.setState({ showModal: true });
   }
-  handleCloseModal = () =>{
-  this.setState({showModal: false})
-  }
-    
-  login = (evt) => {
-    evt.preventDefault();
-    userFacade.login(this.state.username, this.state.password)
-  }
-
-  onChange = (evt) => {
-    this.setState({ [evt.target.id]: evt.target.value })
+  userRole = (user) => {
+    this.setState({ username: user })
   }
 
   logout = () => {
@@ -34,6 +22,35 @@ export default class App extends Component {
     this.setState({ loggedIn: false });
   }
 
+  login = (user, pass) => {
+    userFacade.login(user, pass)
+      .then(res => this.setState({ loggedIn: true }));
+  }
+
+  handleOpenModal = () => {
+    this.setState({ showModal: true });
+  }
+  handleCloseModal = () => {
+    this.setState({ showModal: false })
+  }
+
+  login2 = (evt) => {
+    evt.preventDefault();
+    this.state.userRole(this.state.username);
+    this.state.login(this.state.username, this.state.password);
+
+  }
+  onChange = (evt) => {
+    this.setState({ [evt.target.id]: evt.target.value })
+  }
+  componentDidMount() {
+    if (this.state.username === "admin" || this.state.username === "Admin") {
+      userFacade.fetchAdminData().then(res => this.setState({ dataFromServer: res }))
+    } else {
+      userFacade.fetchData().then(res => this.setState({ dataFromServer: res }));
+
+    }
+  }
   render() {
     return (
       <Router>
@@ -46,8 +63,8 @@ export default class App extends Component {
               {!this.state.loggedIn ?
                 (<a onClick={this.handleOpenModal}>Log In</a>) :
                 (<a>Logged In As {this.state.username}</a>)
-                (<a onClick={this.logout}>Log out</a>)}
-                
+                  (<a onClick={this.logout}>Log out</a>)}
+
 
             </li>
           </ul>
@@ -56,7 +73,7 @@ export default class App extends Component {
             isOpen={this.state.showModal}
             contentLabel="Minimal Modal Example">
 
-            <form onSubmit={this.login} onChange={this.onChange}>
+            <form onSubmit={this.login} onChange={this.onChange} >
               <div className="ModalContent">
                 <h2 id="logintext">Log In</h2>
                 <input id="username" placeholder="username" type="username" name="username" required />
@@ -68,7 +85,10 @@ export default class App extends Component {
             </form>
 
           </ReactModal>
+
+          <h3>Welcome {this.state.username}</h3>
         </div>
+
       </Router>
     );
   }
