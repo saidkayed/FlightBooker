@@ -1,4 +1,4 @@
-const URL = "http://localhost:8084/jwtbackend";
+const URL = "http://localhost:8084/";
 
 
 
