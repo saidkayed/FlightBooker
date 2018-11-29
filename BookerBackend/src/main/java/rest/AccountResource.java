@@ -35,11 +35,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.QueryParam;
 import static javax.ws.rs.client.Entity.json;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-import security.SharedSecret;
+
 
 /**
  * REST Web Service
@@ -50,7 +51,7 @@ import security.SharedSecret;
 
 @Path("account")
 public class AccountResource {
-     public static final int TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30 min
+  
     
     Gson gson;
 
@@ -60,65 +61,24 @@ public class AccountResource {
     @Context
     private UriInfo context;
 
-    /**
-     * Creates a new instance of AccountResource
-     */
     public AccountResource() {
          gson = new GsonBuilder().setPrettyPrinting().create();
     }
 
-    /**
-     * Retrieves representation of an instance of rest.AccountResource
-     * @return an instance of java.lang.String
-     */
-    
-   
-  @POST
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response login(String jsonString) throws AuthenticationException {
+ @GET
+ @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+ @Path("account")
+    public Response getJson(String json,@QueryParam("username") String username,@QueryParam("password") String password) throws AuthenticationException {
+        Account acc = gson.fromJson(json, Account.class);
 
-    JsonObject json = new JsonParser().parse(jsonString).getAsJsonObject();
-    String username = json.get("username").getAsString();
-    String password = json.get("password").getAsString();
+        af.getVeryfiedUser(username, password);
 
-    //Todo refactor into facade
-    try {
-      Account account = AccountFacade.getInstance().getVeryfiedUser(username, password);
-      String token = createToken(username);
-      JsonObject responseJson = new JsonObject();
-      responseJson.addProperty("username", username);
-      responseJson.addProperty("token", token);
-      return Response.ok(new Gson().toJson(responseJson)).build();
-
-    } catch (Exception ex) {
-      if (ex instanceof AuthenticationException) {
-        throw (AuthenticationException) ex;
-      }
-    //  Logger.getLogger(GenericExceptionMapper.class.getName()).log(Level.SEVERE, null, ex);
+        return Response.ok(json).build();
     }
-    throw new AuthenticationException("Invalid username or password! Please try again");
-  }
-  
-   private String createToken(String username) throws JOSEException {
 
-  
-   
-
-    JWSSigner signer = new MACSigner(SharedSecret.getSharedKey());
-    Date date = new Date();
-    JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
-            .subject(username)
-            .claim("username", username)
-            .issueTime(date)
-            .expirationTime(new Date(date.getTime() + TOKEN_EXPIRE_TIME))
-            .build();
-    SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
-    signedJWT.sign(signer);
-    return signedJWT.serialize();
-
-  }
-
+ 
+    
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)

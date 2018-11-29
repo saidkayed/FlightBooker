@@ -16,19 +16,6 @@ import javax.persistence.Persistence;
  * @author tobbe
  */
 public class AccountFacade {
-   
-
-    public AccountFacade() {
-    }
-        
-     
-     
-     private static final AccountFacade instance = new AccountFacade();
-    
-        public static AccountFacade getInstance(){
-        return instance;
-    }
-        
         
         EntityManagerFactory emf;  
        
