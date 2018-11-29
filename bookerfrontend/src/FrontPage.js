@@ -12,7 +12,7 @@ export default class FrontPage extends Component {
         super(props);
         this.state = {
             data: [], airline: [], departure: [], destination: [], startDate: [], endDate: [], search: [],
-            names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "",p:["hej"]};
+            names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "",p:[], URI: ""};
     }
 
 
@@ -32,7 +32,7 @@ export default class FrontPage extends Component {
         var mappedDestination = this.state.data.map((data) => data.destination)
         var destinationFilter = mappedDestination.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
         this.setState({ destination: destinationFilter })
-
+        /*
 
         var mappedStartDate = this.state.data.map((data) => data.depTime)
         var startDateFilter = mappedStartDate.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
@@ -43,6 +43,7 @@ export default class FrontPage extends Component {
         var arrDateFilter = mappedArrDate.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
         var sortedArrDate = arrDateFilter.sort()
         this.setState({ endDate: sortedArrDate })
+        */
     }
 
     
@@ -50,15 +51,11 @@ export default class FrontPage extends Component {
     onSubmit = async (evt) => {
         evt.preventDefault();
 
+        const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${0}&to=${10}` + "&airline=" + evt.currentTarget.airline.value + "&dept=" + evt.currentTarget.departure.value + "&dest=" + evt.currentTarget.destination.value + this.state.PSort;
+       this.setState({URI:URI})
+       console.log(URI)
+        return URI
         
-        const URI = 'http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${0}&to=${10}' + "&airline=" + evt.currentTarget.airline.value + "&dept=" + evt.currentTarget.departure.value + "&dest=" + evt.currentTarget.destination.value + "&deptdate=" + evt.currentTarget.departureDate.value + "&arrdate=" + evt.currentTarget.arrivalDate.value + this.state.PSort;
-       
-        console.log(URI)
-        
-        
-        const p = await fetch(URI).then(res => res.json());
-        this.setState({ p: p });
-        console.log("This.state.p " + this.state.p)
       }
             
 
@@ -70,23 +67,11 @@ export default class FrontPage extends Component {
 
         this.setState({ endDate: date });
     }
-    onChange = async (ev) => {
-        
-
-        const URI = 'http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${0}&to=${10}' + "&airline=" + this.state.airline + "&dept=" + this.state.depature + "&dest=" + this.state.destination + "&depdate=" + this.state.deptdate + "&arrdate=" + this.state.arrdate + this.state.PSort;
-
-        let p = await fetch(URI).then(res => {
-            return res.json()
-        });
-        
-
-        this.setState({search: p })
-    }
+    
 
     render() {
 
         return (
-            <form onSubmit={this.onSubmit}>
                 <div>
 
                     Airline
@@ -107,6 +92,7 @@ export default class FrontPage extends Component {
                             return <option value={data}>{data}</option>
                         })}
                     </select>
+                    {/*
                     Departure Date
                     <select name="departureDate">
                         {this.state.startDate.map(function mapper(data) {
@@ -120,13 +106,11 @@ export default class FrontPage extends Component {
                             </option>
                         })}
                     </select>
+                    */}
 
-
-                </div>
-                <Ticket search={this.state.search} p={this.state.p} />
                 
-              
-            </form>
+                <Ticket search={this.state.search} p={this.state.p} onSubmit={this.state.onSubmit} />
+                </div>
         );
     }
 }

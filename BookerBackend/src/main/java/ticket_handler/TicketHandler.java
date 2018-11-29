@@ -18,7 +18,7 @@ import javax.persistence.Persistence;
  */
 public class TicketHandler {
 
-    public static List<FlightTicket> ticketHandler(String airline, String dept, String dest, String deptDate, String arrDate) throws IOException {
+    public static List<FlightTicket> ticketHandler(String airline, String dept, String dest) throws IOException {
         TicketFacade tf = new TicketFacade(Persistence.createEntityManagerFactory("pu"));
 
 
@@ -28,9 +28,7 @@ public class TicketHandler {
         for (int i = 0; i < allTickets.size(); i++) {
             if (allTickets.get(i).getAirline().equalsIgnoreCase(airline)
                     && allTickets.get(i).getDeparture().equalsIgnoreCase(dept)
-                    && allTickets.get(i).getDestination().equalsIgnoreCase(dest)
-                    && allTickets.get(i).getDepTime().equalsIgnoreCase(deptDate)
-                    && allTickets.get(i).getArrTime().equalsIgnoreCase(arrDate)) {
+                    && allTickets.get(i).getDestination().equalsIgnoreCase(dest)) {
 
                 myTicks.add(allTickets.get(i));
             }
@@ -41,10 +39,15 @@ public class TicketHandler {
 
     public static void main(String[] args) throws IOException {
             
-        List<FlightTicket> list = ticketHandler("DATFlights", "CPH", "TUN", "2019-10-10T15-00", "2019-10-08T18-00");
+        List<FlightTicket> list = ticketHandler("DATFlights", "CPH", "LDN");
         
-        System.out.println(list.size());
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).toString());
+            
+        }
+                
         
+                
         
     }
 

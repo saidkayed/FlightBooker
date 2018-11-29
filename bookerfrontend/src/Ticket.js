@@ -42,11 +42,16 @@ export default class Ticket extends Component {
     }
 
 
-    onSubmit = (ev) => {
+    onSubmit = async (ev) => {
         ev.preventDefault();
+        
+        console.log(this.props.onSubmit)
+        const p = await fetch(this.props.onSubmit).then(res => res.json());
+        
+        this.setState({ names: p })
         this.setState({ PSort: "&sort" })
         this.forceUpdate(this.componentDidMount);
-        
+
     }
 
 
@@ -99,26 +104,20 @@ export default class Ticket extends Component {
         }]
 
         return (
-
             <form onSubmit={this.onSubmit}>
-
-                <div>
-
-
-                    <BootstrapTable
-                        striped
-                        remote
-                        bootstrap4
-                        keyField='id'
-                        data={this.state.names}
-                        columns={columns}
-                        onTableChange={this.handleTableChange}
-                        pagination={paginationFactory({ page, sizePerPage, totalSize })}
-                    />
-
-
-                </div>
-                <button>Submit</button>
+            <div>
+                <BootstrapTable
+                    striped
+                    remote
+                    bootstrap4
+                    keyField='id'
+                    data={this.state.names}
+                    columns={columns}
+                    onTableChange={this.handleTableChange}
+                    pagination={paginationFactory({ page, sizePerPage, totalSize })}
+                />
+            </div>
+            <button>Submit</button>
             </form>
         )
     }
