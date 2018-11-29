@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import FrontPage from './FrontPage';
-import apiFacade from './apiFacade';
 import { HashRouter as Router, Route, NavLink } from "react-router-dom";
 import ReactModal from 'react-modal';
 import "./loginmodal.css";
@@ -18,39 +17,11 @@ export default class App extends Component {
   
   handleOpenModal = () => {
     this.setState({ showModal: true });
-    
-    userRole = (user) => {
-      this.setState({ username: user })
-    }
-  
-    logout = () => {
-      apiFacade.logout();
-      this.setState({ loggedIn: false });
-    }
-  
-    login = (user, pass) => {
-      apiFacade.login(user, pass)
-        .then(res => this.setState({ loggedIn: true }));
-    }
   }
-
-  handleCloseModal = () => {
-    
-    login = (evt) => {
-      
-      evt.preventDefault();
-      this.props.userRole(this.state.username);
-      this.props.login(this.state.username, this.state.password);
-      console.log(username)
-      if(this.state.loggedIn=== true){
-        this.setState({ showModal: false });
-      }else{
-        console.log(username)
-      }
-    }
-    
+  handleCloseModal = () =>{
+  this.setState({showModal: false})
   }
-
+    
   login = (evt) => {
     evt.preventDefault();
     userFacade.login(this.state.username, this.state.password)
