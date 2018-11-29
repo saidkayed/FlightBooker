@@ -54,7 +54,7 @@ export default class FrontPage extends Component {
         console.log(URI);
       
     //this.setState({ airline: evt.target.airline.value, departure: evt.target.departure.value, destination: evt.target.destination.value, startDate:  evt.target.departureDate.value, endDate:evt.target.arrivalDate.value})
-    this.setState({URL:URI.toString()})
+    this.setState({URL:URI})
 
     }
 

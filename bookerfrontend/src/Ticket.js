@@ -51,6 +51,7 @@ export default class Ticket extends Component {
         let p = await fetch(URI).then(res => {
             const totalSize = Number(res.headers.get("X-Total-Count"));
             if (totalSize) { this.setState({ totalSize }) }
+            console.log(res.json())
             return res.json()
         });
 
