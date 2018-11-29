@@ -68,7 +68,7 @@ public class AccountResource {
  @GET
  @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
- @Path("account")
+ @Path("login")
     public Response getJson(String json,@QueryParam("username") String username,@QueryParam("password") String password) throws AuthenticationException {
         Account acc = gson.fromJson(json, Account.class);
 
