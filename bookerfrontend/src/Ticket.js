@@ -3,41 +3,27 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import ShoppingCart from './ShoppingCart';
-import Dropdown from 'react-dropdown'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import 'react-dropdown/style.css'
-import FrontPage from './FrontPage';
 
-
-
-//HUSK at skrive "npm install react-dropdown" for dependency
-
-const airline = ['THR', 'SAS', 'SaidAirlines']
-const from = ['Istanbul', 'Copenhagen', 'SaidLand']
-const dest = ['Istanbul', 'Copenhagen', 'SaidLand']
-
-const URL = "http://localhost:8080/BookerBackend/api/ticket/foundtickets/"
 
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
-        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "" }
-        this.handleChange = this.handleChange.bind(this);
-        this.handleChange1 = this.handleChange1.bind(this);
+        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", booked: [] }
     }
 
-    handleChange(date) {
+    handleChange = (date) => {
         this.setState({
             startDate: date
         });
     }
-    handleChange1(date) {
+    handleChange1 = (date) => {
         this.setState({
             endDate: date
         });
     }
+
 
     handleTableChange = async (type, props) => {
         const { page, sizePerPage } = props;
@@ -45,18 +31,8 @@ export default class Ticket extends Component {
         const currentIndex = (page - 1) * sizePerPage;
         const end = currentIndex + sizePerPage;
 
-
-        const URI = `${URL}?from=${currentIndex}&to=${end}` + "&airline="+this.props.airline +"&dept="+this.props.depature + "&dest="+this.props.destination + "&depdate=" + this.props.deptdate  +"&arrdate=" + this.props.arrdate +  this.state.PSort;
-        let p = await fetch(URI).then(res => {
-            const totalSize = Number(res.headers.get("X-Total-Count"));
-            if (totalSize) { this.setState({ totalSize }) }
-            return res.json()
-        });
-
-
-        const names = await p;
+        const names = this.props.p
         this.setState({ page, sizePerPage, names })
-
 
     }
 
@@ -70,6 +46,7 @@ export default class Ticket extends Component {
         ev.preventDefault();
         this.setState({ PSort: "&sort" })
         this.forceUpdate(this.componentDidMount);
+        
     }
 
 
@@ -84,7 +61,7 @@ export default class Ticket extends Component {
             text: 'From',
         },
         {
-            dataField: 'desination',
+            dataField: 'destination',
             text: 'Destination',
         },
         {
@@ -107,6 +84,7 @@ export default class Ticket extends Component {
                 onClick: (e, column, columnIndex, row, rowIndex) => {
 
                     this.setState({ booked: row })
+                    console.log(row)
 
                 },
             },
@@ -122,22 +100,26 @@ export default class Ticket extends Component {
 
         return (
 
-            <div>
-                            
-                
-                <BootstrapTable
-                    striped
-                    remote
-                    bootstrap4
-                    keyField='id'
-                    data={this.state.names}
-                    columns={columns}
-                    onTableChange={this.handleTableChange}
-                    pagination={paginationFactory({ page, sizePerPage, totalSize })}
-                />
-            
+            <form onSubmit={this.onSubmit}>
 
-            </div>
+                <div>
+
+
+                    <BootstrapTable
+                        striped
+                        remote
+                        bootstrap4
+                        keyField='id'
+                        data={this.state.names}
+                        columns={columns}
+                        onTableChange={this.handleTableChange}
+                        pagination={paginationFactory({ page, sizePerPage, totalSize })}
+                    />
+
+
+                </div>
+                <button>Submit</button>
+            </form>
         )
     }
 }

@@ -46,7 +46,7 @@ public class FlightTicket implements Serializable,Comparable {
         this.departure = departure;
         this.destination = destination;
         this.depTime = depTime;
-        this.arrTime = arrTime;
+        this.arrTime = arrTime.substring(0, 10);
         this.duration = duration;
         this.price = price;
         this.cancelInsurance = cancelInsurance;
