@@ -3,40 +3,22 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import ShoppingCart from './ShoppingCart';
-import Dropdown from 'react-dropdown'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import 'react-dropdown/style.css'
-import FrontPage from './FrontPage';
 
-
-
-//HUSK at skrive "npm install react-dropdown" for dependency
-
-
-
-const URL = "http://localhost:8080/BookerBackend/api/ticket/foundtickets/"
 
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
         this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", booked: [] }
-        this.handleChange = this.handleChange.bind(this);
-        this.handleChange1 = this.handleChange1.bind(this);
     }
-   
 
-
-
-      
-
-    handleChange(date) {
+    handleChange = (date) => {
         this.setState({
             startDate: date
         });
     }
-    handleChange1(date) {
+    handleChange1 = (date) => {
         this.setState({
             endDate: date
         });
@@ -49,18 +31,7 @@ export default class Ticket extends Component {
         const currentIndex = (page - 1) * sizePerPage;
         const end = currentIndex + sizePerPage;
 
-      
-
-        /*
-                
-                let p = await fetch(URI).then(res => {
-                    const totalSize = Number(res.headers.get("X-Total-Count"));
-                    if (totalSize) { this.setState({ totalSize }) }
-                    return res.json()
-                        
-                });
-        */ 
-         const names = this.props.p
+        const names = this.props.p
         this.setState({ page, sizePerPage, names })
 
     }
@@ -147,7 +118,7 @@ export default class Ticket extends Component {
 
 
                 </div>
-                <button>TEST</button>
+                <button>Submit</button>
             </form>
         )
     }

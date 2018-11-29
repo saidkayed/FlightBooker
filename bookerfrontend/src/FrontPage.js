@@ -1,18 +1,9 @@
 import React, { Component } from 'react';
 import 'react-dropdown/style.css';
-import DatePicker, { calenderType } from "react-datepicker";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Ticket from "./Ticket"
 
-
-
-function  handleHttpErrors(res) {
-    if (!res.ok) {
-        return Promise.reject({ status: res.status, fullError: res.json() })
-    }
-    console.log("http error")
-    return res.json();
-}
 
 const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets"
 
@@ -31,25 +22,25 @@ export default class FrontPage extends Component {
         this.setState({ data: data });
 
         var mappedAirline = this.state.data.map((data) => data.airline)
-        var airlineFilter = mappedAirline.filter((elem, pos, arr) => arr.indexOf(elem) == pos)
+        var airlineFilter = mappedAirline.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
         this.setState({ airline: airlineFilter })
 
         var mappedDepature = this.state.data.map((data) => data.departure)
-        var departureFilter = mappedDepature.filter((elem, pos, arr) => arr.indexOf(elem) == pos)
+        var departureFilter = mappedDepature.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
         this.setState({ departure: departureFilter })
 
         var mappedDestination = this.state.data.map((data) => data.destination)
-        var destinationFilter = mappedDestination.filter((elem, pos, arr) => arr.indexOf(elem) == pos)
+        var destinationFilter = mappedDestination.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
         this.setState({ destination: destinationFilter })
 
 
         var mappedStartDate = this.state.data.map((data) => data.depTime)
-        var startDateFilter = mappedStartDate.filter((elem, pos, arr) => arr.indexOf(elem) == pos)
+        var startDateFilter = mappedStartDate.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
         var sortedStartDate = startDateFilter.sort()
         this.setState({ startDate: sortedStartDate })
 
         var mappedArrDate = this.state.data.map((data) => data.arrTime)
-        var arrDateFilter = mappedArrDate.filter((elem, pos, arr) => arr.indexOf(elem) == pos)
+        var arrDateFilter = mappedArrDate.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
         var sortedArrDate = arrDateFilter.sort()
         this.setState({ endDate: sortedArrDate })
     }
@@ -69,17 +60,7 @@ export default class FrontPage extends Component {
         this.setState({ p: p });
         console.log("This.state.p " + this.state.p)
       }
-           
-          
-     
-       
-       /*
-        console.log(URI);
-
-      
-    this.setState({URL:URI})
-*/
-    
+            
 
     handleChangeDepartureDate = (date) => {
 
