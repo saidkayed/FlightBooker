@@ -10,21 +10,21 @@ import java.util.Random;
 public class Generator
 {
 
-    private Random rnd = new Random();
-    private List<String> airlines;
-    private List<String> airports;
-    private List<String> registrations;
-    private List<String> types;
-    private LocalDateTime startDate;
-    private int futureDays;
-    private int tickets;
-    private int durMin;
-    private int durMax;
-    private int priceMin;
-    private int priceMax;
-    private int capMin;
-    private int capMax;
-    private int cancelFee;
+    private final Random rnd = new Random();
+    private final List<String> airlines;
+    private final List<String> airports;
+    private final List<String> registrations;
+    private final List<String> types;
+    private final LocalDateTime startDate;
+    private final int futureDays;
+    private final int tickets;
+    private final int durMin;
+    private final int durMax;
+    private final int priceMin;
+    private final int priceMax;
+    private final int capMin;
+    private final int capMax;
+    private final int cancelFee;
 
     public Generator(List<String> airlines, List<String> airports, List<String> registrations, List<String> types, LocalDateTime startDate, int futureDays, int tickets, int durMin, int durMax, int priceMin, int priceMax, int capMin, int capMax, int cancelFee)
     {
