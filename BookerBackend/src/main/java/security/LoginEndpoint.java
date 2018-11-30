@@ -10,6 +10,7 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import entity.Role;
 import entity.User;
 import entity.UserFacade;
 import java.util.Date;
@@ -25,6 +26,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import exceptions.AuthenticationException;
 import exceptions.GenericExceptionMapper;
+import java.util.ArrayList;
 
 @Path("login")
 public class LoginEndpoint {
@@ -58,7 +60,7 @@ public class LoginEndpoint {
     throw new AuthenticationException("Invalid username or password! Please try again");
   }
 
-  private String createToken(String userName, List<String> roles) throws JOSEException {
+  private static String createToken(String userName, List<String> roles) throws JOSEException {
 
     StringBuilder res = new StringBuilder();
     for (String string : roles) {
@@ -83,4 +85,13 @@ public class LoginEndpoint {
     return signedJWT.serialize();
 
   }
+  
+    public static void main(String[] args) throws JOSEException {
+        LoginEndpoint l = new LoginEndpoint();
+        Role role = new Role("user");
+        List<String> roles = new ArrayList();
+        roles.add("user");
+        System.out.println(createToken("user", roles));
+        
+    }
 }
