@@ -8,8 +8,16 @@ function handleHttpErrors(res) {
     return res.json();
    }
 
-
-
+   class ApiFacade {
+    makeOptions(method,addToken,body) {
+      var opts = {
+        method: method,
+        headers: {
+          "Content-type": "application/json",
+          'Accept': 'application/json',
+        }
+      }
+    }
       setToken = (token) => {
         localStorage.setItem('jwtToken', token)
       }
@@ -32,3 +40,7 @@ function handleHttpErrors(res) {
         return fetch(URL + "/api/info/admin", options).then(handleHttpErrors);
       }
    }
+   
+const facade = new ApiFacade();
+export default facade;
+   

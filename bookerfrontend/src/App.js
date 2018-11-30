@@ -31,32 +31,25 @@ export default class App extends Component {
 
   login2 = (evt) => {
     evt.preventDefault();
-    this.props.userRole(this.state.username2);
-    this.props.login(this.state.username2, this.state.password2);
+    this.userRole(this.state.username2);
+    this.login("user", "test");
 
   }
 
-  }
+  
   onChange = (evt) => {
     this.setState({ [evt.target.id]: evt.target.value })
     console.log(evt.target.value);
   }
-  componentDidMount() {
-    if (this.state.username === "admin" || this.state.username === "Admin") {
-      userFacade.fetchAdminData().then(res => this.setState({ dataFromServer: res }))
-    } else {
-      userFacade.fetchData().then(res => this.setState({ dataFromServer: res }));
-
-    }
-  }
-  componentDidMount() {
+  
+  componentDidMount(){
     if (this.state.username === "admin" || this.state.username === "Admin") {
         userFacade.fetchAdminData().then(res => this.setState({ dataFromServer: res }))
     } else {
         userFacade.fetchData().then(res => this.setState({ dataFromServer: res }));
-
-    }
 }
+console.log(this.state.username)
+  }
 
   render() {
     return (
@@ -81,7 +74,7 @@ export default class App extends Component {
             isOpen={this.state.showModal}
             contentLabel="Minimal Modal Example">
 
-            <form onSubmit={this.login} onChange={this.onChange} >
+            <form onSubmit={this.login2} onChange={this.onChange} >
               <div className="ModalContent">
                 <h2 id="logintext">Log In</h2>
                 <input id="username" placeholder="username" type="username" name="username" required />
@@ -94,7 +87,7 @@ export default class App extends Component {
 
           </ReactModal>
 
-          <h3>Welcome {this.state.username}</h3>
+          <h3>Welcome {this.state.dataFromServer}</h3>
         </div>
 
       </Router>

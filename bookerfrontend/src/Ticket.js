@@ -22,7 +22,7 @@ export default class Ticket extends Component {
         const names = this.props.p
         this.setState({ page, sizePerPage, names })
 
-        const URI = `http://localhost:8084/BookerBackend/api/ticket/foundtickets?from=${currentIndex}&to=${end}` + "&airline=" + this.props.airline + "&dept=" + this.props.departure + "&dest=" + this.props.destination + this.state.PSort;
+        const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${currentIndex}&to=${end}` + "&airline=" + this.props.airline + "&dept=" + this.props.departure + "&dest=" + this.props.destination + this.state.PSort;
     
         const p = await fetch(URI).then(res => res.json())
         this.setState({ names: p })
