@@ -40,6 +40,12 @@ export default class App extends Component {
       });
     }
 
+    
+  logout = () => {
+    userFacade.logout();
+    this.setState({ loggedIn: false });
+  }
+
   
 
   
