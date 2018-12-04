@@ -6,6 +6,8 @@ import entity.FlightTicket;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 
 public class Generator
 {
@@ -46,9 +48,11 @@ public class Generator
 
     public void ticketPrint()
     {
+        EntityManager em = Persistence.createEntityManagerFactory("pu").createEntityManager();
         Gson gson = new Gson();
         for (int i = 0; i < tickets; i++)
         {
+            em.getTransaction().begin();
             String airline = airlines.get(rnd.nextInt(airlines.size()));
             String departure = airports.get(rnd.nextInt(airports.size()));
             String destination = airports.get(rnd.nextInt(airports.size()));
@@ -61,7 +65,7 @@ public class Generator
             System.out.println(depString);
             int depHour = rnd.nextInt(24);
             int depMinute = rnd.nextInt(60);
-            depString += "T"+depHour+"-"+depMinute;
+            depString += "T" + depHour + "-" + depMinute;
             System.out.println(depString);
             dep = dep.plusHours(rnd.nextInt(24));
             dep = dep.plusMinutes(rnd.nextInt(60));
@@ -70,18 +74,19 @@ public class Generator
             int arrHour = arr.getHour();
             int arrMinute = arr.getMinute();
             String arrString = Main.FORMATTER2.format(arr);
-            arrString += "T"+arrHour+"-"+arrMinute;
+            arrString += "T" + arrHour + "-" + arrMinute;
             System.out.println(arrString);
             int price = rnd.nextInt(priceMax - priceMin + 1) + priceMin;
             int cancel = rnd.nextInt(cancelFee);
             String airplane = registrations.get(rnd.nextInt(registrations.size()));
             String model = types.get(rnd.nextInt(types.size()));
             int capacity = rnd.nextInt(capMax - capMin + 1) + capMin;
-            
 
             FlightTicket ticket = new FlightTicket(airline, departure, destination, depString, arrString,
                     duration, price, cancel, airplane, model, capacity);
             System.out.println(gson.toJson(ticket));
+            em.persist(ticket);
+            em.getTransaction().commit();
         }
     }
 }
