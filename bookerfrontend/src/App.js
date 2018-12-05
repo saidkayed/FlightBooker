@@ -3,14 +3,15 @@ import FrontPage from './FrontPage';
 import { HashRouter as Router, Route, NavLink } from "react-router-dom";
 import ReactModal from 'react-modal';
 import "./loginmodal.css";
-import "./Route.css"
+import "./Route.css";
+import logo from './logo1.svg';
 import userFacade from './userFacade';
 
 export default class App extends Component {
 
   constructor() {
     super();
-    this.state = { showModal: false,loggedIn: false,username: "",password:"" ,dataFromServer:"Fethcing!", loggedInUser: ""}
+    this.state = { showModal: false, loggedIn: false, username: "", password: "", dataFromServer: "Fethcing!", loggedInUser: "" }
   }
 
   handleOpenModal = () => {
@@ -27,69 +28,71 @@ export default class App extends Component {
   login2 = (evt) => {
     evt.preventDefault();
     this.userRole(this.state.username2);
-    this.login(this.state.username, this.state.password); 
-    this.setState({username: this.state.username})
+    this.login(this.state.username, this.state.password);
+    this.setState({ username: this.state.username })
     this.handleCloseModal();
 
   }
-  componentDidMount(){
-    
-    if(this.state.loggedIn == true){
-      this.setState({loggedInUser : this.state.username})
+  componentDidMount() {
+
+    if (this.state.loggedIn == true) {
+      this.setState({ loggedInUser: this.state.username })
       console.log("hej");
-    }else{
+    } else {
       console.log("nej");
-      this.setState({loggedInUser : "Guest"})
+      this.setState({ loggedInUser: "Guest" })
     }
 
   }
-    
-  login = async (user, pass) => {
-      await userFacade.login(user, pass)
-      .then(res =>{
-      this.setState({ loggedIn: true })
-      });
-   
-      this.forceUpdate(this.componentDidMount);
-    }
 
-    
+  login = async (user, pass) => {
+    await userFacade.login(user, pass)
+      .then(res => {
+        this.setState({ loggedIn: true })
+      });
+
+    this.forceUpdate(this.componentDidMount);
+  }
+
+
   logout = () => {
     userFacade.logout();
     this.setState({ loggedIn: false });
-    this.setState({loggedInUser : "Guest"})
+    this.setState({ loggedInUser: "Guest" })
   }
 
-  
 
-  
+
+
   onChange = (evt) => {
     this.setState({ [evt.target.id]: evt.target.value })
   }
 
   render() {
     return (
+      
       <Router>
         <div>
           <ul className="header">
             <li>
-              <NavLink exact to="/">Front Page</NavLink>
+              <img src={logo} alt="Logo" height="100" />
+              <NavLink exact to="/"></NavLink>
             </li>
             <li>
               {!this.state.loggedIn ?
                 (<a onClick={this.handleOpenModal}>Log In</a>) :
                 (<a onClick={this.logout}>Log out</a>)
-                   
+
               }
             </li>
             <li>
-              
+
               <a id="loginname">{this.state.loggedInUser}</a>
 
             </li>
           </ul>
           <Route exact path="/" component={FrontPage} />
-         
+
           <ReactModal className="ReactModal"
             isOpen={this.state.showModal}
             contentLabel="Minimal Modal Example">
@@ -107,7 +110,7 @@ export default class App extends Component {
 
           </ReactModal>
 
-         
+
         </div>
 
       </Router>
