@@ -38,8 +38,8 @@ public class SetupTestUsers {
      User mySaid = new User("Zaid", "1234");
     mySaid.addRole(userRole);
     
-    //em.persist(userRole);
-    //em.persist(adminRole);
+    em.persist(userRole);
+    em.persist(adminRole);
     //em.persist(user);
     //em.persist(admin);
     //em.persist(myUser);

@@ -85,8 +85,9 @@ public class Generator
             FlightTicket ticket = new FlightTicket(airline, departure, destination, depString, arrString,
                     duration, price, cancel, airplane, model, capacity);
             System.out.println(gson.toJson(ticket));
-            em.persist(ticket);
-            em.getTransaction().commit();
+            //em.persist(ticket);
+            //em.getTransaction().commit();
         }
     }
+   
 }
