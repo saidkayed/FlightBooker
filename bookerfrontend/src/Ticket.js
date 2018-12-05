@@ -3,32 +3,27 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
-        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", booked: []}
+        this.state = { names: [], currentIndex: 0, end:10,PSort:"",showMore: false}
     }
 
     handleTableChange = async (type, props) => {
-        const { page, sizePerPage } = props;
-
-        const currentIndex = (page - 1) * sizePerPage;
-        const end = currentIndex + sizePerPage;
+      
 
         const names = this.props.p
-        this.setState({ page, sizePerPage, names })
+        this.setState({names})
 
-        const URL = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?` + "dept=" + this.props.departure + "&dest=" + this.props.destination + this.state.PSort;
-        
-        const p = await fetch(URL).then(res =>res.json())
-        this.setState({ totalSize: p.length })
-         
-        const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${currentIndex}&to=${end}` + "&dept=" + this.props.departure + "&dest=" + this.props.destination + this.state.PSort;
-        const t = await fetch(URI).then(res =>res.json())
-        this.setState({names : t})
+        const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${this.state.currentIndex}&to=${this.state.end}` + "&dept=" + this.props.departure + "&dest=" + this.props.destination + this.state.PSort;
+    
+        const p = await fetch(URI).then(res => res.json())
+        this.setState({ names: p })
+        console.log(URI);
 
 
         console.log(this.props.date.toString().substring(4, 15))
@@ -61,75 +56,54 @@ export default class Ticket extends Component {
 
     onSubmit = async (ev) => {
         ev.preventDefault();
-        this.forceUpdate(this.componentDidMount)
-
+        console.log(this.state.names.length)
+        if(this.state.names.length != 0){
+        this.setState({showMore: true})
+        }
+        await this.forceUpdate(this.componentDidMount)
+        
     }
 
 
     render() {
-        const { page, sizePerPage, totalSize } = this.state;
-        const columns = [{
-            dataField: 'airline',
-            text: 'Airline',
-        },
-        {
-            dataField: 'departure',
-            text: 'From',
-        },
-        {
-            dataField: 'destination',
-            text: 'Destination',
-        },
-        {
-            dataField: 'depTime',
-            text: 'Departure',
-        },
-        {
-            dataField: 'arrTime',
-            text: 'Arrival',
-        },
-        {
-            dataField: 'duration',
-            text: 'Duration',
-        },
-        {
-            dataField: 'price',
-            text: 'Price',
-        }, {
-            events: {
-                onClick: (e, column, columnIndex, row, rowIndex) => {
-
-                    this.setState({ booked: row })
-                    console.log(row)
-
-                },
-            },
-            formatter: () => {
-                return (
-
-                    <button>Book</button>
-
-                );
-
-            }
-        }]
+        
         
         return (
             
             <form onSubmit={this.onSubmit}>
             <div>
-                <BootstrapTable
-                    striped
-                    remote
-                    bootstrap4
-                    keyField='id'
-                    data={this.state.names}
-                    columns={columns}
-                    onTableChange={this.handleTableChange}
-                    pagination={paginationFactory({ page, sizePerPage, totalSize })}
-                />
+                <table>
+                    <tr>
+                    <th>Airline</th>
+                    <th>From</th>
+                    <th>Destination</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Duration</th>
+                    <th>Price</th>
+                    </tr>
+                    {this.state.names.map((data) =>
+                    <tr>
+                        <td>{data.airline}</td>
+                        <td>{data.from}</td>
+                        <td>{data.destination}</td>
+                        <td>{data.departure}</td>
+                        <td>{data.arrival}</td>
+                        <td>{data.duration}</td>
+                        <td>{data.price}</td>
+                    </tr>
+                    )}
+                     
+
+
+                </table>
+
+                
             </div>
-            <button>Submit</button>
+            {!this.state.showMore ? 
+            (<button>Submit</button>) : 
+            ( <button>SHOW MORE</button>)
+            }
             </form>
         )
     }
