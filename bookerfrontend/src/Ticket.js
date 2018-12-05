@@ -4,6 +4,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import "react-datepicker/dist/react-datepicker.css";
+import "./Buttons.css"
 
 
 export default class Ticket extends Component {
@@ -129,7 +130,7 @@ export default class Ticket extends Component {
                     pagination={paginationFactory({ page, sizePerPage, totalSize })}
                 />
             </div>
-            <button>Submit</button>
+            <button class="button buttonGrey">Submit</button>
             </form>
         )
     }
