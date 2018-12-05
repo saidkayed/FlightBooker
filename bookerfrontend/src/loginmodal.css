@@ -1,5 +1,5 @@
 .ReactModal {
-  position: fixed;
+    position: fixed;
     top: 60px; 
     left: 760px; 
     right: 760px; 
@@ -14,17 +14,17 @@
 }
 
 #logintext {
-    font-family: "cerapro-regular",sans-serif;
-    font-weight: 700;
+font-family: "cerapro-regular",sans-serif;
+font-weight: 700;
 }
-
+        
 #username {
-    margin: 5%;
-    background-color: rgba(0,0,0,0.05);
-    border-radius: 5px;
-    border: 1px solid #ccc;
-
+margin: 5%;
+background-color: rgba(0,0,0,0.05);
+border-radius: 5px;
+border: 1px solid #ccc;
 }
+
 
 #username:focus{
     margin: 5%;

@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Ticket from "./Ticket"
 
-const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets"
+const URL = "http://localhost:8084/BookerBackend/api/ticket/alltickets"
 
 export default class FrontPage extends Component {
     constructor(props) {
