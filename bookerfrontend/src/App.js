@@ -27,17 +27,30 @@ export default class App extends Component {
   login2 = (evt) => {
     evt.preventDefault();
     this.userRole(this.state.username2);
-    this.login(this.state.username, this.state.password);
-    this.setState({loggedInUser : this.state.username})
+    this.login(this.state.username, this.state.password); 
+    this.setState({username: this.state.username})
     this.handleCloseModal();
 
   }
+  componentDidMount(){
     
-  login = (user, pass) => {
-     userFacade.login(user, pass)
+    if(this.state.loggedIn == true){
+      this.setState({loggedInUser : this.state.username})
+      console.log("hej");
+    }else{
+      console.log("nej");
+      this.setState({loggedInUser : "guest"})
+    }
+
+  }
+    
+  login = async (user, pass) => {
+      await userFacade.login(user, pass)
       .then(res =>{
-       this.setState({ loggedIn: true })
+      this.setState({ loggedIn: true })
       });
+   
+      this.forceUpdate(this.componentDidMount);
     }
 
     
