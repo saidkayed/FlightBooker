@@ -16,6 +16,9 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import javax.persistence.Persistence;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -117,7 +120,7 @@ public class TicketResource {
     @Path("foundtickets")
     public Response getFoundTickets(String json, @QueryParam("from") int id, @QueryParam("to") int id2, 
             @QueryParam("sort") String sort, @QueryParam("dept") String dept, @QueryParam("dest")String dest) throws MalformedURLException, IOException {
-        
+        /*
         TicketHandler th = new TicketHandler();
         
         List<FlightTicket> pricesort = th.ticketHandler(dept, dest);
@@ -140,6 +143,16 @@ public class TicketResource {
         CorsResponseFilter crf = new CorsResponseFilter();
 
         return Response.ok(gson.toJson(pricesort)).build();
+        */
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        List<Future<String>> list = new ArrayList();
+        for(int i = 0; i < ; i ++){
+            Callable<String> callable = new TicketFacade();
+            Future<String> future = executor.submit(callable);
+            list.add(future);
+            
+        }
+        
     }
     /**
      * PUT method for updating or creating an instance of GenericResource
