@@ -1,0 +1,7 @@
+body { 
+    background: lightblue;
+    background-image: url("logo2.svg") ;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-attachment: fixed;
+}

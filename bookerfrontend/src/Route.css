@@ -1,17 +1,22 @@
 ul.header {
     list-style-type: none;
+    background-image: url("logo1.svg") ;
+    background-repeat: no-repeat;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color:lightblue;
-   }
-   
-   ul.header li { float: left;}
-  
-   ul.header li a {
+    background-color:rgb(211, 243, 253);
+}
+
+ul.header li { 
+    float: right;
+    background-position: center bottom;
+}
+
+ul.header li a {
     display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
+    color: black;
+    text-align: justify;
+    padding: 20px 10px;
     text-decoration: none;
    }
