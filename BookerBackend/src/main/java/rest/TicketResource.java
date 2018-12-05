@@ -120,7 +120,7 @@ public class TicketResource {
     @Path("foundtickets")
     public Response getFoundTickets(String json, @QueryParam("from") int id, @QueryParam("to") int id2, 
             @QueryParam("sort") String sort, @QueryParam("dept") String dept, @QueryParam("dest")String dest) throws MalformedURLException, IOException {
-        /*
+        
         TicketHandler th = new TicketHandler();
         
         List<FlightTicket> pricesort = th.ticketHandler(dept, dest);
@@ -143,15 +143,8 @@ public class TicketResource {
         CorsResponseFilter crf = new CorsResponseFilter();
 
         return Response.ok(gson.toJson(pricesort)).build();
-        */
-        ExecutorService executor = Executors.newFixedThreadPool(2);
-        List<Future<String>> list = new ArrayList();
-        for(int i = 0; i < ; i ++){
-            Callable<String> callable = new TicketFacade();
-            Future<String> future = executor.submit(callable);
-            list.add(future);
-            
-        }
+        
+       
         
     }
     /**
