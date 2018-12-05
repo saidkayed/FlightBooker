@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
-        this.state = { names: [], currentIndex: 0, end: 10, PSort: "", showMore: false }
+        this.state = { names: [], currentIndex: 0, end: 10, PSort: "", showMore: false,savednames:[] }
     }
 
     handleTableChange = async () => {
@@ -23,6 +23,9 @@ export default class Ticket extends Component {
         console.log(URI)
         const p = await fetch(URI).then(res => res.json())
         this.setState({ names: p })
+        this.state.names.map((data) => {
+            this.state.savednames.push(data);
+        })
         console.log(URI);
 
 
@@ -64,6 +67,7 @@ export default class Ticket extends Component {
 
     showMore = (ev) => {
         ev.preventDefault();
+        this.setState({currentIndex: this.state.currentIndex+10})
         this.setState({end : this.state.end+10})
         this.forceUpdate(this.componentDidMount)
     }
@@ -86,7 +90,7 @@ export default class Ticket extends Component {
                         <th>Duration</th>
                         <th>Price</th>
                     </tr>
-                    {this.state.names.map((data) =>
+                    {this.state.savednames.map((data) =>
                         <tr>
                             <td>{data.airline}</td>
                             <td>{data.from}</td>
