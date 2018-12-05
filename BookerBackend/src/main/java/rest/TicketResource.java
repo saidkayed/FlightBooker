@@ -7,6 +7,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import cors.CorsResponseFilter;
 import entity.FlightTicket;
 import facade.DatboisTicket;
 import facade.TicketFacade;
@@ -43,7 +44,7 @@ public class TicketResource {
     Gson gson;
 
     TicketFacade tf = new TicketFacade(Persistence.createEntityManagerFactory("pu"));
-
+    
     /**
      * Creates a new instance of GenericResource
      */
@@ -80,6 +81,7 @@ public class TicketResource {
 
         return Response.ok(gson.toJson(pricesort)).build();
     }
+
 
     
     @GET
@@ -135,7 +137,8 @@ public class TicketResource {
             }
             pricesort = ticks;
         }
-        
+        CorsResponseFilter crf = new CorsResponseFilter();
+
         return Response.ok(gson.toJson(pricesort)).build();
     }
     /**
