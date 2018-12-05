@@ -10,17 +10,17 @@ import "react-datepicker/dist/react-datepicker.css";
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
-        this.state = { names: [], currentIndex: 0, end:10,PSort:"",showMore: false}
+        this.state = { names: [], currentIndex: 0, end: 10, PSort: "", showMore: false }
     }
 
-    handleTableChange = async (type, props) => {
-      
+    handleTableChange = async () => {
+
 
         const names = this.props.p
-        this.setState({names})
+        this.setState({ names })
 
         const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${this.state.currentIndex}&to=${this.state.end}` + "&dept=" + this.props.departure + "&dest=" + this.props.destination + this.state.PSort;
-    
+        console.log(URI)
         const p = await fetch(URI).then(res => res.json())
         this.setState({ names: p })
         console.log(URI);
@@ -30,81 +30,89 @@ export default class Ticket extends Component {
         /*Fri Nov 30 2018 14:50:11 GMT+0100 (Central European Standard Time)*/
         /*Nov 30 2018*/
 
-        console.log(this.state.names.map(function mapper(data){
+        console.log(this.state.names.map(function mapper(data) {
             return data.depTime
             /*"2019-03-10T07-05", "2019-02-10T07-05", "2019-03-10T15-05"*/
         }))
-/*
-            dates = data.map(function mapper(data){
-                return data.depTime
-        })
-            dates.sort(function sorter(){
+        /*
+                    dates = data.map(function mapper(data){
+                        return data.depTime
+                })
+                    dates.sort(function sorter(){
+        
+                    })
+        */
 
-            })
-*/
-        
-        
-    
+
+
 
     }
 
     async componentDidMount() {
-        const { page, sizePerPage } = this.state
-        this.handleTableChange("didMount", { page, sizePerPage });
+        await this.handleTableChange()
+        if (this.state.names.length != 0) {
+            this.setState({ showMore: true })
+        }
     }
 
 
-    onSubmit = async (ev) => {
+    onSubmit = (ev) => {
         ev.preventDefault();
-        console.log(this.state.names.length)
-        if(this.state.names.length != 0){
-        this.setState({showMore: true})
-        }
-        await this.forceUpdate(this.componentDidMount)
-        
+        this.forceUpdate(this.componentDidMount)
+
+    }
+
+    showMore = (ev) => {
+        ev.preventDefault();
+        this.setState({end : this.state.end+10})
+        this.forceUpdate(this.componentDidMount)
     }
 
 
     render() {
-        
-        
+
+
         return (
-            
-            <form onSubmit={this.onSubmit}>
+
+
             <div>
                 <table>
                     <tr>
-                    <th>Airline</th>
-                    <th>From</th>
-                    <th>Destination</th>
-                    <th>Departure</th>
-                    <th>Arrival</th>
-                    <th>Duration</th>
-                    <th>Price</th>
+                        <th>Airline</th>
+                        <th>From</th>
+                        <th>Destination</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>Duration</th>
+                        <th>Price</th>
                     </tr>
                     {this.state.names.map((data) =>
-                    <tr>
-                        <td>{data.airline}</td>
-                        <td>{data.from}</td>
-                        <td>{data.destination}</td>
-                        <td>{data.departure}</td>
-                        <td>{data.arrival}</td>
-                        <td>{data.duration}</td>
-                        <td>{data.price}</td>
-                    </tr>
+                        <tr>
+                            <td>{data.airline}</td>
+                            <td>{data.from}</td>
+                            <td>{data.destination}</td>
+                            <td>{data.departure}</td>
+                            <td>{data.arrival}</td>
+                            <td>{data.duration}</td>
+                            <td>{data.price}</td>
+                        </tr>
                     )}
-                     
+
 
 
                 </table>
 
-                
+                {!this.state.showMore ?
+                    (<form onSubmit={this.onSubmit}>
+                        <button>Submit</button>
+                    </form>) :
+                   (<form onSubmit={this.showMore}>
+                    <button>Show More</button>
+                </form>)
+                }
             </div>
-            {!this.state.showMore ? 
-            (<button>Submit</button>) : 
-            ( <button>SHOW MORE</button>)
-            }
-            </form>
+
+
         )
     }
 }
