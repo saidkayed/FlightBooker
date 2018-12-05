@@ -36,9 +36,7 @@ export default class App extends Component {
     
     if(this.state.loggedIn == true){
       this.setState({loggedInUser : this.state.username})
-      console.log("hej");
     }else{
-      console.log("nej");
       this.setState({loggedInUser : "Guest"})
     }
 

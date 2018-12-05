@@ -18,6 +18,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.core.Response;
+import ticket_handler.TicketHandler;
 
 /**
  *
@@ -62,17 +63,7 @@ public class TicketFacade {
 
     }
 
-    public int X_total_count_header() throws MalformedURLException, IOException {
-        DatboisTicket sf = new DatboisTicket();
-        List<FlightTicket> pricesort = sf.getDatbois();
-        List<FlightTicket> mixTicket = getMixTickets();
 
-        for (int i = 0; i < getMixTickets().size(); i++) {
-            pricesort.add(mixTicket.get(i));
-        }
-
-        return pricesort.size();
-    }
     
     public List<FlightDTO> getFlightDTO() {
         EntityManager em = emf.createEntityManager();

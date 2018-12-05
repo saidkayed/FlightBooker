@@ -138,8 +138,6 @@ public class TicketResource {
         
         return Response.ok(gson.toJson(pricesort)).build();
     }
-
-
     /**
      * PUT method for updating or creating an instance of GenericResource
      *
