@@ -10,28 +10,47 @@ export default class App extends Component {
 
   constructor() {
     super();
-    this.state = { showModal: false }
+    this.state = { showModal: false,loggedIn: false,username: "",password:"" ,dataFromServer:"Fethcing!", loggedInUser: ""}
   }
 
   handleOpenModal = () => {
     this.setState({ showModal: true });
   }
-  handleCloseModal = () =>{
-  this.setState({showModal: false})
+  handleCloseModal = () => {
+    this.setState({ showModal: false })
+  }
+
+  userRole = (user) => {
+    this.setState({ username: user })
+  }
+
+  login2 = (evt) => {
+    evt.preventDefault();
+    this.userRole(this.state.username2);
+    this.login(this.state.username, this.state.password);
+    this.setState({loggedInUser : this.state.username})
+    this.handleCloseModal();
+
   }
     
-  login = (evt) => {
-    evt.preventDefault();
-    userFacade.login(this.state.username, this.state.password)
-  }
+  login = (user, pass) => {
+     userFacade.login(user, pass)
+      .then(res =>{
+       this.setState({ loggedIn: true })
+      });
+    }
 
-  onChange = (evt) => {
-    this.setState({ [evt.target.id]: evt.target.value })
-  }
-
+    
   logout = () => {
     userFacade.logout();
     this.setState({ loggedIn: false });
+  }
+
+  
+
+  
+  onChange = (evt) => {
+    this.setState({ [evt.target.id]: evt.target.value })
   }
 
   render() {
@@ -45,18 +64,20 @@ export default class App extends Component {
             <li>
               {!this.state.loggedIn ?
                 (<a onClick={this.handleOpenModal}>Log In</a>) :
-                (<a>Logged In As {this.state.username}</a>)
-                (<a onClick={this.logout}>Log out</a>)}
-                
+                (<a onClick={this.logout}>Log out</a>)
+                   
+              }
+
 
             </li>
           </ul>
           <Route exact path="/" component={FrontPage} />
+         
           <ReactModal className="ReactModal"
             isOpen={this.state.showModal}
             contentLabel="Minimal Modal Example">
 
-            <form onSubmit={this.login} onChange={this.onChange}>
+            <form onSubmit={this.login2} onChange={this.onChange} >
               <div className="ModalContent">
                 <h2 id="logintext">Log In</h2>
                 <input id="username" placeholder="username" type="username" name="username" required />
@@ -68,7 +89,10 @@ export default class App extends Component {
             </form>
 
           </ReactModal>
+
+          <h3>Welcome {this.state.loggedInUser}</h3>
         </div>
+
       </Router>
     );
   }

@@ -72,7 +72,7 @@ handleChangeDate = (date) => {
 
         return (
                 <div>
-
+                    
                     Airline
                     <select name="airline" onChange={this.handleChangeAirline}>
                         {this.state.airline.map(function mapper(data) {
