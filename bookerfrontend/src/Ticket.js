@@ -6,6 +6,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Buttons.css"
+import "./Table.css"
 
 
 export default class Ticket extends Component {
@@ -62,6 +63,7 @@ export default class Ticket extends Component {
 
     onSubmit = (ev) => {
         ev.preventDefault();
+        this.setState({savednames : []})
         this.forceUpdate(this.componentDidMount)
 
     }
@@ -75,29 +77,34 @@ export default class Ticket extends Component {
 
 
     render() {
-
+        let showMoreButton;
+        if(this.state.showMore){
+            showMoreButton = <form onSubmit={this.showMore}>
+                <button>Show More</button>
+            </form>
+        }
 
         return (
 
 
             <div>
-                <table>
+                <table id="table">
                     <tr>
                         <th>Airline</th>
-                        <th>From</th>
-                        <th>Destination</th>
                         <th>Departure</th>
-                        <th>Arrival</th>
+                        <th>Destination</th>
+                        <th>Departure Time</th>
+                        <th>Arrival Time</th>
                         <th>Duration</th>
                         <th>Price</th>
                     </tr>
                     {this.state.savednames.map((data) =>
                         <tr>
                             <td>{data.airline}</td>
-                            <td>{data.from}</td>
-                            <td>{data.destination}</td>
                             <td>{data.departure}</td>
-                            <td>{data.arrival}</td>
+                            <td>{data.destination}</td>
+                            <td>{data.depTime}</td>
+                            <td>{data.arrTime}</td>
                             <td>{data.duration}</td>
                             <td>{data.price}</td>
                         </tr>
@@ -107,14 +114,19 @@ export default class Ticket extends Component {
 
                 </table>
 
-                {!this.state.showMore ?
-                    (<form onSubmit={this.onSubmit}>
+                
+                    <form onSubmit={this.onSubmit}>
                         <button>Submit</button>
-                    </form>) :
+                    </form> 
+
+
+                        {showMoreButton}
+                    
+                   {/* {this.state.showMore 
                    (<form onSubmit={this.showMore}>
                     <button>Show More</button>
                 </form>)
-                }
+                   }*/}
             </div>
 
 
