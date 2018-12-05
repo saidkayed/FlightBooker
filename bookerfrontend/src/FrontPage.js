@@ -21,11 +21,6 @@ export default class FrontPage extends Component {
         const data = await fetch(URL).then(res => res.json());
         this.setState({ data: data });
 
-        var mappedAirline = this.state.data.map((data) => data.airline)
-        var airlineFilter = mappedAirline.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
-        airlineFilter.unshift("Choose Airline")
-        this.setState({ airline: airlineFilter })
-
         var mappedDepature = this.state.data.map((data) => data.departure)
         var departureFilter = mappedDepature.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
         departureFilter.unshift("Choose Departure Airport")
@@ -50,9 +45,7 @@ export default class FrontPage extends Component {
     }
 
 
-handleChangeAirline = (evt) => {
-    this.setState({searchAirline : evt.currentTarget.value})  
-}
+
 handleChangeDeparture = (evt) => {
     this.setState({searchDeparture : evt.currentTarget.value})
 }
@@ -73,12 +66,7 @@ handleChangeDate = (date) => {
         return (
                 <div>
                     
-                    Airline
-                    <select name="airline" onChange={this.handleChangeAirline}>
-                        {this.state.airline.map(function mapper(data) {
-                            return <option value={data}>{data}</option>
-                        })}
-                    </select>
+                  
                     Departure Airport
                     <select name="departure" onChange={this.handleChangeDeparture}>
                         {this.state.departure.map(function mapper(data) {
