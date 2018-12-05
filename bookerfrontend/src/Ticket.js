@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
-        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", booked: [] }
+        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", booked: []}
     }
 
     handleTableChange = async (type, props) => {
@@ -22,10 +22,16 @@ export default class Ticket extends Component {
         const names = this.props.p
         this.setState({ page, sizePerPage, names })
 
+        const URL = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?` + "dept=" + this.props.departure + "&dest=" + this.props.destination + this.state.PSort;
+        
+        const p = await fetch(URL).then(res =>res.json())
+        this.setState({ totalSize: p.length })
+         
         const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${currentIndex}&to=${end}` + "&dept=" + this.props.departure + "&dest=" + this.props.destination + this.state.PSort;
-    
-        const p = await fetch(URI).then(res => res.json())
-        this.setState({ names: p })
+        const t = await fetch(URI).then(res =>res.json())
+        this.setState({names : t})
+
+
         console.log(this.props.date.toString().substring(4, 15))
         /*Fri Nov 30 2018 14:50:11 GMT+0100 (Central European Standard Time)*/
         /*Nov 30 2018*/

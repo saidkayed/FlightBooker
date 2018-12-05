@@ -9,12 +9,13 @@ import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.ext.Provider;
+import rest.TicketResource;
 
 //Comment out the two annotations below to disable CORS-handling
 @Provider
 @PreMatching
 public class CorsResponseFilter implements ContainerResponseFilter {
-     TicketFacade tf = new TicketFacade(Persistence.createEntityManagerFactory("pu"));
+     TicketResource tr = new TicketResource();
   private final static Logger LOG = Logger.getLogger(CorsResponseFilter.class.getName());
   @Override
   public void filter( ContainerRequestContext requestCtx, ContainerResponseContext res )
@@ -23,9 +24,7 @@ public class CorsResponseFilter implements ContainerResponseFilter {
     res.getHeaders().add("Access-Control-Allow-Origin", "*" );
     res.getHeaders().add("Access-Control-Allow-Credentials", "true" );
     res.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT" );
-    res.getHeaders().add("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, Authorization,x-access-token,x-total-count");
-    res.getHeaders().add("Access-Control-Expose-Headers","x-total-count" );  
-    res.getHeaders().add("X-Total-Count", tf.X_total_count_header());
+    res.getHeaders().add("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, Authorization,x-access-token");
   
   }
 }

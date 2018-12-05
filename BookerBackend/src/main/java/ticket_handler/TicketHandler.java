@@ -18,7 +18,7 @@ import javax.persistence.Persistence;
  */
 public class TicketHandler {
 
-    public static List<FlightTicket> ticketHandler(String dept, String dest) throws IOException {
+    public List<FlightTicket> ticketHandler(String dept, String dest) throws IOException {
         TicketFacade tf = new TicketFacade(Persistence.createEntityManagerFactory("pu"));
 
         List<FlightTicket> allTickets = tf.getAllTickets();
@@ -34,16 +34,11 @@ public class TicketHandler {
 
         return myTicks;
     }
+    
+    
+    
 
-    public static void main(String[] args) throws IOException {
 
-        List<FlightTicket> list = ticketHandler("CPH","TUN");
-
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i).toString());
-
-        }
-
-    }
+    
 
 }

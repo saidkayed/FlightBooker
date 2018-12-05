@@ -33,14 +33,12 @@ export default class App extends Component {
     this.handleCloseModal();
 
   }
-  componentDidMount() {
-
-    if (this.state.loggedIn == true) {
-      this.setState({ loggedInUser: this.state.username })
-      console.log("hej");
-    } else {
-      console.log("nej");
-      this.setState({ loggedInUser: "Guest" })
+  componentDidMount(){
+    
+    if(this.state.loggedIn == true){
+      this.setState({loggedInUser : this.state.username})
+    }else{
+      this.setState({loggedInUser : "Guest"})
     }
 
   }
@@ -75,14 +73,13 @@ export default class App extends Component {
         <div>
           <ul className="header">
             <li>
-              <img src={logo} alt="Logo" height="100" />
               <NavLink exact to="/"></NavLink>
             </li>
             <li>
               {!this.state.loggedIn ?
                 (<a onClick={this.handleOpenModal}>Log In</a>) :
                 (<a onClick={this.logout}>Log out</a>)
-
+                
               }
             </li>
             <li>
@@ -90,6 +87,7 @@ export default class App extends Component {
               <a id="loginname">{this.state.loggedInUser}</a>
 
             </li>
+              <img src={logo} alt="Logo" height="100" center/>
           </ul>
           <Route exact path="/" component={FrontPage} />
 
