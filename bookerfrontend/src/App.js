@@ -39,7 +39,7 @@ export default class App extends Component {
       console.log("hej");
     }else{
       console.log("nej");
-      this.setState({loggedInUser : "guest"})
+      this.setState({loggedInUser : "Guest"})
     }
 
   }
@@ -57,6 +57,7 @@ export default class App extends Component {
   logout = () => {
     userFacade.logout();
     this.setState({ loggedIn: false });
+    this.setState({loggedInUser : "Guest"})
   }
 
   
@@ -80,7 +81,10 @@ export default class App extends Component {
                 (<a onClick={this.logout}>Log out</a>)
                    
               }
-
+            </li>
+            <li>
+              
+              <a id="loginname">{this.state.loggedInUser}</a>
 
             </li>
           </ul>
@@ -103,7 +107,7 @@ export default class App extends Component {
 
           </ReactModal>
 
-          <h3>Welcome {this.state.loggedInUser}</h3>
+         
         </div>
 
       </Router>
