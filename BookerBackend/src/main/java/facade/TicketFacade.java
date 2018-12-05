@@ -97,32 +97,4 @@ public class TicketFacade implements Callable<String> {
 
         
     }
-/*
-    public static void main(String[] args) {
-
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
-
-        TicketFacade tf = new TicketFacade(emf);
-
-        java.util.Date dt = new java.util.Date();
-
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-        String currentTime = sdf.format(dt);
-
-        for (int i = 0; i < 1; i++) {
-            FlightTicket t1 = new FlightTicket("MixFlight", "CPH", "TUN", "2019-09-11T09-00", "2019-10-09T09-00", 0, 300, 0, "JumboJet", "ABC123", 0);
-            FlightTicket t2 = new FlightTicket("MixFlight", "CPH", "LAX", "2019-09-11T09-00", "2019-08-12T09-00", 0, 500, 0, "JumboJet", "ABC123", 0);
-            FlightTicket t3 = new FlightTicket("MixFlight", "CPH", "SWE", "2019-09-11T09-00", "2019-07-07T09-00", 0, 200, 0, "JumboJet", "ABC123", 0);
-            FlightTicket t4 = new FlightTicket("MixFlight", "CPH", "IST", "2019-09-11T09-00", "2019-09-10T09-00", 0, 400, 0, "JumboJet", "ABC123", 0);
-            tf.CreateTicket(t1);
-            tf.CreateTicket(t2);
-            tf.CreateTicket(t3);
-            tf.CreateTicket(t4);
-
-        }
-        System.out.println(tf.getMixTickets());
-    }
-
-*/
 }

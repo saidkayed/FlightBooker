@@ -7,7 +7,6 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import cors.CorsResponseFilter;
 import entity.FlightTicket;
 import facade.DatboisTicket;
 import facade.MixTicket;
@@ -15,7 +14,6 @@ import facade.TicketFacade;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -70,7 +68,7 @@ public class TicketResource {
     @Path("alltickets")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllTickets(String json) throws MalformedURLException, IOException {
+    public Response getAllTickets() throws MalformedURLException, IOException {
         MixTicket mt = new MixTicket();
         DatboisTicket dt = new DatboisTicket();
         List<FlightTicket> mix = mt.getMix();
@@ -97,7 +95,7 @@ public class TicketResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("foundtickets")
-    public Response getAllTickets(String json, @QueryParam("from") int from, @QueryParam("to") int to, @QueryParam("dept") String dept, @QueryParam("dest") String dest) throws MalformedURLException, IOException, InterruptedException, ExecutionException {
+    public Response getAllTickets(@QueryParam("from") int from, @QueryParam("to") int to, @QueryParam("dept") String dept, @QueryParam("dest") String dest) throws MalformedURLException, IOException, InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newFixedThreadPool(2);
         List<FlightTicket> ticks = new ArrayList();
         List<Future<String>> list = new ArrayList();
@@ -134,11 +132,7 @@ public class TicketResource {
      *
      * @param content representation for the resource
      */
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
-    }
-
+   
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
