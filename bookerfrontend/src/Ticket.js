@@ -6,12 +6,14 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Buttons.css"
+import "./Table.css"
 
 
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
-        this.state = { names: [], currentIndex: 0, end: 10, PSort: "", showMore: false,savednames:[] }
+        this.state = { names: [], currentIndex: 0, end: 10, PSort: "", showMore: false,savednames:[],
+    dept: "", dest: ""}
     }
 
     handleTableChange = async () => {
@@ -20,7 +22,7 @@ export default class Ticket extends Component {
         const names = this.props.p
         this.setState({ names })
 
-        const URI = `http://localhost:8084/BookerBackend/api/ticket/foundtickets?from=${this.state.currentIndex}&to=${this.state.end}` + "&dept=" + this.props.departure + "&dest=" + this.props.destination + this.state.PSort;
+        const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${this.state.currentIndex}&to=${this.state.end}` + "&dept=" + this.state.dept + "&dest=" + this.state.dest + this.state.PSort;
         console.log(URI)
         const p = await fetch(URI).then(res => res.json())
         this.setState({ names: p })
@@ -62,42 +64,52 @@ export default class Ticket extends Component {
 
     onSubmit = (ev) => {
         ev.preventDefault();
+        this.setState({savednames : [],currentIndex: 0,end:10})
+        this.setState({dest : this.props.destination})
+        this.setState({dept : this.props.departure})
         this.forceUpdate(this.componentDidMount)
 
     }
 
     showMore = (ev) => {
         ev.preventDefault();
+
         this.setState({currentIndex: this.state.currentIndex+10})
         this.setState({end : this.state.end+10})
+
         this.forceUpdate(this.componentDidMount)
     }
 
 
     render() {
-
+        let showMoreButton;
+        if(this.state.showMore){
+            showMoreButton = <form onSubmit={this.showMore}>
+                <button>Show More</button>
+            </form>
+        }
 
         return (
 
 
             <div>
-                <table>
+                <table id="table">
                     <tr>
                         <th>Airline</th>
-                        <th>From</th>
-                        <th>Destination</th>
                         <th>Departure</th>
-                        <th>Arrival</th>
+                        <th>Destination</th>
+                        <th>Departure Time</th>
+                        <th>Arrival Time</th>
                         <th>Duration</th>
                         <th>Price</th>
                     </tr>
                     {this.state.savednames.map((data) =>
                         <tr>
                             <td>{data.airline}</td>
-                            <td>{data.from}</td>
-                            <td>{data.destination}</td>
                             <td>{data.departure}</td>
-                            <td>{data.arrival}</td>
+                            <td>{data.destination}</td>
+                            <td>{data.depTime}</td>
+                            <td>{data.arrTime}</td>
                             <td>{data.duration}</td>
                             <td>{data.price}</td>
                         </tr>
@@ -107,14 +119,19 @@ export default class Ticket extends Component {
 
                 </table>
 
-                {!this.state.showMore ?
-                    (<form onSubmit={this.onSubmit}>
+                
+                    <form onSubmit={this.onSubmit}>
                         <button>Submit</button>
-                    </form>) :
+                    </form> 
+
+
+                        {showMoreButton}
+                    
+                   {/* {this.state.showMore 
                    (<form onSubmit={this.showMore}>
                     <button>Show More</button>
                 </form>)
-                }
+                   }*/}
             </div>
 
 
