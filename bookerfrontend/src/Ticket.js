@@ -5,133 +5,119 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "./Buttons.css"
 
 
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
-        this.state = { names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", booked: []}
+        this.state = { names: [], currentIndex: 0, end: 10, PSort: "", showMore: false,savednames:[] }
     }
 
-    handleTableChange = async (type, props) => {
-        const { page, sizePerPage } = props;
+    handleTableChange = async () => {
 
-        const currentIndex = (page - 1) * sizePerPage;
-        const end = currentIndex + sizePerPage;
 
         const names = this.props.p
-        this.setState({ page, sizePerPage, names })
+        this.setState({ names })
 
-        const URL = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?` + "dept=" + this.props.departure + "&dest=" + this.props.destination + this.state.PSort;
-        
-        const p = await fetch(URL).then(res =>res.json())
-        this.setState({ totalSize: p.length })
-         
-        const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${currentIndex}&to=${end}` + "&dept=" + this.props.departure + "&dest=" + this.props.destination + this.state.PSort;
-        const t = await fetch(URI).then(res =>res.json())
-        this.setState({names : t})
+        const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${this.state.currentIndex}&to=${this.state.end}` + "&dept=" + this.props.departure + "&dest=" + this.props.destination + this.state.PSort;
+        console.log(URI)
+        const p = await fetch(URI).then(res => res.json())
+        this.setState({ names: p })
+        this.state.names.map((data) => {
+            this.state.savednames.push(data);
+        })
+        console.log(URI);
 
 
         console.log(this.props.date.toString().substring(4, 15))
         /*Fri Nov 30 2018 14:50:11 GMT+0100 (Central European Standard Time)*/
         /*Nov 30 2018*/
 
-        console.log(this.state.names.map(function mapper(data){
+        console.log(this.state.names.map(function mapper(data) {
             return data.depTime
             /*"2019-03-10T07-05", "2019-02-10T07-05", "2019-03-10T15-05"*/
         }))
-/*
-            dates = data.map(function mapper(data){
-                return data.depTime
-        })
-            dates.sort(function sorter(){
+        /*
+                    dates = data.map(function mapper(data){
+                        return data.depTime
+                })
+                    dates.sort(function sorter(){
+        
+                    })
+        */
 
-            })
-*/
-        
-        
-    
+
+
 
     }
 
     async componentDidMount() {
-        const { page, sizePerPage } = this.state
-        this.handleTableChange("didMount", { page, sizePerPage });
+        await this.handleTableChange()
+        if (this.state.names.length != 0) {
+            this.setState({ showMore: true })
+        }
     }
 
 
-    onSubmit = async (ev) => {
+    onSubmit = (ev) => {
         ev.preventDefault();
         this.forceUpdate(this.componentDidMount)
 
     }
 
+    showMore = (ev) => {
+        ev.preventDefault();
+        this.setState({currentIndex: this.state.currentIndex+10})
+        this.setState({end : this.state.end+10})
+        this.forceUpdate(this.componentDidMount)
+    }
+
 
     render() {
-        const { page, sizePerPage, totalSize } = this.state;
-        const columns = [{
-            dataField: 'airline',
-            text: 'Airline',
-        },
-        {
-            dataField: 'departure',
-            text: 'From',
-        },
-        {
-            dataField: 'destination',
-            text: 'Destination',
-        },
-        {
-            dataField: 'depTime',
-            text: 'Departure',
-        },
-        {
-            dataField: 'arrTime',
-            text: 'Arrival',
-        },
-        {
-            dataField: 'duration',
-            text: 'Duration',
-        },
-        {
-            dataField: 'price',
-            text: 'Price',
-        }, {
-            events: {
-                onClick: (e, column, columnIndex, row, rowIndex) => {
 
-                    this.setState({ booked: row })
-                    console.log(row)
 
-                },
-            },
-            formatter: () => {
-                return (
-
-                    <button>Book</button>
-
-                );
-
-            }
-        }]
-        
         return (
-            
-            <form onSubmit={this.onSubmit}>
+
+
             <div>
-                <BootstrapTable
-                    striped
-                    remote
-                    bootstrap4
-                    keyField='id'
-                    data={this.state.names}
-                    columns={columns}
-                    onTableChange={this.handleTableChange}
-                    pagination={paginationFactory({ page, sizePerPage, totalSize })}
-                />
+                <table>
+                    <tr>
+                        <th>Airline</th>
+                        <th>From</th>
+                        <th>Destination</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>Duration</th>
+                        <th>Price</th>
+                    </tr>
+                    {this.state.savednames.map((data) =>
+                        <tr>
+                            <td>{data.airline}</td>
+                            <td>{data.from}</td>
+                            <td>{data.destination}</td>
+                            <td>{data.departure}</td>
+                            <td>{data.arrival}</td>
+                            <td>{data.duration}</td>
+                            <td>{data.price}</td>
+                        </tr>
+                    )}
+
+
+
+                </table>
+
+                {!this.state.showMore ?
+                    (<form onSubmit={this.onSubmit}>
+                        <button>Submit</button>
+                    </form>) :
+                   (<form onSubmit={this.showMore}>
+                    <button>Show More</button>
+                </form>)
+                }
             </div>
-            <button>Submit</button>
-            </form>
+
+
         )
     }
 }

@@ -5,7 +5,6 @@
  */
 package facade;
 
-import DTO.FlightDTO;
 import entity.FlightTicket;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -57,24 +56,6 @@ public class TicketFacade {
         try {
             Query q = em.createQuery("SELECT e FROM FlightTicket e");
             return q.getResultList();
-        } finally {
-            em.close();
-        }
-
-    }
-
-
-    
-    public List<FlightDTO> getFlightDTO() {
-        EntityManager em = emf.createEntityManager();
-
-        TypedQuery<FlightDTO> query = em.createQuery("SELECT NEW DTO.FlightDTO"
-                + "(c1.id ,c1.airplane,c1.arrTime,c1.depTime,c1.departure,c1.destination,c1.duration,c1.model,c2.username)"
-                + "FROM FlightTicket AS c1 INNER JOIN c1.id AS c2", FlightDTO.class);
-        
-        try {
-            
-            return query.getResultList();
         } finally {
             em.close();
         }
