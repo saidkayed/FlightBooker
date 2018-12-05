@@ -63,7 +63,8 @@ export default class Ticket extends Component {
 
     onSubmit = (ev) => {
         ev.preventDefault();
-        this.setState({savednames : []})
+        this.setState({savednames : [],currentIndex: 0,end:10})
+       
         this.forceUpdate(this.componentDidMount)
 
     }
