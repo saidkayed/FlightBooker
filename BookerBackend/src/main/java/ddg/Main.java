@@ -10,13 +10,11 @@ import java.util.List;
 import java.util.Properties;
 
 public class Main {
-    static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm");
-    static DateTimeFormatter FORMATTER2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    static DateTimeFormatter FORMATTER3 = DateTimeFormatter.ofPattern("HH-mm");
+    static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm");
 
     public static void main(String[] args) {
         Main main = new Main();
-        int tickets = 1;
+        int tickets = 10;
         if (args.length > 0) {
             tickets = Integer.parseInt(args[0]);
         }
