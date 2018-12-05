@@ -12,7 +12,8 @@ import "./Table.css"
 export default class Ticket extends Component {
     constructor(props) {
         super(props);
-        this.state = { names: [], currentIndex: 0, end: 10, PSort: "", showMore: false,savednames:[] }
+        this.state = { names: [], currentIndex: 0, end: 10, PSort: "", showMore: false,savednames:[],
+    dept: "", dest: ""}
     }
 
     handleTableChange = async () => {
@@ -21,7 +22,7 @@ export default class Ticket extends Component {
         const names = this.props.p
         this.setState({ names })
 
-        const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${this.state.currentIndex}&to=${this.state.end}` + "&dept=" + this.props.departure + "&dest=" + this.props.destination + this.state.PSort;
+        const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${this.state.currentIndex}&to=${this.state.end}` + "&dept=" + this.state.dept + "&dest=" + this.state.dest + this.state.PSort;
         console.log(URI)
         const p = await fetch(URI).then(res => res.json())
         this.setState({ names: p })
@@ -64,15 +65,18 @@ export default class Ticket extends Component {
     onSubmit = (ev) => {
         ev.preventDefault();
         this.setState({savednames : [],currentIndex: 0,end:10})
-       
+        this.setState({dest : this.props.destination})
+        this.setState({dept : this.props.departure})
         this.forceUpdate(this.componentDidMount)
 
     }
 
     showMore = (ev) => {
         ev.preventDefault();
+
         this.setState({currentIndex: this.state.currentIndex+10})
         this.setState({end : this.state.end+10})
+
         this.forceUpdate(this.componentDidMount)
     }
 
