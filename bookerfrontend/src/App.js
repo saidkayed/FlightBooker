@@ -4,6 +4,7 @@ import { HashRouter as Router, Route, NavLink } from "react-router-dom";
 import ReactModal from 'react-modal';
 import "./loginmodal.css";
 import "./Route.css";
+import "./App.css";
 import logo from './logo1.svg';
 import userFacade from './userFacade';
 
@@ -33,12 +34,12 @@ export default class App extends Component {
     this.handleCloseModal();
 
   }
-  componentDidMount(){
-    
-    if(this.state.loggedIn == true){
-      this.setState({loggedInUser : this.state.username})
-    }else{
-      this.setState({loggedInUser : "Guest"})
+  componentDidMount() {
+
+    if (this.state.loggedIn == true) {
+      this.setState({ loggedInUser: this.state.username })
+    } else {
+      this.setState({ loggedInUser: "Guest" })
     }
 
   }
@@ -68,7 +69,7 @@ export default class App extends Component {
 
   render() {
     return (
-      
+
       <Router>
         <div>
           <ul className="header">
@@ -79,7 +80,7 @@ export default class App extends Component {
               {!this.state.loggedIn ?
                 (<a onClick={this.handleOpenModal}>Log In</a>) :
                 (<a onClick={this.logout}>Log out</a>)
-                
+
               }
             </li>
             <li>
@@ -87,7 +88,6 @@ export default class App extends Component {
               <a id="loginname">{this.state.loggedInUser}</a>
 
             </li>
-              <img src={logo} alt="Logo" height="100" center/>
           </ul>
           <Route exact path="/" component={FrontPage} />
 
