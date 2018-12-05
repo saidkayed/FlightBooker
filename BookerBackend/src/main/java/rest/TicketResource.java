@@ -16,6 +16,9 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import javax.persistence.Persistence;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -140,6 +143,9 @@ public class TicketResource {
         CorsResponseFilter crf = new CorsResponseFilter();
 
         return Response.ok(gson.toJson(pricesort)).build();
+        
+       
+        
     }
     /**
      * PUT method for updating or creating an instance of GenericResource

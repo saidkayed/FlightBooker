@@ -102,7 +102,7 @@ handleChangeDate = (date) => {
                     */}
 
                 
-                <Ticket search={this.state.search} p={this.state.p} airline={this.state.searchAirline} departure={this.state.searchDeparture} destination={this.state.searchDestination} date={this.state.searchDate} />
+                <Ticket search={this.state.search} p={this.state.p} departure={this.state.searchDeparture} destination={this.state.searchDestination} date={this.state.searchDate} />
                 </div>
         );
     }
