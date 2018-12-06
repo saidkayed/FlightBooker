@@ -22,9 +22,7 @@ export default class Ticket extends Component {
         const p = await fetch(URI).then(res => res.json())
         this.setState({ names: p })
 
-        console.log(this.props.date)
         var sortedFilteredArr = this.dateSortFilter(this.props.date)
-        console.log(sortedFilteredArr)
         this.setState({names : sortedFilteredArr})
         
         this.state.names.map((data) => {
