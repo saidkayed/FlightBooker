@@ -9,9 +9,11 @@ import Button from 'react-bootstrap/lib/Button';
 
 const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets"
 const options = [
-    { value: 'SaidLand', label: 'SaidLand' },
-    { value: 'KristianLand', label: 'KristianLand' },
-    { value: 'TobiasLand', label: 'TobiasLand' }
+    { value: 'LHR', label: 'LHR' },
+    { value: 'FRA', label: 'FRA' },
+    { value: 'AMS', label: 'AMS' },
+    { value: 'MAD', label: 'MAD' },
+    { value: 'CDG', label: 'CDG' }
 ];
 
 export default class FrontPage extends Component {
@@ -72,10 +74,6 @@ export default class FrontPage extends Component {
                             return <option value={data}>{data}</option>
                         })}
                     </select>
-                    {/*<form onSubmit={this.onSubmit}>
-                        <Button bsStyle="primary">Submit</Button>
-                    </form>*/}
-
                     <Ticket search={this.state.search} p={this.state.p} departure={this.state.searchDeparture} destination={this.state.searchDestination} date={this.state.searchDate} />
                 </div>
             </center>
