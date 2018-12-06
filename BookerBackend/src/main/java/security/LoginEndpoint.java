@@ -10,6 +10,7 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import entity.Data;
 import entity.Role;
 import entity.User;
 import entity.UserFacade;
@@ -28,89 +29,110 @@ import exceptions.AuthenticationException;
 import exceptions.GenericExceptionMapper;
 import java.util.ArrayList;
 
-@Path("login")
+@Path("User")
 public class LoginEndpoint {
-Gson gson;
-  public static final int TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30 min
 
-  @POST
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response login(String jsonString) throws AuthenticationException {
+    Gson gson;
+    public static final int TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30 min
 
-    JsonObject json = new JsonParser().parse(jsonString).getAsJsonObject();
-    String username = json.get("username").getAsString();
-    String password = json.get("password").getAsString();
+    @POST
+    @Path("login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response login(String jsonString) throws AuthenticationException {
 
-    //Todo refactor into facade
-    try {
-      User user = UserFacade.getInstance().getVeryfiedUser(username, password);
-      String token = createToken(username, user.getRolesAsStrings());
-      JsonObject responseJson = new JsonObject();
-      responseJson.addProperty("username", username);
-      responseJson.addProperty("token", token);
-      return Response.ok(new Gson().toJson(responseJson)).build();
+        JsonObject json = new JsonParser().parse(jsonString).getAsJsonObject();
+        String username = json.get("username").getAsString();
+        String password = json.get("password").getAsString();
 
-    } catch (Exception ex) {
-      if (ex instanceof AuthenticationException) {
-        throw (AuthenticationException) ex;
-      }
-      Logger.getLogger(GenericExceptionMapper.class.getName()).log(Level.SEVERE, null, ex);
+        //Todo refactor into facade
+        try {
+            User user = UserFacade.getInstance().getVeryfiedUser(username, password);
+            String token = createToken(username, user.getRolesAsStrings());
+            JsonObject responseJson = new JsonObject();
+            responseJson.addProperty("username", username);
+            responseJson.addProperty("token", token);
+            return Response.ok(new Gson().toJson(responseJson)).build();
+
+        } catch (Exception ex) {
+            if (ex instanceof AuthenticationException) {
+                throw (AuthenticationException) ex;
+            }
+            Logger.getLogger(GenericExceptionMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        throw new AuthenticationException("Invalid username or password! Please try again");
     }
-    throw new AuthenticationException("Invalid username or password! Please try again");
-  }
 
-  private static String createToken(String userName, List<String> roles) throws JOSEException {
+    private static String createToken(String userName, List<String> roles) throws JOSEException {
 
-    StringBuilder res = new StringBuilder();
-    for (String string : roles) {
-      res.append(string);
-      res.append(",");
+        StringBuilder res = new StringBuilder();
+        for (String string : roles) {
+            res.append(string);
+            res.append(",");
+        }
+        String rolesAsString = res.length() > 0 ? res.substring(0, res.length() - 1) : "";
+        String issuer = "semesterdemo_security_course";
+
+        JWSSigner signer = new MACSigner(SharedSecret.getSharedKey());
+        Date date = new Date();
+        JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
+                .subject(userName)
+                .claim("username", userName)
+                .claim("roles", rolesAsString)
+                .claim("issuer", issuer)
+                .issueTime(date)
+                .expirationTime(new Date(date.getTime() + TOKEN_EXPIRE_TIME))
+                .build();
+        SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
+        signedJWT.sign(signer);
+        return signedJWT.serialize();
+
     }
-    String rolesAsString = res.length() > 0 ? res.substring(0, res.length() - 1) : "";
-    String issuer = "semesterdemo_security_course";
 
-    JWSSigner signer = new MACSigner(SharedSecret.getSharedKey());
-    Date date = new Date();
-    JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
-            .subject(userName)
-            .claim("username", userName)
-            .claim("roles", rolesAsString)
-            .claim("issuer", issuer)
-            .issueTime(date)
-            .expirationTime(new Date(date.getTime() + TOKEN_EXPIRE_TIME))
-            .build();
-    SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
-    signedJWT.sign(signer);
-    return signedJWT.serialize();
-
-  }
-  
     public static void main(String[] args) throws JOSEException {
         LoginEndpoint l = new LoginEndpoint();
         Role role = new Role("user");
         List<String> roles = new ArrayList();
         roles.add("user");
         System.out.println(createToken("user", roles));
-        
+
     }
+
     @Path("create")
-     @POST
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response postJson(String json) {
-        
-        JsonObject get_json = new JsonParser().parse(json).getAsJsonObject();
-    String username = get_json.get("username").getAsString();
-    String password = get_json.get("password").getAsString();
-    
-    
-         System.out.println(json);
-        UserFacade uf = new UserFacade();
-        uf.CreateUser(new User(username,password));
-       
 
- 
+        JsonObject get_json = new JsonParser().parse(json).getAsJsonObject();
+        String username = get_json.get("username").getAsString();
+        String password = get_json.get("password").getAsString();
+
+        System.out.println(json);
+        UserFacade uf = new UserFacade();
+        uf.CreateUser(new User(username, password));
+
+        return Response.ok(json).build();
+    }
+
+    @Path("data")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response postData(String json) {
+
+        JsonObject get_json = new JsonParser().parse(json).getAsJsonObject();
+        String username = get_json.get("username").getAsString();
+        String departure = get_json.get("departure").getAsString();
+        String destination = get_json.get("destination").getAsString();
+        String depTime = get_json.get("depTime").getAsString();
+        UserFacade uf = new UserFacade();
+
+        User user = uf.GetUser(username);
+        Data data = new Data(username, departure, destination, depTime);
+
+        uf.Save_Ticket_With_User(data, user);
+
         return Response.ok(json).build();
     }
 }
