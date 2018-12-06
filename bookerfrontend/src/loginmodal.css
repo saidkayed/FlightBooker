@@ -1,11 +1,12 @@
 .ReactModal {
-    position: fixed;
-    top: 60px; 
-    left: 760px; 
-    right: 760px; 
-    bottom: 390px;
+    position: absolute;
+    padding: 120px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: aliceblue;
     border-radius: 5px;
+
 }
 
 .ModalContent {
