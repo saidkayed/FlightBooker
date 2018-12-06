@@ -12,6 +12,9 @@ import com.nimbusds.jose.JOSEException;
 import entity.User;
 import entity.UserFacade;
 import exceptions.AuthenticationException;
+import exceptions.GenericExceptionMapper;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -36,14 +39,26 @@ public class CreateEndpoint
         String username = get_json.get("username").getAsString();
         String password = get_json.get("password").getAsString();
 
-        System.out.println(json);
-        UserFacade uf = new UserFacade();
-        uf.CreateUser(new User(username, password));
-        User user = UserFacade.getInstance().getVeryfiedUser(username, password);
-        String token = LoginEndpoint.createToken(username, user.getRolesAsStrings());
-        JsonObject responseJson = new JsonObject();
-        responseJson.addProperty("username", username);
-        responseJson.addProperty("token", token);
-        return Response.ok(new Gson().toJson(responseJson)).build();
+        try
+        {
+            System.out.println(json);
+            UserFacade uf = new UserFacade();
+            uf.CreateUser(new User(username, password));
+            User user = UserFacade.getInstance().getVeryfiedUser(username, password);
+            String token = LoginEndpoint.createToken(username, user.getRolesAsStrings());
+            JsonObject responseJson = new JsonObject();
+            responseJson.addProperty("username", username);
+            responseJson.addProperty("token", token);
+            return Response.ok(new Gson().toJson(responseJson)).build();
+        }
+        catch (Exception ex)
+        {
+            if (ex instanceof AuthenticationException)
+            {
+                throw (AuthenticationException) ex;
+            }
+            Logger.getLogger(GenericExceptionMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        throw new AuthenticationException("User already exists! Please try again");
     }
 }

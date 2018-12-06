@@ -32,7 +32,6 @@ export default class App extends Component {
     this.userRole(this.state.username2);
     this.login(this.state.username, this.state.password);
     this.setState({ username: this.state.username })
-    this.handleCloseModal();
 
   }
 
@@ -42,7 +41,6 @@ export default class App extends Component {
     this.userRole(this.state.username2);
     this.register(this.state.username, this.state.password);
     this.setState({ username: this.state.username })
-    this.handleCloseModal();
 
   }
 
@@ -62,6 +60,7 @@ export default class App extends Component {
         this.setState({ loggedIn: true })
       });
 
+    this.handleCloseModal();
     this.forceUpdate(this.componentDidMount);
   }
 
@@ -71,6 +70,7 @@ export default class App extends Component {
         this.setState({ loggedIn: true })
       });
 
+    this.handleCloseModal();
     this.forceUpdate(this.componentDidMount);
   }
 
