@@ -148,10 +148,12 @@ export default class Ticket extends Component {
                         </tr>
                     )}
                 </table>
+                <center>
                     <form onSubmit={this.onSubmit}>
                         <button>Submit</button>
                     </form> 
                         {showMoreButton}
+                </center>
             </div>
         )
     }
