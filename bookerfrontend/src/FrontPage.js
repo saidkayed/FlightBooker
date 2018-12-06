@@ -14,9 +14,7 @@ export default class FrontPage extends Component {
             names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "",p:[], URI: "hej", 
             searchAirline: "", searchDeparture : "", searchDestination:"", searchDate: new Date() };
     }
-
-
-
+    
     async componentDidMount() {
         const data = await fetch(URL).then(res => res.json());
         this.setState({ data: data });
