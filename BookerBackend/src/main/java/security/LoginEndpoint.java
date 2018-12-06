@@ -29,14 +29,13 @@ import exceptions.AuthenticationException;
 import exceptions.GenericExceptionMapper;
 import java.util.ArrayList;
 
-@Path("user")
+    @Path("login")
 public class LoginEndpoint {
 
     Gson gson;
     public static final int TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30 min
 
     @POST
-    @Path("login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(String jsonString) throws AuthenticationException {
@@ -64,7 +63,7 @@ public class LoginEndpoint {
     }
 
 
-    private static String createToken(String userName, List<String> roles) throws JOSEException {
+    public static String createToken(String userName, List<String> roles) throws JOSEException {
 
         StringBuilder res = new StringBuilder();
         for (String string : roles) {
