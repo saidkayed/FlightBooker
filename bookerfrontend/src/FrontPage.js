@@ -2,20 +2,26 @@ import React, { Component } from 'react';
 import 'react-dropdown/style.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Ticket from "./Ticket"
+import Ticket from "./Ticket";
+import Select from 'react-select';
+import "./FrontPage.css";
 
 const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets"
+const options = [
+    { value: 'SaidLand', label: 'SaidLand' },
+    { value: 'KristianLand', label: 'KristianLand' },
+    { value: 'TobiasLand', label: 'TobiasLand' }
+];
 
 export default class FrontPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [], airline: [], departure: [], destination: [], startDate: new Date(), endDate: new Date(), search: [],
-            names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "",p:[], URI: "hej", 
-            searchAirline: "", searchDeparture : "", searchDestination:"", searchDate: new Date() };
+            names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "", p: [], URI: "hej",
+            searchAirline: "", searchDeparture: "", searchDestination: "", searchDate: new Date()
+        };
     }
-
-
 
     async componentDidMount() {
         const data = await fetch(URL).then(res => res.json());
@@ -46,64 +52,32 @@ export default class FrontPage extends Component {
 
 
 
-handleChangeDeparture = (evt) => {
-    this.setState({searchDeparture : evt.currentTarget.value})
-}
-handleChangeDestination = (evt) => {
-    this.setState({searchDestination : evt.currentTarget.value})
-}
-
-        
-handleChangeDate = (date) => {
-        this.setState({ startDate: date });
-        this.setState({searchDate : date})
+    handleChangeDeparture = (evt) => {
+        this.setState({ searchDeparture: evt.currentTarget.value })
     }
-    
-    
+    handleChangeDestination = (evt) => {
+        this.setState({ searchDestination: evt.currentTarget.value })
+    }
+
+
+    handleChangeDate = (date) => {
+        this.setState({ startDate: date });
+        this.setState({ searchDate: date })
+    }
 
     render() {
-
+        const { selectedOption, selectedOption1 } = this.state;
+        
         return (
-                <div>
-                    
-                  
-                    Departure Airport
-                    <select name="departure" onChange={this.handleChangeDeparture}>
-                        {this.state.departure.map(function mapper(data) {
-                            return <option value={data}>{data}</option>
-                        })}
-                    </select>
-                    Destination Airport
-                    <select name="destination" onChange={this.handleChangeDestination}>
-                        {this.state.destination.map(function mapper(data) {
-                            return <option value={data}>{data}</option>
-                        })}
-                    </select>
-                    Day Of Depature
-                    <DatePicker 
-                    dateFormat="dd-MM-YYYY"
-                    selected={this.state.startDate}
-                    onChange={this.handleChangeDate}
-                    />
-                    {/*
-                    Departure Date
-                    <select name="departureDate">
-                        {this.state.startDate.map(function mapper(data) {
-                            return <option value={data}>{data.substring(0, 10)}</option>
-                        })}
-                    </select>
-                    Arrival Date
-                        <select name="arrivalDate">
-                        {this.state.endDate.map(function mapper(data) {
-                            return <option value={data}>{data.substring(0, 10)}
-                            </option>
-                        })}
-                    </select>
-                    */}
+            <div classname="divs">
+                <Select id="style" placeholder="Departure Airport" value={selectedOption} options={options}/>
+                <Select id="style"  placeholder="Destination Airport" value={selectedOption1} options={options}/>
 
-                
+                Day Of Depature 
+                <DatePicker id="date" dateFormat="dd-MM-YYYY" selected={this.state.startDate} onChange={this.handleChangeDate}/>
+
                 <Ticket search={this.state.search} p={this.state.p} departure={this.state.searchDeparture} destination={this.state.searchDestination} date={this.state.searchDate} />
-                </div>
+            </div>
         );
     }
 }

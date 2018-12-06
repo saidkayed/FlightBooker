@@ -1,0 +1,15 @@
+
+#style
+{
+    display: inline-block;
+    border-radius: 1px;
+    width: 250px;
+    border: 1px solid #ccc;
+}
+
+#date
+{
+    background-color: bisque;
+    text-align: center;
+    left: 20px;
+}
