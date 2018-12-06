@@ -7,18 +7,20 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import cors.CorsResponseFilter;
 import entity.FlightTicket;
 import facade.DatboisTicket;
+import facade.MixTicket;
 import facade.TicketFacade;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 import javax.persistence.Persistence;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -31,7 +33,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import ticket_handler.TicketHandler;
 
 /**
  * REST Web Service
@@ -43,6 +44,10 @@ public class TicketResource {
 
     @Context
     private UriInfo context;
+    
+    public String[] hostlist = {
+            "http://localhost:8080/BookerBackend/api/ticket/mixtickets", 
+            "https://emilvh.dk/DATFlights/api/flights"};
 
     Gson gson;
 
@@ -60,103 +65,74 @@ public class TicketResource {
      *
      * @return an instance of java.lang.String
      */
-    @Path("mixtickets")
+    @Path("alltickets")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMix(String json, @QueryParam("from") int id, @QueryParam("to") int id2, @QueryParam("sort") String sort) {
-        List<FlightTicket> pricesort = tf.getMixTickets();
-        List<FlightTicket> ticks = new ArrayList<>();
-
-        if (sort != null) {
-            Collections.sort(pricesort);
+    public Response getAllTickets() throws MalformedURLException, IOException {
+        MixTicket mt = new MixTicket();
+        DatboisTicket dt = new DatboisTicket();
+        List<FlightTicket> mix = mt.getMix();
+        
+        List<FlightTicket> datbois = dt.getDatbois();
+        
+        for(int i = 0; i < datbois.size(); i++ ){
+            mix.add(datbois.get(i));
         }
-
-        if (id != 0 || id2 != 0) {
-            if (id2 > pricesort.size()) {
-                id2 = pricesort.size();
-            }
-            for (int i = id; i < id2; i++) {
-                FlightTicket ticket = pricesort.get(i);
-                ticks.add(ticket);
-            }
-            pricesort = ticks;
-        }
-
-        return Response.ok(gson.toJson(pricesort)).build();
+        return Response.ok(gson.toJson(mix)).build();
     }
-
-
     
     @GET
+    @Path("mixtickets")
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("alltickets")
-    public Response getAllTickets(String json, @QueryParam("from") int id, @QueryParam("to") int id2, @QueryParam("Sort") String sort) throws MalformedURLException, IOException {
+    public Response getMix(String json){
+        List<FlightTicket> list = tf.getMixTickets();
         
-       
-        
-        List<FlightTicket> pricesort = tf.getAllTickets();
-        List<FlightTicket> ticks = new ArrayList();
-        
- 
-        if (sort != null) {
-            Collections.sort(pricesort);
-        }
-
-        if (id != 0 || id2 != 0) {
-            if (id2 > pricesort.size()) {
-                id2 = pricesort.size();
-            }
-            for (int i = id; i < id2; i++) {
-                FlightTicket ticket = pricesort.get(i);
-                ticks.add(ticket);
-            }
-            pricesort = ticks;
-        }
-        return Response.ok(gson.toJson(pricesort)).build();
+        return Response.ok(gson.toJson(list)).build();
     }
+
+
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("foundtickets")
-    public Response getFoundTickets(String json, @QueryParam("from") int id, @QueryParam("to") int id2, 
-            @QueryParam("sort") String sort, @QueryParam("dept") String dept, @QueryParam("dest")String dest) throws MalformedURLException, IOException {
-        
-        TicketHandler th = new TicketHandler();
-        
-        List<FlightTicket> pricesort = th.ticketHandler(dept, dest);
+    public Response getAllTickets(@QueryParam("from") int from, @QueryParam("to") int to, @QueryParam("dept") String dept, @QueryParam("dest") String dest) throws MalformedURLException, IOException, InterruptedException, ExecutionException {
+        ExecutorService executor = Executors.newFixedThreadPool(2);
         List<FlightTicket> ticks = new ArrayList();
-   
-        if (sort != null) {
-            Collections.sort(pricesort);
-        }
-
-        if (id != 0 || id2 != 0) {
-            if (id2 > pricesort.size()) {
-                id2 = pricesort.size();
+        List<Future<String>> list = new ArrayList();
+        ArrayList<FlightTicket> returnList = new ArrayList();
+        for (int i = 0; i < hostlist.length; i++){
+            Callable<String> callable = new TicketFacade(hostlist[i]);
+            Future<String> future = executor.submit(callable);
+            FlightTicket[] mylist = gson.fromJson(future.get(), FlightTicket[].class);
+            //list.add(future);
+            for (FlightTicket mylist1 : mylist) {
+                returnList.add(mylist1);
             }
-            for (int i = id; i < id2; i++) {
-                FlightTicket ticket = pricesort.get(i);
+        }
+        executor.shutdown();
+        
+        List<FlightTicket> blaList = returnList.stream().filter(ticket -> ticket.getDeparture().equals(dept) && ticket.getDestination().equals(dest)).collect(Collectors.toList());
+        
+         if (from != 0 || to != 0) {
+            if (to > blaList.size()) {
+                to = blaList.size();
+            }
+            for (int i = from; i < to; i++) {
+                FlightTicket ticket = blaList.get(i);
                 ticks.add(ticket);
             }
-            pricesort = ticks;
+            blaList = ticks;
         }
-        CorsResponseFilter crf = new CorsResponseFilter();
-
-        return Response.ok(gson.toJson(pricesort)).build();
-        
-       
-        
+        return Response.ok(gson.toJson(blaList)).build();
+    
     }
+    
     /**
      * PUT method for updating or creating an instance of GenericResource
      *
      * @param content representation for the resource
      */
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
-    }
-
+   
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
