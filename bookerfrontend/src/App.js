@@ -78,8 +78,8 @@ export default class App extends Component {
             </li>
             <li>
               {!this.state.loggedIn ?
-                (<a onClick={this.handleOpenModal}>Log In</a>) :
-                (<a onClick={this.logout}>Log out</a>)
+                (<a onClick={this.handleOpenModal} style={{ cursor: 'pointer' }}>Log In</a>) :
+                (<a onClick={this.logout} style={{ cursor: 'pointer' }}>Log out</a>)
 
               }
             </li>
@@ -91,7 +91,8 @@ export default class App extends Component {
           </ul>
           <Route exact path="/" component={FrontPage} />
 
-          <ReactModal className="ReactModal"
+          <ReactModal 
+            className="ReactModal"
             isOpen={this.state.showModal}
             contentLabel="Minimal Modal Example">
 
@@ -101,7 +102,7 @@ export default class App extends Component {
                 <input id="username" placeholder="username" type="username" name="username" required />
                 <input id="password" placeholder="password" type="password" name="password" required />
               </div>
-              <a id="closebtn" onClick={this.handleCloseModal}>Close</a>
+              <a id="closebtn" style={{ cursor: 'pointer' }} onClick={this.handleCloseModal}>Close</a>
 
               <button id="loginbtn">Log In</button>
             </form>
