@@ -21,7 +21,9 @@ export default class Ticket extends Component {
         const p = await fetch(URI).then(res => res.json())
         this.setState({ names: p })
 
+        console.log(this.props.date)
         var sortedFilteredArr = this.dateSortFilter(this.props.date)
+        console.log(sortedFilteredArr)
         this.setState({names : sortedFilteredArr})
         
         this.state.names.map((data) => {
@@ -40,56 +42,58 @@ export default class Ticket extends Component {
         
         var date = date.toString().substring(4,21)
         var yeardate = date.substring(7,11)
-        var yeardate2 = yeardate.concat("-")
-        var yeardate3 = yeardate2.concat(date.substring(4,6))
-        var yeardate4 = yeardate3.concat("-")
+        var yeardate1 = yeardate.concat("-")
         switch(date.substring(0,3)){
             case "Jan":
-                var yeardate5 = yeardate4.concat("01")
+                var yeardate2 = yeardate1.concat("01")
                 break;
             case "Feb":
-                var yeardate5 = yeardate4.concat("02")
+                var yeardate2 = yeardate1.concat("02")
                 break;
             case "Mar":
-                var yeardate5 = yeardate4.concat("03")
+                var yeardate2 = yeardate1.concat("03")
                 break;
             case "Apr":
-                var yeardate5 = yeardate4.concat("04")
+                var yeardate2 = yeardate1.concat("04")
                 break;
             case "May":
-                var yeardate5 = yeardate4.concat("05")
+                var yeardate2 = yeardate1.concat("05")
                 break;
             case "Jun":
-                var yeardate5 = yeardate4.concat("06")
+                var yeardate2 = yeardate1.concat("06")
                 break;
             case "Jul":
-                var yeardate5 = yeardate4.concat("07")
+                var yeardate2 = yeardate1.concat("07")
                 break;
             case "Aug":
-                var yeardate5 = yeardate4.concat("08")
+                var yeardate2 = yeardate1.concat("08")
                 break;
             case "Sep":
-                var yeardate5 = yeardate4.concat("09")
+                var yeardate2 = yeardate1.concat("09")
                 break;
             case "Oct":
-                var yeardate5 = yeardate4.concat("10")
+                var yeardate2 = yeardate1.concat("10")
                 break;
             case "Nov":
-                var yeardate5 = yeardate4.concat("11")
+                var yeardate2 = yeardate1.concat("11")
                 break;
             case "Dec":
-                var yeardate5 = yeardate4.concat("12")
+                var yeardate2 = yeardate1.concat("12")
                 break;
         }
-        var yeardate6 = yeardate5.concat("T")
-        var yeardate7 = yeardate6.concat(date.substring(12,17))
+
+        var yeardate3 = yeardate2.concat("-")
+        var yeardate4 = yeardate3.concat(date.substring(4,6))
+        var yeardate5 = yeardate4.concat("T")
+        var yeardate6 = yeardate5.concat(date.substring(12,17))
+
 
       var sortedArr = this.state.names.sort((a, b) => 
         (a.depTime > b.depTime) ? 1 : ((b.depTime > a.depTime) ? -1 : 0)
       )
 
       var filteredSortedArr = sortedArr.filter((data) =>{
-          return data.depTime > yeardate7
+          return data.depTime > yeardate6
       }
       )
         return filteredSortedArr;
