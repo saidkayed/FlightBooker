@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import paginationFactory from 'react-bootstrap-table2-paginator';
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Buttons.css"
 import "./Table.css"
+import facade from './userFacade';
 
 
 export default class Ticket extends Component {
@@ -17,41 +15,19 @@ export default class Ticket extends Component {
     }
 
     handleTableChange = async () => {
-
-
         const names = this.props.p
         this.setState({ names })
 
         const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${this.state.currentIndex}&to=${this.state.end}` + "&dept=" + this.state.dept + "&dest=" + this.state.dest + this.state.PSort;
-        console.log(URI)
         const p = await fetch(URI).then(res => res.json())
         this.setState({ names: p })
+
+        var sortedFilteredArr = this.dateSortFilter(this.props.date)
+        this.setState({names : sortedFilteredArr})
+        
         this.state.names.map((data) => {
             this.state.savednames.push(data);
         })
-        console.log(URI);
-
-
-        console.log(this.props.date.toString().substring(4, 15))
-        /*Fri Nov 30 2018 14:50:11 GMT+0100 (Central European Standard Time)*/
-        /*Nov 30 2018*/
-
-        console.log(this.state.names.map(function mapper(data) {
-            return data.depTime
-            /*"2019-03-10T07-05", "2019-02-10T07-05", "2019-03-10T15-05"*/
-        }))
-        /*
-                    dates = data.map(function mapper(data){
-                        return data.depTime
-                })
-                    dates.sort(function sorter(){
-        
-                    })
-        */
-
-
-
-
     }
 
     async componentDidMount() {
@@ -61,37 +37,93 @@ export default class Ticket extends Component {
         }
     }
 
+    dateSortFilter(date){
+        
+        var date = date.toString().substring(4,21)
+        var yeardate = date.substring(7,11)
+        var yeardate1 = yeardate.concat("-")
+        switch(date.substring(0,3)){
+            case "Jan":
+                var yeardate2 = yeardate1.concat("01")
+                break;
+            case "Feb":
+                var yeardate2 = yeardate1.concat("02")
+                break;
+            case "Mar":
+                var yeardate2 = yeardate1.concat("03")
+                break;
+            case "Apr":
+                var yeardate2 = yeardate1.concat("04")
+                break;
+            case "May":
+                var yeardate2 = yeardate1.concat("05")
+                break;
+            case "Jun":
+                var yeardate2 = yeardate1.concat("06")
+                break;
+            case "Jul":
+                var yeardate2 = yeardate1.concat("07")
+                break;
+            case "Aug":
+                var yeardate2 = yeardate1.concat("08")
+                break;
+            case "Sep":
+                var yeardate2 = yeardate1.concat("09")
+                break;
+            case "Oct":
+                var yeardate2 = yeardate1.concat("10")
+                break;
+            case "Nov":
+                var yeardate2 = yeardate1.concat("11")
+                break;
+            case "Dec":
+                var yeardate2 = yeardate1.concat("12")
+                break;
+        }
+
+        var yeardate3 = yeardate2.concat("-")
+        var yeardate4 = yeardate3.concat(date.substring(4,6))
+        var yeardate5 = yeardate4.concat("T")
+        var yeardate6 = yeardate5.concat(date.substring(12,17))
+
+
+      var sortedArr = this.state.names.sort((a, b) => 
+        (a.depTime > b.depTime) ? 1 : ((b.depTime > a.depTime) ? -1 : 0)
+      )
+
+      var filteredSortedArr = sortedArr.filter((data) =>{
+          return data.depTime > yeardate6
+      }
+      )
+        return filteredSortedArr;
+    }
 
     onSubmit = (ev) => {
         ev.preventDefault();
         this.setState({savednames : [],currentIndex: 0,end:10})
         this.setState({dest : this.props.destination})
         this.setState({dept : this.props.departure})
-        this.forceUpdate(this.componentDidMount)
+        facade.submitData(this.props.name, this.props.departure, this.props.destination, this.props.date)
 
+        this.forceUpdate(this.componentDidMount)
     }
 
     showMore = (ev) => {
         ev.preventDefault();
-
         this.setState({currentIndex: this.state.currentIndex+10})
         this.setState({end : this.state.end+10})
-
         this.forceUpdate(this.componentDidMount)
     }
 
-
-    render() {
+    render(){
         let showMoreButton;
         if(this.state.showMore){
             showMoreButton = <form onSubmit={this.showMore}>
                 <button>Show More</button>
             </form>
         }
-
+        
         return (
-
-
             <div>
                 <table id="table">
                     <tr>
@@ -104,6 +136,7 @@ export default class Ticket extends Component {
                         <th>Price</th>
                     </tr>
                     {this.state.savednames.map((data) =>
+                         
                         <tr>
                             <td>{data.airline}</td>
                             <td>{data.departure}</td>
@@ -114,27 +147,12 @@ export default class Ticket extends Component {
                             <td>{data.price}</td>
                         </tr>
                     )}
-
-
-
                 </table>
-
-                
                     <form onSubmit={this.onSubmit}>
                         <button>Submit</button>
                     </form> 
-
-
                         {showMoreButton}
-                    
-                   {/* {this.state.showMore 
-                   (<form onSubmit={this.showMore}>
-                    <button>Show More</button>
-                </form>)
-                   }*/}
             </div>
-
-
         )
     }
 }

@@ -12,7 +12,7 @@ export default class App extends Component {
 
   constructor() {
     super();
-    this.state = { showModal: false, loggedIn: false, username: "", password: "", dataFromServer: "Fethcing!", loggedInUser: "" }
+    this.state = { showModal: false, loggedIn: false, username: "", password: "", dataFromServer: "Fetching!", loggedInUser: "" }
   }
 
   handleOpenModal = () => {
@@ -27,6 +27,7 @@ export default class App extends Component {
   }
 
   login2 = (evt) => {
+    console.log("Login called")
     evt.preventDefault();
     this.userRole(this.state.username2);
     this.login(this.state.username, this.state.password);
@@ -34,9 +35,20 @@ export default class App extends Component {
     this.handleCloseModal();
 
   }
+
+  handleRegister = (evt) => {
+    console.log("Register called")
+    evt.preventDefault();
+    this.userRole(this.state.username2);
+    this.register(this.state.username, this.state.password);
+    this.setState({ username: this.state.username })
+    this.handleCloseModal();
+
+  }
+
   componentDidMount() {
 
-    if (this.state.loggedIn == true) {
+    if (this.state.loggedIn === true) {
       this.setState({ loggedInUser: this.state.username })
     } else {
       this.setState({ loggedInUser: "Guest" })
@@ -46,6 +58,15 @@ export default class App extends Component {
 
   login = async (user, pass) => {
     await userFacade.login(user, pass)
+      .then(res => {
+        this.setState({ loggedIn: true })
+      });
+
+    this.forceUpdate(this.componentDidMount);
+  }
+
+  register = async (user, pass) => {
+    await userFacade.create(user, pass)
       .then(res => {
         this.setState({ loggedIn: true })
       });
@@ -78,9 +99,8 @@ export default class App extends Component {
             </li>
             <li>
               {!this.state.loggedIn ?
-                (<a onClick={this.handleOpenModal}>Log In</a>) :
-                (<a onClick={this.logout}>Log out</a>)
-
+                (<a onClick={this.handleOpenModal} style={{ cursor: 'pointer' }}>Log In</a>) :
+                (<a onClick={this.logout} style={{ cursor: 'pointer' }}>Log out</a>)
               }
             </li>
             <li>
@@ -89,10 +109,15 @@ export default class App extends Component {
 
             </li>
           </ul>
-          <Route exact path="/" component={FrontPage} />
+          <Route exact path="/" 
+          render={(props) => <FrontPage {...props} name={this.state.loggedInUser} />}
+          />
+          
 
-          <ReactModal className="ReactModal"
+          <ReactModal 
+            className="ReactModal"
             isOpen={this.state.showModal}
+            shouldCloseOnOverlayClick={true}
             contentLabel="Minimal Modal Example">
 
             <form onSubmit={this.login2} onChange={this.onChange} >
@@ -100,10 +125,10 @@ export default class App extends Component {
                 <h2 id="logintext">Log In</h2>
                 <input id="username" placeholder="username" type="username" name="username" required />
                 <input id="password" placeholder="password" type="password" name="password" required />
+                <button type="button" onClick={this.login2}id="loginbtn">Log In</button>
+                <button type="button" onClick={this.handleRegister} id="registerbtn">Register User</button>
               </div>
-              <a id="closebtn" onClick={this.handleCloseModal}>Close</a>
-
-              <button id="loginbtn">Log In</button>
+              <a id="closebtn" style={{ cursor: 'pointer' }} onClick={this.handleCloseModal}>Close</a>
             </form>
 
           </ReactModal>

@@ -36,21 +36,8 @@ export default class FrontPage extends Component {
         var destinationFilter = mappedDestination.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
         destinationFilter.unshift("Choose Destination Airport")
         this.setState({ destination: destinationFilter })
-        /*
 
-        var mappedStartDate = this.state.data.map((data) => data.depTime)
-        var startDateFilter = mappedStartDate.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
-        var sortedStartDate = startDateFilter.sort()
-        this.setState({ startDate: sortedStartDate })
-
-        var mappedArrDate = this.state.data.map((data) => data.arrTime)
-        var arrDateFilter = mappedArrDate.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
-        var sortedArrDate = arrDateFilter.sort()
-        this.setState({ endDate: sortedArrDate })
-        */
     }
-
-
 
     handleChangeDeparture = (evt) => {
         this.setState({ searchDeparture: evt.currentTarget.value })
@@ -67,14 +54,14 @@ export default class FrontPage extends Component {
 
     render() {
         const { selectedOption, selectedOption1 } = this.state;
-        
+
         return (
             <div classname="divs">
-                <Select id="style" placeholder="Departure Airport" value={selectedOption} options={options}/>
-                <Select id="style"  placeholder="Destination Airport" value={selectedOption1} options={options}/>
+                <Select id="style" placeholder="Departure Airport" value={selectedOption} options={options} />
+                <Select id="style" placeholder="Destination Airport" value={selectedOption1} options={options} />
 
-                Day Of Depature 
-                <DatePicker id="date" dateFormat="dd-MM-YYYY" selected={this.state.startDate} onChange={this.handleChangeDate}/>
+                Day Of Depature
+                <DatePicker id="date" dateFormat="dd-MM-YYYY" selected={this.state.startDate} onChange={this.handleChangeDate} />
 
                 <Ticket search={this.state.search} p={this.state.p} departure={this.state.searchDeparture} destination={this.state.searchDestination} date={this.state.searchDate} />
             </div>

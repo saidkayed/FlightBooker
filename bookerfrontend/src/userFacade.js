@@ -36,7 +36,16 @@ function handleHttpErrors(res) {
         .then(handleHttpErrors)
         .then(res => {
           this.setToken(res.token) })
-    }      
+    }
+
+    create = (user, pass) => {
+      const options = this.makeOptions("POST", true,{ username: user, password: pass });
+      return fetch(URL + "/api/create", options, true)
+        .then(handleHttpErrors)
+        .then(res => {
+          this.setToken(res.token) })
+    }
+
       setToken = (token) => {
         localStorage.setItem('jwtToken', token)
       }
@@ -50,7 +59,15 @@ function handleHttpErrors(res) {
       logout = () => {
         localStorage.removeItem("jwtToken");
       }
+
+      submitData = (username, departure, destination, date) => {
+        const options = this.makeOptions("POST", false, {username: username, departure: departure, destination: destination, depTime: date});
+        return fetch(URL + "api/data", options, true)
+        .then(handleHttpErrors)
+      }
     }
+
+    
    
 const facade = new ApiFacade();
 export default facade;

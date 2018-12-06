@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 @Path("login")
 public class LoginEndpoint {
-
+Gson gson;
   public static final int TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30 min
 
   @POST
@@ -93,5 +93,24 @@ public class LoginEndpoint {
         roles.add("user");
         System.out.println(createToken("user", roles));
         
+    }
+    @Path("create")
+     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response postJson(String json) {
+        
+        JsonObject get_json = new JsonParser().parse(json).getAsJsonObject();
+    String username = get_json.get("username").getAsString();
+    String password = get_json.get("password").getAsString();
+    
+    
+         System.out.println(json);
+        UserFacade uf = new UserFacade();
+        uf.CreateUser(new User(username,password));
+       
+
+ 
+        return Response.ok(json).build();
     }
 }
