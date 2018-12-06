@@ -29,28 +29,61 @@ export default class Ticket extends Component {
         this.state.names.map((data) => {
             this.state.savednames.push(data);
         })
-        console.log(URI);
 
+        var date = this.props.date.toString().substring(4,21)
+        var yeardate = date.substring(7,11)
+        var yeardate2 = yeardate.concat("-")
+        var yeardate3 = yeardate2.concat(date.substring(4,6))
+        var yeardate4 = yeardate3.concat("-")
+        switch(date.substring(0,3)){
+            case "Jan":
+                var yeardate5 = yeardate4.concat("01")
+                break;
+            case "Feb":
+                var yeardate5 = yeardate4.concat("02")
+                break;
+            case "Mar":
+                var yeardate5 = yeardate4.concat("03")
+                break;
+            case "Apr":
+                var yeardate5 = yeardate4.concat("04")
+                break;
+            case "May":
+                var yeardate5 = yeardate4.concat("05")
+                break;
+            case "Jun":
+                var yeardate5 = yeardate4.concat("06")
+                break;
+            case "Jul":
+                var yeardate5 = yeardate4.concat("07")
+                break;
+            case "Aug":
+                var yeardate5 = yeardate4.concat("08")
+                break;
+            case "Sep":
+                var yeardate5 = yeardate4.concat("09")
+                break;
+            case "Oct":
+                var yeardate5 = yeardate4.concat("10")
+                break;
+            case "Nov":
+                var yeardate5 = yeardate4.concat("11")
+                break;
+            case "Dec":
+                var yeardate5 = yeardate4.concat("12")
+                break;
+        }
+        var yeardate6 = yeardate5.concat("T")
+        var yeardate7 = yeardate6.concat(date.substring(12,17))
+        console.log(yeardate7)
+        //2018-06-12T11:22
 
-        console.log(this.props.date.toString().substring(4, 15))
-        /*Fri Nov 30 2018 14:50:11 GMT+0100 (Central European Standard Time)*/
-        /*Nov 30 2018*/
 
         console.log(this.state.names.map(function mapper(data) {
             return data.depTime
-            /*"2019-03-10T07-05", "2019-02-10T07-05", "2019-03-10T15-05"*/
+            /*"2019-03-10T07:05", "2019-02-10T07:05", "2019-03-10T15:05"*/
         }))
-        /*
-                    dates = data.map(function mapper(data){
-                        return data.depTime
-                })
-                    dates.sort(function sorter(){
-        
-                    })
-        */
-
-
-
+    
 
     }
 
