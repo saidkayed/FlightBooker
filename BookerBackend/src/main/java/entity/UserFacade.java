@@ -18,10 +18,26 @@ public class UserFacade {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
     private static final UserFacade instance = new UserFacade();
     
-    private UserFacade(){}
+    public UserFacade(){}
     
     public static UserFacade getInstance(){
         return instance;
+    }
+    
+    public User CreateUser(User user){
+        EntityManager em = emf.createEntityManager();
+        Role userRole = new Role("user");
+         user.addRole(userRole);
+         
+        try {
+            em.getTransaction().begin();
+            em.persist(user);
+            em.getTransaction().commit();
+
+        } finally {
+            em.close();
+        }
+        return user;
     }
     
     public User getVeryfiedUser(String username, String password) throws AuthenticationException {
