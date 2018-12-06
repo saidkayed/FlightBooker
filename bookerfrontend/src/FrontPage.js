@@ -30,21 +30,8 @@ export default class FrontPage extends Component {
         var destinationFilter = mappedDestination.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
         destinationFilter.unshift("Choose Destination Airport")
         this.setState({ destination: destinationFilter })
-        /*
 
-        var mappedStartDate = this.state.data.map((data) => data.depTime)
-        var startDateFilter = mappedStartDate.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
-        var sortedStartDate = startDateFilter.sort()
-        this.setState({ startDate: sortedStartDate })
-
-        var mappedArrDate = this.state.data.map((data) => data.arrTime)
-        var arrDateFilter = mappedArrDate.filter((elem, pos, arr) => arr.indexOf(elem) === pos)
-        var sortedArrDate = arrDateFilter.sort()
-        this.setState({ endDate: sortedArrDate })
-        */
     }
-
-
 
 handleChangeDeparture = (evt) => {
     this.setState({searchDeparture : evt.currentTarget.value})
@@ -58,8 +45,6 @@ handleChangeDate = (date) => {
         this.setState({ startDate: date });
         this.setState({searchDate : date})
     }
-    
-    
 
     render() {
 
@@ -85,23 +70,7 @@ handleChangeDate = (date) => {
                     selected={this.state.startDate}
                     onChange={this.handleChangeDate}
                     />
-                    {/*
-                    Departure Date
-                    <select name="departureDate">
-                        {this.state.startDate.map(function mapper(data) {
-                            return <option value={data}>{data.substring(0, 10)}</option>
-                        })}
-                    </select>
-                    Arrival Date
-                        <select name="arrivalDate">
-                        {this.state.endDate.map(function mapper(data) {
-                            return <option value={data}>{data.substring(0, 10)}
-                            </option>
-                        })}
-                    </select>
-                    */}
-
-                
+            
                 <Ticket search={this.state.search} p={this.state.p} departure={this.state.searchDeparture} destination={this.state.searchDestination} date={this.state.searchDate} />
                 </div>
         );

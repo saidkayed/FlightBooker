@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import paginationFactory from 'react-bootstrap-table2-paginator';
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Buttons.css"
 import "./Table.css"
@@ -17,30 +14,16 @@ export default class Ticket extends Component {
     }
 
     handleTableChange = async () => {
-
-
         const names = this.props.p
-        const submitDate = this.props.date
-        console.log(submitDate)
         this.setState({ names })
 
         const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${this.state.currentIndex}&to=${this.state.end}` + "&dept=" + this.state.dept + "&dest=" + this.state.dest + this.state.PSort;
-        console.log(URI)
         const p = await fetch(URI).then(res => res.json())
-        
-        
         this.setState({ names: p })
-        console.log(this.state.names, "NAMES")
 
         var sortedFilteredArr = this.dateSortFilter(this.props.date)
-        console.log(sortedFilteredArr, "SORTED")
+        this.setState({names : sortedFilteredArr})
         
-        this.state.names.map((sortedFilteredArr.map((data =>
-            
-            
-            
-        
-
         this.state.names.map((data) => {
             this.state.savednames.push(data);
         })
@@ -101,21 +84,16 @@ export default class Ticket extends Component {
         var yeardate6 = yeardate5.concat("T")
         var yeardate7 = yeardate6.concat(date.substring(12,17))
 
+      var sortedArr = this.state.names.sort((a, b) => 
+        (a.depTime > b.depTime) ? 1 : ((b.depTime > a.depTime) ? -1 : 0)
+      )
 
-        var ticketDates = this.state.names.map(function mapper(data) {
-            return data.depTime
-        })
-
-        var sortedDates = ticketDates.sort()
-        
-        var filteredDates = sortedDates.filter(function filter(data, index){
-            return data > yeardate7
-        })
-    
-        return filteredDates;
+      var filteredSortedArr = sortedArr.filter((data) =>{
+          return data.depTime > yeardate7
+      }
+      )
+        return filteredSortedArr;
     }
-
-    
 
     onSubmit = (ev) => {
         ev.preventDefault();
@@ -123,18 +101,14 @@ export default class Ticket extends Component {
         this.setState({dest : this.props.destination})
         this.setState({dept : this.props.departure})
         this.forceUpdate(this.componentDidMount)
-
     }
 
     showMore = (ev) => {
         ev.preventDefault();
-
         this.setState({currentIndex: this.state.currentIndex+10})
         this.setState({end : this.state.end+10})
-
         this.forceUpdate(this.componentDidMount)
     }
-
 
     render(){
         let showMoreButton;
@@ -144,12 +118,7 @@ export default class Ticket extends Component {
             </form>
         }
         
-    
-    
         return (
-            
-
-
             <div>
                 <table id="table">
                     <tr>
@@ -173,28 +142,12 @@ export default class Ticket extends Component {
                             <td>{data.price}</td>
                         </tr>
                     )}
-                    
-
-
-
                 </table>
-
-                
                     <form onSubmit={this.onSubmit}>
                         <button>Submit</button>
                     </form> 
-
-
                         {showMoreButton}
-                    
-                   {/* {this.state.showMore 
-                   (<form onSubmit={this.showMore}>
-                    <button>Show More</button>
-                </form>)
-                   }*/}
             </div>
-
-
         )
     }
 }
