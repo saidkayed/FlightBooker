@@ -21,3 +21,12 @@
 background-color: #f2f2f2;
 border: 2px solid #f2f2f2;
 }
+
+#button{
+  background-color:aliceblue;
+  border-color: #ccc;
+  border-style:double;
+  border-width:8px;
+  text-align: center;
+  left: 20px;
+}

@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./Buttons.css"
 import "./Table.css"
 import facade from './userFacade';
+import { Button } from 'react-bootstrap';
 
 
 export default class Ticket extends Component {
@@ -119,7 +120,7 @@ export default class Ticket extends Component {
         let showMoreButton;
         if(this.state.showMore){
             showMoreButton = <form onSubmit={this.showMore}>
-                <button>Show More</button>
+                <button id="button">Show More</button>
             </form>
         }
         
@@ -148,10 +149,11 @@ export default class Ticket extends Component {
                         </tr>
                     )}
                 </table>
-                <center>
+                
                     <form onSubmit={this.onSubmit}>
-                        <button>Submit</button>
+                        <button id="button"> Submit </button>
                     </form> 
+                <center>
                         {showMoreButton}
                 </center>
             </div>
