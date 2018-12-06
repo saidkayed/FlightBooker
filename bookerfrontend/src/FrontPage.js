@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Ticket from "./Ticket";
 import Select from 'react-select';
 import "./FrontPage.css";
+import Button from 'react-bootstrap/lib/Button';
 
 const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets"
 const options = [
@@ -56,15 +57,19 @@ export default class FrontPage extends Component {
         const { selectedOption, selectedOption1 } = this.state;
 
         return (
+                <center>
             <div classname="divs">
-                <Select id="style" placeholder="Departure Airport" value={selectedOption} options={options} />
-                <Select id="style" placeholder="Destination Airport" value={selectedOption1} options={options} />
+                    <Select id="style" placeholder="Departure Airport" value={selectedOption} options={options} />
+                    <Select id="style" placeholder="Destination Airport" value={selectedOption1} options={options} />
+                    <DatePicker id="date" dateFormat="dd-MM-YYYY" selected={this.state.startDate} onChange={this.handleChangeDate} />
+                    
+                    <form onSubmit={this.onSubmit}>
+                        <Button bsStyle="primary">Submit</Button>
+                    </form>
 
-                Day Of Depature
-                <DatePicker id="date" dateFormat="dd-MM-YYYY" selected={this.state.startDate} onChange={this.handleChangeDate} />
-
-                <Ticket search={this.state.search} p={this.state.p} departure={this.state.searchDeparture} destination={this.state.searchDestination} date={this.state.searchDate} />
-            </div>
+                    <Ticket search={this.state.search} p={this.state.p} departure={this.state.searchDeparture} destination={this.state.searchDestination} date={this.state.searchDate} />
+                </div>
+            </center>
         );
     }
 }

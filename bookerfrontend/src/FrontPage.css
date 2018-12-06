@@ -9,7 +9,10 @@
 
 #date
 {
-    background-color: bisque;
+    background-color:aliceblue;
+    border-color: #ccc;
+    border-style:double;
+    border-width:8px;
     text-align: center;
     left: 20px;
 }
