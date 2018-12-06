@@ -71,7 +71,7 @@ public class TicketFacade implements Callable<String> {
         } finally {
             em.close();
         }
-
+        
     }
     
     @Override

@@ -7,11 +7,13 @@ package entity;
 
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -36,10 +38,31 @@ public class FlightTicket implements Serializable,Comparable {
     private String airplane;
     private String model;
     private int capacity;
-    
+   
+   
     public FlightTicket(){
         
     }
+
+    public FlightTicket(Integer id, String airline, String departure, String destination, String depTime, String arrTime, int duration, int price, int cancelInsurance, String airplane, String model, int capacity, User user) {
+        this.id = id;
+        this.airline = airline;
+        this.departure = departure;
+        this.destination = destination;
+        this.depTime = depTime;
+        this.arrTime = arrTime;
+        this.duration = duration;
+        this.price = price;
+        this.cancelInsurance = cancelInsurance;
+        this.airplane = airplane;
+        this.model = model;
+        this.capacity = capacity;
+      
+    }
+
+   
+    
+    
 
     public FlightTicket(String airline, String departure, String destination, String depTime, String arrTime, int duration, int price, int cancelInsurance, String airplane, String model, int capacity) {
         this.airline = airline;
