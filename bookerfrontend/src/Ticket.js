@@ -20,17 +20,42 @@ export default class Ticket extends Component {
 
 
         const names = this.props.p
+        const submitDate = this.props.date
+        console.log(submitDate)
         this.setState({ names })
 
         const URI = `http://localhost:8080/BookerBackend/api/ticket/foundtickets?from=${this.state.currentIndex}&to=${this.state.end}` + "&dept=" + this.state.dept + "&dest=" + this.state.dest + this.state.PSort;
         console.log(URI)
         const p = await fetch(URI).then(res => res.json())
+        
+        
         this.setState({ names: p })
+        console.log(this.state.names, "NAMES")
+
+        var sortedFilteredArr = this.dateSortFilter(this.props.date)
+        console.log(sortedFilteredArr, "SORTED")
+        
+        this.state.names.map((sortedFilteredArr.map((data =>
+            
+            
+            
+        
+
         this.state.names.map((data) => {
             this.state.savednames.push(data);
         })
+    }
 
-        var date = this.props.date.toString().substring(4,21)
+    async componentDidMount() {
+        await this.handleTableChange()
+        if (this.state.names.length != 0) {
+            this.setState({ showMore: true })
+        }
+    }
+
+    dateSortFilter(date){
+        
+        var date = date.toString().substring(4,21)
         var yeardate = date.substring(7,11)
         var yeardate2 = yeardate.concat("-")
         var yeardate3 = yeardate2.concat(date.substring(4,6))
@@ -75,25 +100,22 @@ export default class Ticket extends Component {
         }
         var yeardate6 = yeardate5.concat("T")
         var yeardate7 = yeardate6.concat(date.substring(12,17))
-        console.log(yeardate7)
-        //2018-06-12T11:22
 
 
-        console.log(this.state.names.map(function mapper(data) {
+        var ticketDates = this.state.names.map(function mapper(data) {
             return data.depTime
-            /*"2019-03-10T07:05", "2019-02-10T07:05", "2019-03-10T15:05"*/
-        }))
+        })
+
+        var sortedDates = ticketDates.sort()
+        
+        var filteredDates = sortedDates.filter(function filter(data, index){
+            return data > yeardate7
+        })
     
-
+        return filteredDates;
     }
 
-    async componentDidMount() {
-        await this.handleTableChange()
-        if (this.state.names.length != 0) {
-            this.setState({ showMore: true })
-        }
-    }
-
+    
 
     onSubmit = (ev) => {
         ev.preventDefault();
@@ -114,15 +136,18 @@ export default class Ticket extends Component {
     }
 
 
-    render() {
+    render(){
         let showMoreButton;
         if(this.state.showMore){
             showMoreButton = <form onSubmit={this.showMore}>
                 <button>Show More</button>
             </form>
         }
-
+        
+    
+    
         return (
+            
 
 
             <div>
@@ -137,6 +162,7 @@ export default class Ticket extends Component {
                         <th>Price</th>
                     </tr>
                     {this.state.savednames.map((data) =>
+                         
                         <tr>
                             <td>{data.airline}</td>
                             <td>{data.departure}</td>
@@ -147,6 +173,7 @@ export default class Ticket extends Component {
                             <td>{data.price}</td>
                         </tr>
                     )}
+                    
 
 
 
