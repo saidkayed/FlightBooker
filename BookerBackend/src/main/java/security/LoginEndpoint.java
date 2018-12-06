@@ -29,7 +29,7 @@ import exceptions.AuthenticationException;
 import exceptions.GenericExceptionMapper;
 import java.util.ArrayList;
 
-@Path("User")
+@Path("user")
 public class LoginEndpoint {
 
     Gson gson;
@@ -63,6 +63,7 @@ public class LoginEndpoint {
         throw new AuthenticationException("Invalid username or password! Please try again");
     }
 
+
     private static String createToken(String userName, List<String> roles) throws JOSEException {
 
         StringBuilder res = new StringBuilder();
@@ -88,7 +89,6 @@ public class LoginEndpoint {
         return signedJWT.serialize();
 
     }
-
     public static void main(String[] args) throws JOSEException {
         LoginEndpoint l = new LoginEndpoint();
         Role role = new Role("user");
@@ -97,6 +97,7 @@ public class LoginEndpoint {
         System.out.println(createToken("user", roles));
 
     }
+
 
     @Path("create")
     @POST
@@ -135,4 +136,5 @@ public class LoginEndpoint {
 
         return Response.ok(json).build();
     }
+
 }
