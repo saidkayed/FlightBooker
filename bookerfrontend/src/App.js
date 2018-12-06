@@ -12,7 +12,7 @@ export default class App extends Component {
 
   constructor() {
     super();
-    this.state = { showModal: false, loggedIn: false, username: "", password: "", dataFromServer: "Fethcing!", loggedInUser: "" }
+    this.state = { showModal: false, loggedIn: false, username: "", password: "", dataFromServer: "Fetching!", loggedInUser: "" }
   }
 
   handleOpenModal = () => {
@@ -103,6 +103,7 @@ export default class App extends Component {
                 <input id="username" placeholder="username" type="username" name="username" required />
                 <input id="password" placeholder="password" type="password" name="password" required />
                 <button type="button" id="loginbtn">Log In</button>
+                <button type="button" id="registerbtn">Register User</button>
               </div>
               <a id="closebtn" style={{ cursor: 'pointer' }} onClick={this.handleCloseModal}>Close</a>
             </form>
