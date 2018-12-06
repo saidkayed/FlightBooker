@@ -60,7 +60,7 @@ Gson gson;
     throw new AuthenticationException("Invalid username or password! Please try again");
   }
 
-  private static String createToken(String userName, List<String> roles) throws JOSEException {
+  public static String createToken(String userName, List<String> roles) throws JOSEException {
 
     StringBuilder res = new StringBuilder();
     for (String string : roles) {
@@ -94,23 +94,5 @@ Gson gson;
         System.out.println(createToken("user", roles));
         
     }
-    @Path("create")
-     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response postJson(String json) {
-        
-        JsonObject get_json = new JsonParser().parse(json).getAsJsonObject();
-    String username = get_json.get("username").getAsString();
-    String password = get_json.get("password").getAsString();
     
-    
-         System.out.println(json);
-        UserFacade uf = new UserFacade();
-        uf.CreateUser(new User(username,password));
-       
-
- 
-        return Response.ok(json).build();
-    }
 }
