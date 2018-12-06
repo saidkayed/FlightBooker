@@ -6,7 +6,6 @@
     transform: translate(-50%, -50%);
     background-color: aliceblue;
     border-radius: 5px;
-
 }
 
 .ModalContent {
@@ -59,8 +58,8 @@ border: 1px solid #ccc;
 
 #loginbtn {
     position: absolute;
-    bottom: 50%;
-    right: 40%;
+    bottom: 25%;
+    left: 45%;
     font-size: 18px;
     font-family: "cerapro-regular",sans-serif;
     color: grey;

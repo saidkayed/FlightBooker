@@ -94,6 +94,7 @@ export default class App extends Component {
           <ReactModal 
             className="ReactModal"
             isOpen={this.state.showModal}
+            shouldCloseOnOverlayClick={true}
             contentLabel="Minimal Modal Example">
 
             <form onSubmit={this.login2} onChange={this.onChange} >
@@ -101,10 +102,9 @@ export default class App extends Component {
                 <h2 id="logintext">Log In</h2>
                 <input id="username" placeholder="username" type="username" name="username" required />
                 <input id="password" placeholder="password" type="password" name="password" required />
+                <button type="button" id="loginbtn">Log In</button>
               </div>
               <a id="closebtn" style={{ cursor: 'pointer' }} onClick={this.handleCloseModal}>Close</a>
-
-              <button id="loginbtn">Log In</button>
             </form>
 
           </ReactModal>
