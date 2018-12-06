@@ -65,3 +65,14 @@ border: 1px solid #ccc;
     color: grey;
     font-weight: 700;
 }
+
+#registerbtn {
+    position: absolute;
+    bottom: 18%;
+    left: 40%;
+    right: 40%;
+    font-size: 18px;
+    font-family: "cerapro-regular",sans-serif;
+    color: grey;
+    font-weight: 700;
+}
