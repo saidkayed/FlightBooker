@@ -80,7 +80,6 @@ export default class App extends Component {
               {!this.state.loggedIn ?
                 (<a onClick={this.handleOpenModal} style={{ cursor: 'pointer' }}>Log In</a>) :
                 (<a onClick={this.logout} style={{ cursor: 'pointer' }}>Log out</a>)
-
               }
             </li>
             <li>
