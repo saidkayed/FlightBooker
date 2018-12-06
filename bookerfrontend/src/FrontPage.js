@@ -59,8 +59,8 @@ export default class FrontPage extends Component {
         return (
                 <center>
             <div classname="divs">
-                    <Select id="style" placeholder="Departure Airport" value={selectedOption} options={options} />
-                    <Select id="style" placeholder="Destination Airport" value={selectedOption1} options={options} />
+                    <Select id="style" placeholder="Departure Airport" value={selectedOption} options={this.state.departure} />
+                    <Select id="style" placeholder="Destination Airport" value={selectedOption1} options={this.state.destination} />
                     <DatePicker id="date" dateFormat="dd-MM-YYYY" selected={this.state.startDate} onChange={this.handleChangeDate} />
                     <select name="departure" onChange={this.handleChangeDeparture}>
                         {this.state.departure.map(function mapper(data) {

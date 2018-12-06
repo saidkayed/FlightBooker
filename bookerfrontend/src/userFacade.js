@@ -61,11 +61,15 @@ function handleHttpErrors(res) {
       }
 
       submitData = (username, departure, destination, date) => {
+        console.log("hej")
+        console.log(username, departure, destination, date)
         const options = this.makeOptions("POST", false, {username: username, departure: departure, destination: destination, depTime: date});
         return fetch(URL + "api/data", options, true)
         .then(handleHttpErrors)
+        
+        } 
       }
-    }
+    
 
     
    

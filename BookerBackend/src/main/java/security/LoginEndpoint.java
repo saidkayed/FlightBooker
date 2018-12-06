@@ -29,14 +29,14 @@ import exceptions.AuthenticationException;
 import exceptions.GenericExceptionMapper;
 import java.util.ArrayList;
 
-@Path("user")
+
+@Path("login")
 public class LoginEndpoint {
 
     Gson gson;
     public static final int TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30 min
 
     @POST
-    @Path("login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(String jsonString) throws AuthenticationException {
@@ -64,7 +64,7 @@ public class LoginEndpoint {
     }
 
 
-    private static String createToken(String userName, List<String> roles) throws JOSEException {
+    public static String createToken(String userName, List<String> roles) throws JOSEException {
 
         StringBuilder res = new StringBuilder();
         for (String string : roles) {
@@ -99,42 +99,42 @@ public class LoginEndpoint {
     }
 
 
-    @Path("create")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response postJson(String json) {
+//    @Path("create")
+//    @POST
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response postJson(String json) {
+//
+//        JsonObject get_json = new JsonParser().parse(json).getAsJsonObject();
+//        String username = get_json.get("username").getAsString();
+//        String password = get_json.get("password").getAsString();
+//
+//        System.out.println(json);
+//        UserFacade uf = new UserFacade();
+//        uf.CreateUser(new User(username, password));
+//
+//        return Response.ok(json).build();
+//    }
 
-        JsonObject get_json = new JsonParser().parse(json).getAsJsonObject();
-        String username = get_json.get("username").getAsString();
-        String password = get_json.get("password").getAsString();
-
-        System.out.println(json);
-        UserFacade uf = new UserFacade();
-        uf.CreateUser(new User(username, password));
-
-        return Response.ok(json).build();
-    }
-
-    @Path("data")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response postData(String json) {
-
-        JsonObject get_json = new JsonParser().parse(json).getAsJsonObject();
-        String username = get_json.get("username").getAsString();
-        String departure = get_json.get("departure").getAsString();
-        String destination = get_json.get("destination").getAsString();
-        String depTime = get_json.get("depTime").getAsString();
-        UserFacade uf = new UserFacade();
-
-        User user = uf.GetUser(username);
-        Data data = new Data(username, departure, destination, depTime);
-
-        uf.Save_Ticket_With_User(data, user);
-
-        return Response.ok(json).build();
-    }
+//    @Path("data")
+//    @POST
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response postData(String json) {
+//
+//        JsonObject get_json = new JsonParser().parse(json).getAsJsonObject();
+//        String username = get_json.get("username").getAsString();
+//        String departure = get_json.get("departure").getAsString();
+//        String destination = get_json.get("destination").getAsString();
+//        String depTime = get_json.get("depTime").getAsString();
+//        UserFacade uf = new UserFacade();
+//
+//        User user = uf.GetUser(username);
+//        Data data = new Data(username, departure, destination, depTime);
+//
+//        uf.Save_Ticket_With_User(data, user);
+//
+//        return Response.ok(json).build();
+//    }
 
 }

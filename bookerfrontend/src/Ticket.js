@@ -115,6 +115,7 @@ export default class Ticket extends Component {
         this.setState({ dest: this.props.destination })
         this.setState({ dept: this.props.departure })
         facade.submitData(this.props.name, this.props.departure, this.props.destination, this.props.date)
+       
 
         this.forceUpdate(this.componentDidMount)
     }
