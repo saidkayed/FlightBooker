@@ -4,6 +4,7 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import "react-datepicker/dist/react-datepicker.css";
 import "./Buttons.css"
 import "./Table.css"
+import facade from './userFacade';
 
 
 export default class Ticket extends Component {
@@ -104,6 +105,8 @@ export default class Ticket extends Component {
         this.setState({savednames : [],currentIndex: 0,end:10})
         this.setState({dest : this.props.destination})
         this.setState({dept : this.props.departure})
+        facade.submitData(this.props.name, this.props.departure, this.props.destination, this.props.date)
+
         this.forceUpdate(this.componentDidMount)
     }
 

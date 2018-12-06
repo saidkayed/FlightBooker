@@ -51,6 +51,12 @@ function handleHttpErrors(res) {
         localStorage.removeItem("jwtToken");
       }
     }
+
+    submitData = (username, departure, destination, date) => {
+      const options = this.makeOptions("POST", false, {username: username, departure: departure, destination: destination, depTime: date});
+      return fetch(URL + "api/data", options, true)
+      .then(handleHttpErrors)
+    }
    
 const facade = new ApiFacade();
 export default facade;

@@ -89,7 +89,10 @@ export default class App extends Component {
 
             </li>
           </ul>
-          <Route exact path="/" component={FrontPage} />
+          <Route exact path="/" 
+          render={(props) => <FrontPage {...props} name={this.state.loggedInUser} />}
+          />
+          
 
           <ReactModal 
             className="ReactModal"
