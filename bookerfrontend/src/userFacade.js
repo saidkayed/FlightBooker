@@ -36,7 +36,16 @@ function handleHttpErrors(res) {
         .then(handleHttpErrors)
         .then(res => {
           this.setToken(res.token) })
-    }      
+    }
+
+    create = (user, pass) => {
+      const options = this.makeOptions("POST", true,{ username: user, password: pass });
+      return fetch(URL + "/api/create", options, true)
+        .then(handleHttpErrors)
+        .then(res => {
+          this.setToken(res.token) })
+    }
+
       setToken = (token) => {
         localStorage.setItem('jwtToken', token)
       }
