@@ -14,7 +14,7 @@ export default class FrontPage extends Component {
             names: [], sizePerPage: 10, page: 1, totalSize: 0, PSort: "",p:[], URI: "hej", 
             searchAirline: "", searchDeparture : "", searchDestination:"", searchDate: new Date() };
     }
-    
+
     async componentDidMount() {
         const data = await fetch(URL).then(res => res.json());
         this.setState({ data: data });
@@ -64,12 +64,12 @@ handleChangeDate = (date) => {
                     </select>
                     Day Of Depature
                     <DatePicker 
-                    dateFormat="dd-MM-YYYY"
+                    dateFormat="YYYY-MM-dd"
                     selected={this.state.startDate}
                     onChange={this.handleChangeDate}
                     />
             
-                <Ticket search={this.state.search} p={this.state.p} departure={this.state.searchDeparture} destination={this.state.searchDestination} date={this.state.searchDate} />
+                <Ticket search={this.state.search} p={this.state.p} departure={this.state.searchDeparture} destination={this.state.searchDestination} date={this.state.searchDate} name={this.props.name} />
                 </div>
         );
     }
