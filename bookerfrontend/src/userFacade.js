@@ -36,7 +36,9 @@ function handleHttpErrors(res) {
         .then(handleHttpErrors)
         .then(res => {
           this.setToken(res.token) })
+          
     }
+
 
     create = (user, pass) => {
       const options = this.makeOptions("POST", true,{ username: user, password: pass });
@@ -45,6 +47,9 @@ function handleHttpErrors(res) {
         .then(res => {
           this.setToken(res.token) })
     }
+   
+
+
 
       setToken = (token) => {
         localStorage.setItem('jwtToken', token)
@@ -63,8 +68,8 @@ function handleHttpErrors(res) {
       submitData = (username, departure, destination, date) => {
         console.log("hej")
         console.log(username, departure, destination, date)
-        const options = this.makeOptions("POST", false, {username: username, departure: departure, destination: destination, depTime: date});
-        return fetch(URL + "api/data", options, true)
+        const options = this.makeOptions("POST", true, {username: username, departure: departure, destination: destination, depTime: date});
+        return fetch(URL + "/api/login/data/", options, true)
         .then(handleHttpErrors)
         
         } 

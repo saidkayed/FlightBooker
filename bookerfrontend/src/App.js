@@ -42,6 +42,7 @@ export default class App extends Component {
     this.userRole(this.state.username2);
     this.login(this.state.username, this.state.password);
     this.setState({ username: this.state.username })
+    console.log(this.state.username);
     //this.handleCloseModal();
 
   }
@@ -71,6 +72,7 @@ export default class App extends Component {
       .then(res => {
         this.setState({ loggedIn: true })
       });
+      console.log(this.state.loggedIn,"true eller false")
 
       this.handleCloseModal();
     this.forceUpdate(this.componentDidMount);
@@ -92,6 +94,8 @@ export default class App extends Component {
     this.setState({ loggedIn: false });
     this.setState({ loggedInUser: "Guest" })
   }
+
+  
 
 
 
@@ -122,7 +126,7 @@ export default class App extends Component {
 
             </li>
           </ul>
-          <Route exact path="/" component={FrontPage} />
+        
 
           <ReactModal 
             className="ReactModal"
@@ -143,10 +147,10 @@ export default class App extends Component {
 
           </ReactModal>
 
-
+<FrontPage loggedInUser={this.state.loggedInUser}/>
         </div>
-
       </Router>
+      
     );
   }
 }

@@ -72,7 +72,7 @@ export default class FrontPage extends Component {
                             return <option value={data}>{data}</option>
                         })}
                     </select>
-                    <Ticket search={this.state.search} p={this.state.p} departure={this.state.searchDeparture} destination={this.state.searchDestination} date={this.state.searchDate} />
+                    <Ticket search={this.state.search} p={this.state.p} departure={this.state.searchDeparture} destination={this.state.searchDestination} date={this.state.searchDate} username={this.props.loggedInUser} />
                 </div>
             </center>
         );

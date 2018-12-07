@@ -13,7 +13,7 @@ export default class Ticket extends Component {
         super(props);
         this.state = {
             names: [], currentIndex: 0, end: 10, PSort: "", showMore: false, savednames: [],
-            dept: "", dest: ""
+            dept: "", dest: "",username:""
         }
     }
 
@@ -106,7 +106,7 @@ export default class Ticket extends Component {
         this.setState({ savednames: [], currentIndex: 0, end: 10 })
         this.setState({ dest: this.props.destination })
         this.setState({ dept: this.props.departure })
-        facade.submitData(this.props.name, this.props.departure, this.props.destination, this.props.date)
+        facade.submitData(this.props.username, this.props.departure, this.props.destination, this.props.date.toString())
 
         this.forceUpdate(this.componentDidMount)
     }
@@ -114,7 +114,7 @@ export default class Ticket extends Component {
         ev.preventDefault();
         this.setState({ dest: this.props.destination })
         this.setState({ dept: this.props.departure })
-        facade.submitData(this.props.name, this.props.departure, this.props.destination, this.props.date)
+        facade.submitData(this.props.username, this.props.departure, this.props.destination, this.props.date.toString())
        
 
         this.forceUpdate(this.componentDidMount)
