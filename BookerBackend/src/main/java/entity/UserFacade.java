@@ -59,17 +59,21 @@ public class UserFacade {
     
     public User getVeryfiedUser(String username, String password) throws AuthenticationException {
         EntityManager em = emf.createEntityManager();
-        User user;
+   
         try {
-            user = em.find(User.class, username);
-            if (user == null || !user.verifyPassword(password)) {
-                throw new AuthenticationException("Invalid user name or password");
-            }
+              Query q = em.createQuery("SELECT p FROM User p WHERE p.userName = :name");
+            q.setParameter("name", username);
+            return  (User) q.getSingleResult();
+           // user = em.find(User.class, username);
+//            if (username == null || !user.verifyPassword(password)) {
+//                throw new AuthenticationException("Invalid user name or password");
+            
         } finally {
             em.close();
         }
-        return user;
+       // return user;
     }
+
     
     public Data Save_Ticket_With_User(Data data,User user){
         EntityManager em = emf.createEntityManager();

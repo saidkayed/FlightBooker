@@ -8,6 +8,16 @@ import "./App.css";
 import logo from './logo1.svg';
 import userFacade from './userFacade';
 
+function validate(user, pass) {
+  const errors = [];
+
+  if (user.length === 0 || pass.length === 0) {
+    errors.push("Username or Password can't be empty");
+  }
+
+  return errors;
+}
+
 export default class App extends Component {
 
   constructor() {
@@ -32,6 +42,8 @@ export default class App extends Component {
     this.userRole(this.state.username2);
     this.login(this.state.username, this.state.password);
     this.setState({ username: this.state.username })
+    console.log(this.state.username);
+    //this.handleCloseModal();
 
   }
 
@@ -41,6 +53,7 @@ export default class App extends Component {
     this.userRole(this.state.username2);
     this.register(this.state.username, this.state.password);
     this.setState({ username: this.state.username })
+    this.handleCloseModal();
 
   }
 
@@ -59,8 +72,9 @@ export default class App extends Component {
       .then(res => {
         this.setState({ loggedIn: true })
       });
+      console.log(this.state.loggedIn,"true eller false")
 
-    this.handleCloseModal();
+      this.handleCloseModal();
     this.forceUpdate(this.componentDidMount);
   }
 
@@ -70,7 +84,7 @@ export default class App extends Component {
         this.setState({ loggedIn: true })
       });
 
-    this.handleCloseModal();
+      this.handleCloseModal();
     this.forceUpdate(this.componentDidMount);
   }
 
@@ -80,6 +94,8 @@ export default class App extends Component {
     this.setState({ loggedIn: false });
     this.setState({ loggedInUser: "Guest" })
   }
+
+  
 
 
 
@@ -101,6 +117,7 @@ export default class App extends Component {
               {!this.state.loggedIn ?
                 (<a onClick={this.handleOpenModal} style={{ cursor: 'pointer' }}>Log In</a>) :
                 (<a onClick={this.logout} style={{ cursor: 'pointer' }}>Log out</a>)
+
               }
             </li>
             <li>
@@ -109,10 +126,7 @@ export default class App extends Component {
 
             </li>
           </ul>
-          <Route exact path="/" 
-          render={(props) => <FrontPage {...props} name={this.state.loggedInUser} />}
-          />
-          
+        
 
           <ReactModal 
             className="ReactModal"
@@ -125,7 +139,7 @@ export default class App extends Component {
                 <h2 id="logintext">Log In</h2>
                 <input id="username" placeholder="username" type="username" name="username" required />
                 <input id="password" placeholder="password" type="password" name="password" required />
-                <button type="button" onClick={this.login2}id="loginbtn">Log In</button>
+                <button id="loginbtn">Log In</button>
                 <button type="button" onClick={this.handleRegister} id="registerbtn">Register User</button>
               </div>
               <a id="closebtn" style={{ cursor: 'pointer' }} onClick={this.handleCloseModal}>Close</a>
@@ -133,10 +147,10 @@ export default class App extends Component {
 
           </ReactModal>
 
-
+<FrontPage loggedInUser={this.state.loggedInUser}/>
         </div>
-
       </Router>
+      
     );
   }
 }

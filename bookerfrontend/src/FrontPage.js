@@ -5,7 +5,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import Ticket from "./Ticket";
 import Select from 'react-select';
 import "./FrontPage.css";
-import Button from 'react-bootstrap/lib/Button';
 
 const URL = "http://localhost:8080/BookerBackend/api/ticket/alltickets"
 const options = [
@@ -49,7 +48,6 @@ export default class FrontPage extends Component {
         this.setState({ searchDestination: evt.currentTarget.value })
     }
 
-
     handleChangeDate = (date) => {
         this.setState({ startDate: date });
         this.setState({ searchDate: date })
@@ -74,7 +72,7 @@ export default class FrontPage extends Component {
                             return <option value={data}>{data}</option>
                         })}
                     </select>
-                    <Ticket search={this.state.search} p={this.state.p} departure={this.state.searchDeparture} destination={this.state.searchDestination} date={this.state.searchDate} />
+                    <Ticket search={this.state.search} p={this.state.p} departure={this.state.searchDeparture} destination={this.state.searchDestination} date={this.state.searchDate} username={this.props.loggedInUser} />
                 </div>
             </center>
         );
