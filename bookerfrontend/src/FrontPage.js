@@ -59,19 +59,18 @@ export default class FrontPage extends Component {
         return (
                 <center>
             <div classname="divs">
-                    <Select id="style" placeholder="Departure Airport" value={selectedOption} options={this.state.departure} />
-                    <Select id="style" placeholder="Destination Airport" value={selectedOption1} options={this.state.destination} />
-                    <DatePicker id="date" dateFormat="dd-MM-YYYY" selected={this.state.startDate} onChange={this.handleChangeDate} />
-                    <select name="departure" onChange={this.handleChangeDeparture}>
+                    
+                    <select id="date" name="departure" onChange={this.handleChangeDeparture}>
                         {this.state.departure.map(function mapper(data) {
                             return <option value={data}>{data}</option>
                         })}
                     </select>
-                    <select name="destination" onChange={this.handleChangeDestination}>
+                    <select id="date" name="destination" onChange={this.handleChangeDestination}>
                         {this.state.destination.map(function mapper(data) {
                             return <option value={data}>{data}</option>
                         })}
                     </select>
+                    <DatePicker id="date" dateFormat="dd-MM-YYYY" selected={this.state.startDate} onChange={this.handleChangeDate} />
                     <Ticket search={this.state.search} p={this.state.p} departure={this.state.searchDeparture} destination={this.state.searchDestination} date={this.state.searchDate} username={this.props.loggedInUser} />
                 </div>
             </center>
