@@ -58,8 +58,7 @@ export default class FrontPage extends Component {
 
         return (
                 <center>
-            <div classname="divs">
-                    
+            <div>
                     <select id="date" name="departure" onChange={this.handleChangeDeparture}>
                         {this.state.departure.map(function mapper(data) {
                             return <option value={data}>{data}</option>
