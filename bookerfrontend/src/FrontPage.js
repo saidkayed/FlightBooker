@@ -58,7 +58,7 @@ export default class FrontPage extends Component {
 
         return (
                 <center>
-            <div classname="divs">
+            <div className="divs">
                     <Select id="style" placeholder="Departure Airport" value={selectedOption} options={this.state.departure} />
                     <Select id="style" placeholder="Destination Airport" value={selectedOption1} options={this.state.destination} />
                     <DatePicker id="date" dateFormat="dd-MM-YYYY" selected={this.state.startDate} onChange={this.handleChangeDate} />

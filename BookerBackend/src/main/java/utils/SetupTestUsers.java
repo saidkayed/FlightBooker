@@ -13,19 +13,7 @@ public class SetupTestUsers {
 
     EntityManager em = Persistence.createEntityManagerFactory("pu").createEntityManager();
     
-   // SwapiFacade sf = new SwapiFacade();
-    
-    //ArrayList<String> json = sf.getAllSwapi();
-    
-      //System.out.println(json);
-            
-    
-    // IMPORTAAAAAAAAAANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // This breaks one of the MOST fundamental security rules in that it ships with default users and passwords
-    // CHANGE the three passwords below, before you uncomment and execute the code below
-    
-   // throw new UnsupportedOperationException("REMOVE THIS LINE, WHEN YOU HAVE READ WARNING");
-    
+
     em.getTransaction().begin();
     Role userRole = new Role("user");
     Role adminRole = new Role("admin");
@@ -38,9 +26,13 @@ public class SetupTestUsers {
      User mySaid = new User("Zaid", "1234");
     mySaid.addRole(userRole);
     
+    User guest = new User("Guest", "123");
+    guest.addRole(userRole);
+    
     em.persist(userRole);
     em.persist(adminRole);
 
+    em.persist(guest);
     em.persist(user);
     em.persist(admin);
     em.persist(myUser);
