@@ -1,7 +1,4 @@
 # FlightBooker
 
-npm install
+Momondo like aplication were you can book flights!
 
-npm react-bootstrap
-
-npm start
