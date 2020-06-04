@@ -1,0 +1,77 @@
+.ReactModal {
+    position: absolute;
+    padding: 120px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: aliceblue;
+    border-radius: 5px;
+}
+
+.ModalContent {
+    padding: 10%;
+    text-align: center;
+}
+
+#logintext {
+font-family: "cerapro-regular",sans-serif;
+font-weight: 700;
+}
+        
+#username {
+margin: 5%;
+background-color: rgba(0,0,0,0.05);
+border-radius: 5px;
+border: 1px solid #ccc;
+}
+
+
+#username:focus{
+    margin: 5%;
+    background-color: #A9D9E9;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#password {
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#password:focus{
+    background-color: #A9D9E9;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#closebtn {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 18px;
+    font-family: "cerapro-regular",sans-serif;
+    color: grey;
+    font-weight: 700;
+    
+}
+
+#loginbtn {
+    position: absolute;
+    bottom: 25%;
+    left: 45%;
+    font-size: 18px;
+    font-family: "cerapro-regular",sans-serif;
+    color: grey;
+    font-weight: 700;
+}
+
+#registerbtn {
+    position: absolute;
+    bottom: 18%;
+    left: 40%;
+    font-size: 18px;
+    font-family: "cerapro-regular",sans-serif;
+    color: grey;
+    font-weight: 700;
+}
